@@ -1,0 +1,108 @@
+# Configuración de Pages CMS (https://app.pagescms.org)
+media:
+  input: assets/img
+  output: /assets/img
+
+content:
+  - name: sitio
+    label: Contenido del sitio
+    type: file
+    path: _data/site.yml
+    format: yaml
+    fields:
+      - name: hero
+        label: Portada
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto pequeño sobre el título", type: string }
+          - { name: title, label: "Título principal", type: string, required: true }
+          - { name: lead, label: "Texto de presentación", type: text }
+          - { name: photo, label: "Foto de la doctora", type: image }
+          - { name: photo_alt, label: "Descripción de la foto (accesibilidad)", type: string }
+
+      - name: contact
+        label: Contacto y horario
+        type: object
+        fields:
+          - { name: hours, label: "Horario de atención", type: text }
+          - { name: whatsapp, label: "WhatsApp (formato internacional, sin + ni espacios, p. ej. 593999769176)", type: string }
+          - { name: whatsapp_display, label: "WhatsApp como se muestra (p. ej. 099 976 9176)", type: string }
+          - { name: whatsapp_message, label: "Mensaje inicial de WhatsApp", type: string }
+          - { name: landline, label: "Teléfono fijo (formato internacional, p. ej. +59373642883)", type: string }
+          - { name: landline_display, label: "Teléfono fijo como se muestra", type: string }
+          - { name: email, label: "Correo", type: string }
+          - { name: address_line1, label: "Dirección, línea 1", type: string }
+          - { name: address_line2, label: "Dirección, línea 2", type: string }
+          - { name: city, label: "Ciudad", type: string }
+          - { name: maps_query, label: "Búsqueda para el mapa de Google", type: string }
+          - { name: instagram, label: "Enlace de Instagram (opcional)", type: string }
+          - { name: facebook, label: "Enlace de Facebook (opcional)", type: string }
+
+      - name: credentials
+        label: Formación destacada (franja bajo la portada)
+        type: object
+        list:
+          collapsible:
+            summary: "{title}"
+        fields:
+          - { name: label, label: "Etiqueta", type: string }
+          - { name: title, label: "Título", type: string }
+          - { name: detail, label: "Detalle", type: string }
+
+      - name: specialties
+        label: Especialidades
+        type: object
+        list:
+          collapsible:
+            summary: "{title}"
+        fields:
+          - { name: title, label: "Nombre", type: string, required: true }
+          - { name: text, label: "Descripción", type: text }
+
+      - name: about
+        label: Sobre la Dra.
+        type: object
+        fields:
+          - { name: paragraphs, label: "Párrafos de biografía", type: text, list: true }
+          - { name: languages, label: "Idiomas", type: string }
+          - name: publication
+            label: Publicación destacada
+            type: object
+            fields:
+              - { name: title, label: "Título", type: string }
+              - { name: journal, label: "Revista", type: string }
+              - { name: url, label: "Enlace", type: string }
+          - { name: talks, label: "Ponencias", type: string, list: true }
+
+      - name: timeline
+        label: Trayectoria
+        type: object
+        list:
+          collapsible:
+            summary: "{years} · {title}"
+        fields:
+          - { name: years, label: "Años", type: string }
+          - { name: title, label: "Cargo o título", type: string }
+          - { name: place, label: "Lugar", type: string }
+
+      - name: conditions
+        label: Afecciones que trata
+        type: string
+        list: true
+
+      - name: steps
+        label: Pasos de la consulta
+        type: object
+        list:
+          collapsible:
+            summary: "{title}"
+        fields:
+          - { name: title, label: "Título", type: string }
+          - { name: text, label: "Texto", type: text }
+
+      - name: seo
+        label: Google y redes sociales
+        type: object
+        fields:
+          - { name: title, label: "Título en Google", type: string }
+          - { name: description, label: "Descripción en Google", type: text }

@@ -1,0 +1,268 @@
+---
+layout: null
+---
+{%- assign s = site.data.site -%}
+{%- capture wa -%}https://wa.me/{{ s.contact.whatsapp }}?text={{ s.contact.whatsapp_message | uri_escape }}{%- endcapture -%}
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ s.seo.title }}</title>
+<meta name="description" content="{{ s.seo.description | escape }}">
+<meta name="theme-color" content="#f7f7f7">
+<link rel="canonical" href="{{ '/' | absolute_url }}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_EC">
+<meta property="og:title" content="{{ s.seo.title | escape }}">
+<meta property="og:description" content="{{ s.seo.description | escape }}">
+<meta property="og:image" content="{{ s.hero.photo | absolute_url }}">
+<meta property="og:url" content="{{ '/' | absolute_url }}">
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/img/mark.svg' | relative_url }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap">
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+<script>document.documentElement.classList.replace('no-js','js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Physician",
+  "name": "Dra. Marcela Astudillo G.",
+  "medicalSpecialty": "Dermatology",
+  "description": {{ s.seo.description | jsonify }},
+  "image": {{ s.hero.photo | absolute_url | jsonify }},
+  "url": {{ '/' | absolute_url | jsonify }},
+  "telephone": {{ s.contact.landline | jsonify }},
+  "email": {{ s.contact.email | jsonify }},
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": {{ s.contact.address_line1 | append: ', ' | append: s.contact.address_line2 | jsonify }},
+    "addressLocality": "Machala",
+    "addressRegion": "El Oro",
+    "addressCountry": "EC"
+  }
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="#inicio" aria-label="Dra. Marcela Astudillo G., inicio">
+      <img src="{{ '/assets/img/logo-horizontal.svg' | relative_url }}" alt="Dra. Marcela Astudillo G. — Dermatóloga" width="203" height="60">
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+      <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Principal">
+      <a class="nav-link" href="#especialidades">Especialidades</a>
+      <a class="nav-link" href="#sobre">Sobre la Dra.</a>
+      <a class="nav-link" href="#afecciones">Afecciones</a>
+      <a class="nav-link" href="#contacto">Contacto</a>
+      <a class="btn btn-primary" href="{{ wa }}" target="_blank" rel="noopener">
+        {% include icon-chat.svg %}Agenda tu cita
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" id="inicio">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow eyebrow-brand reveal">{{ s.hero.eyebrow }}</p>
+      <h1 class="display reveal">{{ s.hero.title }}</h1>
+      <p class="lead reveal">{{ s.hero.lead }}</p>
+      <div class="hero-actions reveal">
+        <a class="btn btn-primary btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Agenda por WhatsApp</a>
+        <a class="btn btn-outline btn-lg" href="#especialidades">Ver especialidades</a>
+      </div>
+    </div>
+    <div class="hero-media reveal reveal-media">
+      <div class="hero-block" aria-hidden="true"></div>
+      <img class="hero-photo" src="{{ s.hero.photo | relative_url }}" alt="{{ s.hero.photo_alt | escape }}" width="1000" height="1000" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<section class="container credentials" aria-label="Formación">
+  {%- for c in s.credentials %}
+  <div class="credential reveal">
+    <p class="eyebrow{% if forloop.first %} eyebrow-brand{% endif %}">{{ c.label }}</p>
+    <p class="credential-title">{{ c.title }}</p>
+    <p class="small muted">{{ c.detail }}</p>
+  </div>
+  {%- endfor %}
+</section>
+
+<section class="section" id="especialidades">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow eyebrow-brand">Especialidades</p>
+      <h2 class="h1">Atención integral para la piel, el cabello y las uñas</h2>
+      <p class="muted">Diagnóstico preciso y tratamientos basados en evidencia, explicados con claridad en cada consulta.</p>
+    </header>
+    <div class="card-grid">
+      {%- for sp in s.specialties %}
+      <article class="card reveal">
+        <span class="card-rule" aria-hidden="true"></span>
+        <p class="card-num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</p>
+        <h3 class="h3">{{ sp.title }}</h3>
+        <p class="muted">{{ sp.text }}</p>
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-raised" id="sobre">
+  <div class="container about-grid">
+    <div class="about-copy">
+      <p class="eyebrow eyebrow-brand reveal">Sobre la Dra.</p>
+      <h2 class="h1 reveal">Dra. Marcela Astudillo G.</h2>
+      {%- for p in s.about.paragraphs %}
+      <p class="reveal">{{ p }}</p>
+      {%- endfor %}
+      {%- if s.about.publication.title %}
+      <div class="callout reveal">
+        <p class="eyebrow eyebrow-deep">Publicación</p>
+        <p class="callout-title">{{ s.about.publication.title }}</p>
+        <p class="small">{{ s.about.publication.journal }}{% if s.about.publication.url %} · <a class="link-deep" href="{{ s.about.publication.url }}" target="_blank" rel="noopener">Leer artículo</a>{% endif %}</p>
+      </div>
+      {%- endif %}
+      {%- if s.about.talks.size > 0 %}
+      <div class="talks reveal">
+        <p class="eyebrow">Ponencias</p>
+        <ul>
+          {%- for t in s.about.talks %}
+          <li>{{ t }}</li>
+          {%- endfor %}
+        </ul>
+      </div>
+      {%- endif %}
+    </div>
+    <div class="timeline">
+      <p class="eyebrow reveal">Trayectoria</p>
+      <ol>
+        {%- for t in s.timeline %}
+        <li class="reveal">
+          <span class="timeline-years">{{ t.years }}</span>
+          <div>
+            <p class="timeline-title">{{ t.title }}</p>
+            <p class="small muted">{{ t.place }}</p>
+          </div>
+        </li>
+        {%- endfor %}
+      </ol>
+      {%- if s.about.languages %}<p class="small muted reveal">{{ s.about.languages }}</p>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight-bottom" id="afecciones">
+  <div class="container">
+    <div class="conditions reveal">
+      <div class="conditions-head">
+        <p class="eyebrow eyebrow-deep">Afecciones</p>
+        <h2 class="h2">Motivos de consulta frecuentes</h2>
+        <p>Si notas un cambio en tu piel que te preocupa, agenda una valoración.</p>
+      </div>
+      <ul class="tags">
+        {%- for c in s.conditions %}
+        <li class="tag">{{ c }}</li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow eyebrow-brand">Tu consulta</p>
+      <h2 class="h1">Tres pasos para cuidar tu piel</h2>
+    </header>
+    <ol class="steps">
+      {%- for st in s.steps %}
+      <li class="step reveal">
+        <span class="step-num">{{ forloop.index }}</span>
+        <h3 class="h3">{{ st.title }}</h3>
+        <p class="muted">{{ st.text }}</p>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="container" aria-label="Agendar">
+  <div class="cta reveal">
+    <div>
+      <h2 class="h1 cta-title">Agenda tu hora hoy</h2>
+      <p class="cta-text">Atención con cita previa en Machala. Te respondemos por WhatsApp.</p>
+    </div>
+    <a class="btn btn-light btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Escribir al {{ s.contact.whatsapp_display }}</a>
+  </div>
+</section>
+
+<section class="section" id="contacto">
+  <div class="container contact-grid">
+    <div class="contact-list">
+      <header class="section-head reveal">
+        <p class="eyebrow eyebrow-brand">Contacto</p>
+        <h2 class="h1">Visítanos en Machala</h2>
+      </header>
+      <div class="contact-item reveal">
+        {% include icon-pin.svg %}
+        <div><p class="contact-label">Consultorio</p><p class="muted">{{ s.contact.address_line1 }}<br>{{ s.contact.address_line2 }}<br>{{ s.contact.city }}</p></div>
+      </div>
+      <div class="contact-item reveal">
+        {% include icon-phone.svg %}
+        <div><p class="contact-label">Teléfonos</p><p class="muted"><a href="tel:+{{ s.contact.whatsapp }}">{{ s.contact.whatsapp_display }}</a> · celular y WhatsApp<br><a href="tel:{{ s.contact.landline }}">{{ s.contact.landline_display }}</a> · consultorio</p></div>
+      </div>
+      <div class="contact-item reveal">
+        {% include icon-mail.svg %}
+        <div><p class="contact-label">Correo</p><p><a href="mailto:{{ s.contact.email }}">{{ s.contact.email }}</a></p></div>
+      </div>
+      <div class="contact-item reveal">
+        {% include icon-clock.svg %}
+        <div><p class="contact-label">Horario</p><p class="muted">{{ s.contact.hours }}</p></div>
+      </div>
+    </div>
+    <div class="map reveal">
+      <iframe title="Mapa del consultorio en Machala" src="https://maps.google.com/maps?q={{ s.contact.maps_query | uri_escape }}&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <a class="map-link" href="https://www.google.com/maps/search/?api=1&query={{ s.contact.maps_query | uri_escape }}" target="_blank" rel="noopener">{% include icon-pin.svg %}Cómo llegar en Google Maps</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="{{ '/assets/img/mark.svg' | relative_url }}" alt="" width="56" height="56">
+      <div>
+        <p class="footer-name">Dra. Marcela Astudillo G.</p>
+        <p class="eyebrow">Dermatóloga</p>
+      </div>
+    </div>
+    <div class="footer-meta">
+      {%- if s.contact.instagram != "" or s.contact.facebook != "" %}
+      <p class="footer-social">
+        {% if s.contact.instagram != "" %}<a href="{{ s.contact.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+        {% if s.contact.facebook != "" %}<a href="{{ s.contact.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+      </p>
+      {%- endif %}
+      <p class="small muted">© {{ site.time | date: "%Y" }} Dra. Marcela Astudillo G. · Machala, Ecuador<br>La información de este sitio es orientativa y no reemplaza una consulta médica.</p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="{{ wa }}" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">{% include icon-chat.svg %}</a>
+
+<script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+</body>
+</html>

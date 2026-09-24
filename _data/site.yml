@@ -1,0 +1,108 @@
+# Contenido del sitio. Se edita desde Pages CMS (app.pagescms.org)
+# o directamente en este archivo.
+
+seo:
+  title: "Dra. Marcela Astudillo G. — Dermatóloga en Machala"
+  description: "Dermatóloga en Machala, El Oro. Médica graduada en Cuenca y especialista en Dermatología formada en La Habana, Cuba. Dermatología clínica, pediátrica y estética. Agenda tu cita por WhatsApp."
+
+contact:
+  whatsapp: "593999769176"
+  whatsapp_display: "099 976 9176"
+  whatsapp_message: "Hola Dra. Astudillo, quisiera agendar una cita."
+  landline: "+59373642883"
+  landline_display: "(07) 364 2883"
+  email: "dra.marcela.astudillo@gmail.com"
+  address_line1: "25 de Junio entre Colón y Tarqui"
+  address_line2: "Mezzanine, consultorio 3"
+  city: "Machala, El Oro, Ecuador"
+  hours: "Atención con cita previa. Escríbenos para conocer los horarios disponibles."
+  maps_query: "25 de Junio y Colón, Machala, Ecuador"
+  instagram: ""
+  facebook: ""
+
+hero:
+  eyebrow: "Dermatóloga · Machala, El Oro"
+  title: "Cuidado experto de tu piel, con atención cercana"
+  lead: "Médica graduada en Cuenca y especialista en Dermatología formada en La Habana, Cuba. Dermatología clínica, pediátrica y estética, con consulta privada en Machala desde 2021."
+  photo: "/assets/img/retrato.jpg"
+  photo_alt: "Dra. Marcela Astudillo G., dermatóloga, con bata médica"
+
+credentials:
+  - label: "Graduada en Cuenca"
+    title: "Médica"
+    detail: "Universidad Católica de Cuenca, 2015"
+  - label: "Especialidad"
+    title: "Dermatología"
+    detail: "Universidad de Ciencias Médicas de La Habana, Cuba"
+  - label: "Reconocimiento"
+    title: "Mejores calificaciones de su promoción"
+    detail: "Otorgado por la Embajada de Ecuador en Cuba"
+
+specialties:
+  - title: "Dermatología clínica"
+    text: "Diagnóstico y tratamiento de acné, rosácea, dermatitis, psoriasis y otras enfermedades de la piel en adultos."
+  - title: "Dermatología pediátrica"
+    text: "Cuidado de la piel de bebés, niños y adolescentes, con formación en el Hospital Pediátrico Borrás Marfán de La Habana."
+  - title: "Lunares y cáncer de piel"
+    text: "Revisión de lunares y lesiones sospechosas para la detección temprana del cáncer de piel."
+  - title: "Infecciones de la piel"
+    text: "Hongos, bacterias y parásitos como la escabiosis, con apoyo diagnóstico de la luz de Wood."
+  - title: "Dermocosmética y rejuvenecimiento"
+    text: "Rutinas de cuidado, manchas y envejecimiento de la piel, con procedimientos de medicina estética facial."
+  - title: "Infecciones de transmisión sexual"
+    text: "Evaluación confidencial y tratamiento de las manifestaciones en piel y mucosas."
+
+about:
+  paragraphs:
+    - "Graduada en Cuenca, en la Universidad Católica de Cuenca, y especialista en Dermatología por la Universidad de Ciencias Médicas de La Habana, donde realizó su residencia en el Hospital Docente Clínico Quirúrgico Comandante Manuel Fajardo y se formó en dermatología pediátrica en el Hospital Borrás Marfán."
+    - "Culminó la especialidad con las mejores calificaciones, reconocimiento otorgado por la Embajada de Ecuador en Cuba. Desde 2021 atiende en su consultorio dermatológico en Machala."
+  languages: "Idiomas: español e inglés."
+  publication:
+    title: "Luz de Wood, fluorescencia en infecciones por bacterias y hongos"
+    journal: "Folia Dermatológica Cubana, vol. 14, n.º 3 (2020)"
+    url: "http://www.revfdc.sld.cu/index.php/fdc/article/view/109"
+  talks:
+    - "Escabiosis, a propósito de un caso — XLII Jornada Científica de Residentes, La Habana, 2018"
+    - "Luz de Wood. Usos en Dermatología — Semana de la Ciencia, La Habana, 2019"
+
+timeline:
+  - years: "2021 – hoy"
+    title: "Consulta privada de Dermatología"
+    place: "Consultorio Dermatológico — Machala, El Oro"
+  - years: "2021"
+    title: "Dermatóloga"
+    place: "Centro de Especialidades CEM Durán — Santa Rosa, El Oro"
+  - years: "2017 – 2020"
+    title: "Residencia de Dermatología"
+    place: "Hospital Docente Clínico Quirúrgico Comandante Manuel Fajardo — La Habana, Cuba"
+  - years: "2017"
+    title: "Residencia de Dermatología Pediátrica"
+    place: "Hospital Pediátrico Borrás Marfán — La Habana, Cuba"
+  - years: "2016"
+    title: "Médica rural"
+    place: "Ministerio de Salud Pública — San Vicente, Saraguro, Loja"
+  - years: "2015"
+    title: "Graduada en Cuenca como Médica"
+    place: "Universidad Católica de Cuenca"
+
+conditions:
+  - "Acné"
+  - "Rosácea"
+  - "Manchas y melasma"
+  - "Lunares"
+  - "Dermatitis"
+  - "Psoriasis"
+  - "Hongos en piel y uñas"
+  - "Caída del cabello"
+  - "Verrugas"
+  - "Escabiosis"
+  - "Envejecimiento de la piel"
+  - "Piel de bebés y niños"
+
+steps:
+  - title: "Agenda tu hora"
+    text: "Escríbenos por WhatsApp o llama al consultorio y elige el horario que mejor te acomode."
+  - title: "Evaluación completa"
+    text: "Revisamos tu historia y examinamos tu piel para llegar a un diagnóstico claro."
+  - title: "Plan a tu medida"
+    text: "Te explicamos el tratamiento paso a paso y hacemos seguimiento de tu evolución."

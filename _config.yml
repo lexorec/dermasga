@@ -1,0 +1,18 @@
+# Configuración de Jekyll para GitHub Pages
+title: "Dra. Marcela Astudillo G. — Dermatóloga"
+lang: es
+
+# Dirección pública del sitio.
+# - Dominio propio (p. ej. https://dramarcelaastudillo.com): url con el dominio y baseurl: ""
+# - Sin dominio, repo "usuario.github.io/NOMBRE-REPO": url: "https://usuario.github.io" y baseurl: "/NOMBRE-REPO"
+url: "https://dermasga.com"
+baseurl: ""
+
+markdown: kramdown
+exclude:
+  - README.md
+  - EDITAR.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .pages.yml
