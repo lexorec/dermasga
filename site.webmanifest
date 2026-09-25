@@ -2,8 +2,8 @@
 layout: null
 ---
 {
-  "name": "Dra. Marcela Astudillo G. — Dermatóloga",
-  "short_name": "Dra. Astudillo",
+  "name": "DERMASGA — Dra. Marcela Astudillo G., Dermatóloga",
+  "short_name": "DERMASGA",
   "lang": "es",
   "start_url": "{{ '/' | relative_url }}",
   "display": "browser",

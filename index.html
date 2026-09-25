@@ -26,7 +26,7 @@ layout: null
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_EC">
-<meta property="og:site_name" content="Dra. Marcela Astudillo G. — Dermatóloga">
+<meta property="og:site_name" content="DERMASGA — Dra. Marcela Astudillo G.">
 <meta property="og:title" content="{{ s.seo.title | escape }}">
 <meta property="og:description" content="{{ s.seo.description | escape }}">
 <meta property="og:url" content="{{ '/' | absolute_url }}">
@@ -124,7 +124,8 @@ layout: null
       "@type": "WebSite",
       "@id": {{ '/#website' | absolute_url | jsonify }},
       "url": {{ '/' | absolute_url | jsonify }},
-      "name": "Dra. Marcela Astudillo G. — Dermatóloga en Machala",
+      "name": "DERMASGA",
+      "alternateName": ["Dra. Marcela Astudillo G. — Dermatóloga", "dermasga.com"],
       "inLanguage": "es",
       "publisher": { "@id": {{ '/#consultorio' | absolute_url | jsonify }} }
     }
@@ -154,7 +155,7 @@ layout: null
 
 <header class="site-header" id="top">
   <div class="container header-inner">
-    <a class="brand" href="#inicio" aria-label="Dra. Marcela Astudillo G., inicio">
+    <a class="brand" href="#inicio" aria-label="DERMASGA — Dra. Marcela Astudillo G., inicio">
       <img src="{{ '/assets/img/logo-horizontal.svg' | relative_url }}" alt="Dra. Marcela Astudillo G. — Dermatóloga" width="203" height="60">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
@@ -415,10 +416,10 @@ layout: null
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <img src="{{ '/assets/img/mark.svg' | relative_url }}" alt="Logo de la Dra. Marcela Astudillo G." width="56" height="56">
+      <img src="{{ '/assets/img/mark.svg' | relative_url }}" alt="Logo de DERMASGA, Dra. Marcela Astudillo G." width="56" height="56">
       <div>
         <p class="footer-name">Dra. Marcela Astudillo G.</p>
-        <p class="eyebrow">Dermatóloga</p>
+        <p class="eyebrow">DERMASGA · Dermatóloga</p>
       </div>
     </div>
     <div class="footer-meta">
@@ -428,7 +429,7 @@ layout: null
         {% if s.contact.facebook != "" %}<a href="{{ s.contact.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
       </p>
       {%- endif %}
-      <p class="small muted">© {{ site.time | date: "%Y" }} Dra. Marcela Astudillo G. · Machala, Ecuador<br>La información de este sitio es orientativa y no reemplaza una consulta médica.</p>
+      <p class="small muted">© {{ site.time | date: "%Y" }} DERMASGA · Dra. Marcela Astudillo G. · Machala, Ecuador<br>La información de este sitio es orientativa y no reemplaza una consulta médica.</p>
     </div>
   </div>
 </footer>
