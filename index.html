@@ -161,9 +161,9 @@ layout: null
       <article class="card reveal">
         <span class="card-rule" aria-hidden="true"></span>
         <p class="card-num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</p>
-        <h3 class="h3">{% if sp.url != blank %}<a class="card-link" href="{{ sp.url | relative_url }}">{{ sp.title }}</a>{% else %}{{ sp.title }}{% endif %}</h3>
+        <h3 class="h3">{% if sp.url %}<a class="card-link" href="{{ sp.url | relative_url }}">{{ sp.title }}</a>{% else %}{{ sp.title }}{% endif %}</h3>
         <p class="muted">{{ sp.text }}</p>
-        {%- if sp.url != blank %}
+        {%- if sp.url %}
         <p class="card-more" aria-hidden="true">Ver más →</p>
         {%- endif %}
       </article>
