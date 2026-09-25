@@ -26,6 +26,10 @@ Si no ves el cambio, recarga la página del sitio.
 ## Consejos
 
 - El número de **WhatsApp** va en formato internacional, sin “+” ni espacios: `593999769176`.
-- Escribe el **horario** tal como quieres que lo lean tus pacientes, por ejemplo:
-  “Lunes a viernes, 15:00 a 19:00 · Sábados, 9:00 a 13:00”.
+- El **horario** está en **Contacto y horario → Horario por días**. Pon las horas en formato
+  de 24 h (`09:00`, `19:00`). Para un día cerrado deja vacíos los días y las horas.
+  Si cambias el horario, cámbialo también en tu ficha de Google para que coincidan.
+- En **Testimonios** puedes cambiar las reseñas que se muestran. Copia el texto tal cual desde
+  Google (puedes recortarlo con “…”) y pon solo el nombre y la inicial del apellido.
+  Cuando tengas más reseñas en Google, actualiza también el número.
 - Cada cambio queda guardado en el historial, así que siempre se puede volver atrás.
