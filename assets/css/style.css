@@ -1,4 +1,10 @@
 /* Dra. Marcela Astudillo G. — design tokens from the brand design system */
+/* Cantarell draws ¿ and ¡ at x-height; borrow them from a system font so they sit below the baseline as in Spanish typography. */
+@font-face {
+  font-family: "Inverted Punctuation";
+  src: local("Helvetica Neue"), local("HelveticaNeue"), local("Segoe UI"), local("Roboto"), local("Arial"), local("ArialMT");
+  unicode-range: U+00A1, U+00BF;
+}
 :root {
   --teal-500: #14b5c9;
   --teal-700: #0d7582;
@@ -12,7 +18,7 @@
   --border: #d6d6d6;
   --on-brand: #ffffff;
 
-  --font: "Cantarell", "Fira Sans", system-ui, sans-serif;
+  --font: "Inverted Punctuation", "Cantarell", "Fira Sans", system-ui, sans-serif;
 
   --space-1: 4px;  --space-2: 8px;  --space-3: 16px;
   --space-4: 24px; --space-5: 40px; --space-6: 64px;
