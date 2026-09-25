@@ -222,7 +222,7 @@ layout: null
       <div class="conditions-head">
         <p class="eyebrow eyebrow-deep">Afecciones</p>
         <h2 class="h2">Motivos de consulta frecuentes</h2>
-        <p>Si notas un cambio en tu piel que te preocupa, agenda una valoración.</p>
+        <p>Si notas algún cambio en tu piel que te preocupa, agenda una cita.</p>
       </div>
       <ul class="tags">
         {%- for c in s.conditions %}
@@ -356,7 +356,7 @@ layout: null
           {%- if s.contact.opening_hours.size > 0 %}
           <dl class="hours">
             {%- for h in s.contact.opening_hours %}
-            <div><dt>{{ h.label }}</dt><dd>{% if h.opens.size > 0 %}{{ h.opens }} – {{ h.closes }}{% else %}Cerrado{% endif %}</dd></div>
+            <div><dt>{{ h.label }}</dt><dd>{% if h.opens.size > 0 %}{% include hora.html t=h.opens %} a {% include hora.html t=h.closes %}{% else %}Cerrado{% endif %}</dd></div>
             {%- endfor %}
           </dl>
           {%- endif %}

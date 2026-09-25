@@ -54,6 +54,18 @@ bundle exec jekyll serve
 
 Luego abrir http://localhost:4000.
 
+## Estilo de redacción
+
+Español de Ecuador, de la Costa (Machala): formal pero cercano, sin caer en modismos ni estereotipos.
+
+- Tratar al paciente de **tú**, de forma consistente ("Agenda tu cita", "tu piel"). No mezclar con *usted*.
+- Vocabulario local: **cita** (no "hora"), **celular**, **consultorio**, **agendar**, **brindar**, **carnet**.
+  Evitar giros de otros países ("que te acomode", "turno", "móvil", "vale"…).
+- Horas en formato de 12 h: **8:30 a. m.**, **6:30 p. m.** (en los datos del CMS se guardan en 24 h y la
+  página las convierte).
+- Teléfonos como se escriben en Ecuador: **099 976 9176**, **(07) 364 2883**.
+- Textos médicos: solo información confirmada por la doctora; sin promesas de curación ni resultados garantizados.
+
 ## Notas
 
 - **Mapa**: el mapa incrustado usa las coordenadas de `contact.maps_query`; el botón

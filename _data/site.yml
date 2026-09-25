@@ -8,7 +8,7 @@ seo:
 contact:
   whatsapp: "593999769176"
   whatsapp_display: "099 976 9176"
-  whatsapp_message: "Hola Dra. Astudillo, quisiera agendar una cita."
+  whatsapp_message: "Hola, doctora Astudillo. Quisiera agendar una cita, por favor."
   landline: "+59373642883"
   landline_display: "(07) 364 2883"
   email: "dra.marcela.astudillo@gmail.com"
@@ -101,7 +101,7 @@ timeline:
     title: "Médica rural"
     place: "Ministerio de Salud Pública — San Vicente, Saraguro, Loja"
   - years: "2015"
-    title: "Graduada en Cuenca como Médica"
+    title: "Médica graduada en Cuenca"
     place: "Universidad Católica de Cuenca"
 
 conditions:
@@ -120,7 +120,7 @@ conditions:
 
 steps:
   - title: "Agenda tu cita"
-    text: "Escríbenos por WhatsApp o llama al consultorio y elige el horario que mejor te acomode."
+    text: "Escríbenos por WhatsApp o llama al consultorio y elige el horario que más te convenga."
   - title: "Evaluación completa"
     text: "Revisamos tu historia y examinamos tu piel para llegar a un diagnóstico claro."
   - title: "Plan a tu medida"
@@ -161,9 +161,9 @@ faq:
 
             - Lunes a viernes: 8:30 a. m. a 6:30 p. m. (horario continuo).
             - Sábados: 8:30 a. m. a 3:30 p. m.
-        - question: "¿Dónde se puede encontrar más información o seguirlos en redes sociales?"
+        - question: "¿Dónde puedo encontrar más información o seguirlos en redes sociales?"
           answer: |-
-            Puede conocer más sobre nuestros casos y tratamientos en nuestros perfiles de Instagram, Facebook y TikTok, donde nos encuentra como DERMASGA.
+            Puedes conocer más sobre nuestros casos y tratamientos en nuestros perfiles de Instagram, Facebook y TikTok, donde nos encuentras como DERMASGA.
         - question: "¿Qué otros tratamientos y procedimientos están disponibles en el consultorio?"
           answer: |-
             En DERMASGA contamos con tecnología y procedimientos médicos avanzados para el cuidado integral de la piel. Nuestro portafolio de servicios incluye:
