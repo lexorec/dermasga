@@ -28,7 +28,10 @@ Si no ves el cambio, recarga la página del sitio.
 - El número de **WhatsApp** va en formato internacional, sin “+” ni espacios: `593999769176`.
 - El **horario** está en **Contacto y horario → Horario por días**. Pon las horas en formato
   de 24 h (`09:00`, `19:00`). Para un día cerrado deja vacíos los días y las horas.
-  Si cambias el horario, cámbialo también en tu ficha de Google para que coincidan.
+  Si cambias el horario, cámbialo también en **Preguntas frecuentes** y en tu ficha de Google
+  para que coincidan.
+- En **Preguntas frecuentes** puedes agregar, quitar o reordenar preguntas. Para hacer una lista
+  dentro de una respuesta, empieza cada línea con un guion y un espacio (`- `).
 - En **Testimonios** puedes cambiar las reseñas que se muestran. Copia el texto tal cual desde
   Google (puedes recortarlo con “…”) y pon solo el nombre y la inicial del apellido.
   Cuando tengas más reseñas en Google, actualiza también el número.

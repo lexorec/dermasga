@@ -135,3 +135,23 @@ content:
               - { name: quote, label: "Texto (copiado tal cual de Google; puede recortarse con …)", type: text, required: true }
               - { name: name, label: "Nombre (nombre e inicial del apellido)", type: string }
               - { name: topic, label: "Tema (opcional, p. ej. Caída del cabello)", type: string }
+
+      - name: faq
+        label: Preguntas frecuentes
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto pequeño sobre el título", type: string }
+          - { name: title, label: "Título", type: string }
+          - name: groups
+            label: Grupos de preguntas
+            type: object
+            list: true
+            fields:
+              - { name: title, label: "Nombre del grupo (p. ej. Dermatología pediátrica)", type: string }
+              - name: items
+                label: Preguntas
+                type: object
+                list: true
+                fields:
+                  - { name: question, label: "Pregunta", type: string, required: true }
+                  - { name: answer, label: "Respuesta (para una lista, empieza cada línea con - )", type: text, required: true }

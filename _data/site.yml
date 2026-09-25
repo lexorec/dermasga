@@ -20,8 +20,8 @@ contact:
   opening_hours:
     - label: "Lunes a viernes"
       days: "Mo-Fr"
-      opens: "09:00"
-      closes: "19:00"
+      opens: "08:30"
+      closes: "18:30"
     - label: "Sábado"
       days: "Sa"
       opens: "08:30"
@@ -144,3 +144,68 @@ testimonials:
     - quote: "En mi consulta me guió paso a paso, explicándome todo… Hace seguimiento durante el tratamiento."
       name: "Victoria M."
       topic: "Cuidado de la piel"
+
+faq:
+  eyebrow: "Preguntas frecuentes"
+  title: "Resolvemos tus dudas"
+  groups:
+    - title: "Dermatología pediátrica"
+      items:
+        - question: "¿Desde qué edad se atiende a los pacientes?"
+          answer: |-
+            Brindamos atención dermatológica integral a pacientes desde su nacimiento hasta la adolescencia, acompañándolos en todas las etapas de su desarrollo.
+        - question: "¿Cuáles son las afecciones de la piel más frecuentes en niños?"
+          answer: |-
+            Diagnosticamos y tratamos una amplia variedad de condiciones pediátricas, entre las que destacan: molusco contagioso, alopecia areata, dermatitis atópica, acné, dermatitis seborreica infantil, verrugas vulgares, alergias, dermatitis del pañal, enfermedades exantemáticas, piodermitis, alteraciones en las uñas, lunares, hemangiomas, prúrigo por insectos, sarna, tiñas, trastornos de la sudoración y manchas.
+        - question: "¿Cuál es la experiencia de la doctora en el ámbito pediátrico?"
+          answer: |-
+            Durante tres años, la Dra. Astudillo formó parte del equipo médico del Hospital Pediátrico Borrás Marfán, en La Habana, donde se dedicó exclusivamente al diagnóstico, manejo y tratamiento de enfermedades dermatológicas en pacientes pediátricos.
+        - question: "¿Cómo prepararse para la primera consulta de un niño?"
+          answer: |-
+            Para realizar una evaluación clínica precisa, es fundamental que el paciente acuda con la piel limpia, sin haberse aplicado ninguna crema. Además, los padres deben traer la siguiente información y documentos:
+
+            - Fecha exacta de inicio de los síntomas o alteraciones.
+            - Carnet de vacunación y curvas de crecimiento y talla.
+            - Resultados de los exámenes médicos más recientes.
+            - Lista detallada de medicamentos actuales (incluyendo vitaminas).
+            - Recetas o indicaciones de médicos que lo hayan evaluado previamente.
+        - question: "¿Cómo preparar al niño para que asista tranquilo a la consulta?"
+          answer: |-
+            Es fundamental transmitirle seguridad antes de la cita. Se le debe explicar que durante la consulta no habrá inyecciones ni procedimientos que causen dolor; simplemente revisaremos su piel utilizando luces especiales diseñadas para cuidarlo sin hacerle ningún daño.
+
+    - title: "Tricología y caída del cabello"
+      items:
+        - question: "¿Qué tipos de pérdida de cabello se tratan en consulta?"
+          answer: |-
+            Manejamos diversas condiciones capilares, incluyendo: alopecia androgenética, efluvio telógeno, alopecia areata, alopecia frontal fibrosante, liquen plano pilar, foliculitis decalvante y alopecia por tiñas.
+        - question: "¿A quiénes están dirigidos los tratamientos capilares?"
+          answer: |-
+            Brindamos atención especializada tanto a hombres y mujeres adultos como a niños que presenten problemas de pérdida de cabello.
+        - question: "¿Cómo se realiza el diagnóstico de las condiciones capilares?"
+          answer: |-
+            Llevamos a cabo una evaluación clínica exhaustiva que incluye tricoscopía (examen detallado del cuero cabelludo con aumento), análisis con luz de Wood, medición del volumen capilar con cinta métrica y la prueba de tracción (pull test). Dependiendo de los hallazgos de esta evaluación, solicitamos exámenes de sangre específicos para confirmar el diagnóstico.
+        - question: "¿Qué tratamientos capilares se ofrecen en el consultorio?"
+          answer: |-
+            Diseñamos protocolos combinados y personalizados según las necesidades de cada paciente. Estos pueden incluir tratamientos tópicos, medicación oral, terapia con láser capilar y mesoterapia capilar.
+        - question: "¿En cuánto tiempo se empiezan a notar los resultados?"
+          answer: |-
+            El tiempo de evolución depende de la severidad y el tipo de condición de cada paciente. Sin embargo, por lo general, los primeros cambios positivos son visibles a partir del tercer mes de tratamiento continuo.
+
+    - title: "Información general"
+      items:
+        - question: "¿Cuáles son los horarios de atención?"
+          answer: |-
+            Atendemos exclusivamente con cita previa en los siguientes horarios:
+
+            - Lunes a viernes: 8:30 a. m. a 6:30 p. m. (horario continuo).
+            - Sábados: 8:30 a. m. a 3:30 p. m.
+        - question: "¿Dónde se puede encontrar más información o seguirlos en redes sociales?"
+          answer: |-
+            Puede conocer más sobre nuestros casos y tratamientos en nuestros perfiles de Instagram, Facebook y TikTok, donde nos encuentra como DERMASGA.
+        - question: "¿Qué otros tratamientos y procedimientos están disponibles en el consultorio?"
+          answer: |-
+            En DERMASGA contamos con tecnología y procedimientos médicos avanzados para el cuidado integral de la piel. Nuestro portafolio de servicios incluye:
+
+            - Tecnología láser y terapias capilares avanzadas.
+            - Procedimientos clínicos y quirúrgicos: criocirugía, biopsias, cauterizaciones y retiro seguro de lunares, retiro de verrugas genitales, cirugías de lipomas, quistes y cáncer de piel.
+            - Dermatología estética: aplicación de toxina botulínica, peelings químicos y protocolos especializados para la eliminación de manchas.

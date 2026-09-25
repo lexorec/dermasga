@@ -52,6 +52,7 @@ layout: null
       "@type": "Physician",
       "@id": {{ '/#consultorio' | absolute_url | jsonify }},
       "name": "Dra. Marcela Astudillo G. — Dermatóloga",
+      "alternateName": "DERMASGA",
       "description": {{ s.seo.description | jsonify }},
       "url": {{ '/' | absolute_url | jsonify }},
       "image": {{ s.hero.photo | absolute_url | jsonify }},
@@ -126,6 +127,23 @@ layout: null
       "inLanguage": "es",
       "publisher": { "@id": {{ '/#consultorio' | absolute_url | jsonify }} }
     }
+    {%- if s.faq.groups.size > 0 %},
+    {
+      "@type": "FAQPage",
+      "@id": {{ '/#preguntas' | absolute_url | jsonify }},
+      "inLanguage": "es",
+      "about": { "@id": {{ '/#consultorio' | absolute_url | jsonify }} },
+      "mainEntity": [
+        {%- for g in s.faq.groups %}{% for item in g.items %}
+        {
+          "@type": "Question",
+          "name": {{ item.question | jsonify }},
+          "acceptedAnswer": { "@type": "Answer", "text": {{ item.answer | markdownify | strip_newlines | strip | jsonify }} }
+        }{% unless forloop.last and forloop.parentloop.last %},{% endunless %}
+        {%- endfor %}{% endfor %}
+      ]
+    }
+    {%- endif %}
   ]
 }
 </script>
@@ -145,6 +163,7 @@ layout: null
       <a class="nav-link" href="#especialidades">Especialidades</a>
       <a class="nav-link" href="#sobre">Sobre la Dra.</a>
       <a class="nav-link" href="#afecciones">Afecciones</a>
+      <a class="nav-link" href="#preguntas">Preguntas</a>
       <a class="nav-link" href="#contacto">Contacto</a>
       <a class="btn btn-primary" href="{{ wa }}" target="_blank" rel="noopener">
         {% include icon-chat.svg %}Agenda tu cita
@@ -310,6 +329,31 @@ layout: null
           <span class="quote-source">Reseña en Google</span>
         </figcaption>
       </figure>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{%- assign f = s.faq -%}
+{%- if f.groups.size > 0 %}
+<section class="section" id="preguntas">
+  <div class="container faq-layout">
+    <header class="section-head reveal">
+      <p class="eyebrow eyebrow-brand">{{ f.eyebrow }}</p>
+      <h2 class="h1">{{ f.title }}</h2>
+    </header>
+    <div class="faq-groups">
+      {%- for g in f.groups %}
+      <div class="faq-group reveal">
+        <h3 class="h3 faq-group-title">{{ g.title }}</h3>
+        {%- for item in g.items %}
+        <details class="faq-item">
+          <summary>{{ item.question }}</summary>
+          <div class="faq-answer">{{ item.answer | markdownify }}</div>
+        </details>
+        {%- endfor %}
+      </div>
       {%- endfor %}
     </div>
   </div>
