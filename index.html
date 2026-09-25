@@ -134,6 +134,15 @@ layout: null
         <a class="btn btn-primary btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Agende por WhatsApp</a>
         <a class="btn btn-outline btn-lg" href="#especialidades">Ver especialidades</a>
       </div>
+      {%- assign t = s.testimonials %}
+      {%- if t.rating != blank %}
+      <p class="rating hero-rating reveal">
+        <span class="rating-stars" aria-hidden="true">★★★★★</span>
+        <span><strong>{{ t.rating }}</strong> · {{ t.review_count }} reseñas en Google</span>
+        {%- if t.reviews_url != blank %}<a href="{{ t.reviews_url }}" target="_blank" rel="noopener">Ver reseñas</a>{% endif %}
+      </p>
+      {%- endif %}
+      <p class="open-status reveal" data-open-status hidden></p>
     </div>
     <div class="hero-media reveal reveal-media">
       <div class="hero-block" aria-hidden="true"></div>
@@ -367,6 +376,7 @@ layout: null
             {%- endfor %}
           </dl>
           {%- endif %}
+          <p class="open-status" data-open-status hidden></p>
           <p class="muted">{{ s.contact.hours }}</p></div>
       </div>
     </div>

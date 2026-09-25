@@ -449,6 +449,36 @@ a:hover { color: var(--teal-800); }
 .hours dt { min-width: 150px; color: var(--ink); }
 .hours dd { margin: 0; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 
+/* Rating under the hero headline */
+.hero-rating { margin: 0; font-size: 15px; }
+.hero-rating .rating-stars { font-size: 16px; }
+
+/* Open / closed status */
+.open-status { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 15px; font-weight: 700; color: var(--ink-muted); }
+.open-status::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--gray-500); flex: 0 0 auto; }
+.open-status.is-open { color: #0f7a3d; }
+.open-status.is-open::before { background: #25d366; box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.18); }
+.hours + .open-status { margin: 4px 0 8px; }
+
+/* WhatsApp nudge bubble above the floating button */
+.wa-nudge {
+  position: fixed; right: 20px; bottom: 96px; z-index: 41; max-width: min(280px, calc(100vw - 40px));
+  display: flex; align-items: flex-start; gap: 8px; padding: 14px 12px 14px 18px;
+  background: var(--surface-raised); border: 1px solid var(--border); border-radius: 14px 14px 4px 14px;
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.35);
+  opacity: 0; transform: translateY(8px); transition: opacity 300ms ease, transform 300ms var(--ease-out);
+}
+.wa-nudge.is-visible { opacity: 1; transform: none; }
+.wa-nudge__text { color: var(--ink); font-weight: 700; font-size: 15px; line-height: 1.35; text-decoration: none; }
+.wa-nudge__text:hover { color: var(--teal-800); }
+.wa-nudge__close {
+  flex: 0 0 auto; width: 28px; height: 28px; margin: -6px -2px 0 0; padding: 0; border: 0; border-radius: 50%;
+  background: transparent; color: var(--ink-muted); font-size: 20px; line-height: 1; cursor: pointer;
+}
+.wa-nudge__close:hover { background: var(--surface); color: var(--ink); }
+@media (max-width: 380px) { .wa-nudge { right: 12px; bottom: 84px; } }
+@media (prefers-reduced-motion: reduce) { .wa-nudge { transition: none; } }
+
 /* Scroll-reveal transitions (only when JS is running) */
 .js .reveal {
   opacity: 0;

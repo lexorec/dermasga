@@ -3,6 +3,7 @@ title: "Caída del cabello y tricología"
 seo_title: "Tratamiento de la caída del cabello en Machala | DERMASGA"
 description: "Diagnóstico y tratamiento de la caída del cabello en hombres, mujeres y niños en Machala, con tricoscopía y protocolos personalizados. Dra. Marcela Astudillo G."
 order: 2
+whatsapp_message: "Hola Dra. Astudillo, quisiera agendar una cita por caída del cabello."
 eyebrow: "Tricología · DERMASGA"
 heading: "Caída del cabello y tricología en Machala"
 lead: "Atención especializada para hombres y mujeres adultos, y para niños que presenten problemas de pérdida de cabello, con un diagnóstico completo y protocolos combinados y personalizados."

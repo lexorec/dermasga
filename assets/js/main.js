@@ -43,6 +43,92 @@
     window.setTimeout(function () { target.focus({ preventScroll: true }); }, reduceMotion ? 0 : 600);
   });
 
+  /* "Abierto ahora" status from the opening hours, in Ecuador time (UTC-5, no daylight saving) */
+  (function () {
+    var slots = document.querySelectorAll('[data-open-status]');
+    var dataEl = document.getElementById('opening-hours');
+    if (!slots.length || !dataEl) return;
+    var hours;
+    try { hours = JSON.parse(dataEl.textContent); } catch (e) { return; }
+    var en = document.documentElement.lang === 'en';
+    var codes = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    var dayNames = en
+      ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      : ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+
+    function daysOf(spec) {
+      var out = [];
+      (spec || '').split(',').forEach(function (part) {
+        var r = part.trim().split('-'), a = codes.indexOf(r[0]), b = codes.indexOf(r[1] || r[0]);
+        if (a < 0 || b < 0) return;
+        for (var d = a; ; d = (d + 1) % 7) { out.push(d); if (d === b) break; }
+      });
+      return out;
+    }
+    function mins(t) { var p = (t || '').split(':'); return p.length === 2 ? (+p[0]) * 60 + (+p[1]) : null; }
+    function fmt(m) {
+      var h = Math.floor(m / 60), mm = ('0' + (m % 60)).slice(-2), h12 = h % 12 || 12;
+      return h12 + ':' + mm + '\u00a0' + (h >= 12 ? (en ? 'p.m.' : 'p.\u00a0m.') : (en ? 'a.m.' : 'a.\u00a0m.'));
+    }
+    var week = [[], [], [], [], [], [], []];
+    hours.forEach(function (h) {
+      var o = mins(h.opens), c = mins(h.closes);
+      if (o === null || c === null) return;
+      daysOf(h.days).forEach(function (d) { week[d].push([o, c]); });
+    });
+
+    function render() {
+      var now = new Date(Date.now() - 5 * 3600 * 1000); /* Ecuador local time via UTC fields */
+      var day = now.getUTCDay(), cur = now.getUTCHours() * 60 + now.getUTCMinutes();
+      var text = '', open = false;
+      week[day].forEach(function (r) { if (cur >= r[0] && cur < r[1]) { open = true; text = (en ? 'Open now · until ' : 'Abierto ahora · hasta las ') + fmt(r[1]); } });
+      if (!open) {
+        for (var i = 0; i < 8 && !text; i++) {
+          var d = (day + i) % 7;
+          week[d].slice().sort(function (x, y) { return x[0] - y[0]; }).some(function (r) {
+            if (i === 0 && r[0] <= cur) return false;
+            var when = i === 0 ? (en ? 'today' : 'hoy') : i === 1 ? (en ? 'tomorrow' : 'mañana') : (en ? 'on ' : 'el ') + dayNames[d];
+            text = (en ? 'Closed · opens ' : 'Cerrado · abre ') + when + (en ? ' at ' : ' a las ') + fmt(r[0]);
+            return true;
+          });
+        }
+      }
+      slots.forEach(function (el) {
+        if (!text) { el.hidden = true; return; }
+        el.textContent = text;
+        el.classList.toggle('is-open', open);
+        el.hidden = false;
+      });
+    }
+    render();
+    window.setInterval(render, 60000);
+  })();
+
+  /* Gentle WhatsApp nudge: once per visit, after 40 s or most of the page read, never over the hero */
+  (function () {
+    var nudge = document.querySelector('[data-wa-nudge]');
+    if (!nudge || !waFloat) return;
+    var KEY = 'waNudgeShown';
+    try { if (window.sessionStorage.getItem(KEY)) return; } catch (e) { /* storage blocked: still show once */ }
+    var shown = false;
+    function show() {
+      if (shown || !waFloat.classList.contains('is-visible')) return;
+      shown = true;
+      try { window.sessionStorage.setItem(KEY, '1'); } catch (e) { /* ignore */ }
+      nudge.hidden = false;
+      window.requestAnimationFrame(function () { nudge.classList.add('is-visible'); });
+    }
+    function hide() { nudge.classList.remove('is-visible'); window.setTimeout(function () { nudge.hidden = true; }, 300); }
+    var timer = window.setTimeout(function tick() { if (!shown) { show(); if (!shown) timer = window.setTimeout(tick, 5000); } }, 40000);
+    window.addEventListener('scroll', function () {
+      var doc = document.documentElement;
+      if ((window.scrollY + window.innerHeight) / doc.scrollHeight > 0.6) show();
+    }, { passive: true });
+    nudge.querySelector('.wa-nudge__close').addEventListener('click', hide);
+    nudge.querySelector('.wa-nudge__text').addEventListener('click', hide);
+    waFloat.addEventListener('click', hide);
+  })();
+
   if (!('IntersectionObserver' in window)) {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
     if (waFloat) waFloat.classList.add('is-visible');

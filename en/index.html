@@ -59,6 +59,7 @@ permalink: /en/
           <a class="btn btn-primary btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Book via WhatsApp</a>
           <a class="btn btn-outline btn-lg" href="#visit">Location and hours</a>
         </div>
+        <p class="open-status reveal" data-open-status hidden></p>
         {%- assign t = s.testimonials %}
         {%- if t.rating != blank %}
         <p class="rating reveal">
@@ -144,6 +145,7 @@ permalink: /en/
             <div><dt>{{ e.visit.days[forloop.index0] | default: h.label }}</dt><dd>{% if h.opens.size > 0 %}{% include hora.html t=h.opens lang="en" %} – {% include hora.html t=h.closes lang="en" %}{% else %}{{ e.visit.closed }}{% endif %}</dd></div>
             {%- endfor %}
           </dl>
+          <p class="open-status" data-open-status hidden></p>
           <p class="muted">{{ e.visit.hours_note }}</p></div>
       </div>
     </div>

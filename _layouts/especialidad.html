@@ -2,7 +2,8 @@
 layout: null
 ---
 {%- assign s = site.data.site -%}
-{%- capture wa -%}https://wa.me/{{ s.contact.whatsapp }}?text={{ s.contact.whatsapp_message | uri_escape }}{%- endcapture -%}
+{%- assign wa_message = page.whatsapp_message | default: s.contact.whatsapp_message -%}
+{%- capture wa -%}https://wa.me/{{ s.contact.whatsapp }}?text={{ wa_message | uri_escape }}{%- endcapture -%}
 {%- assign page_url = page.url | absolute_url -%}
 <!doctype html>
 <html lang="es" class="no-js">
@@ -90,6 +91,7 @@ layout: null
           <a class="btn btn-primary btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Agende por WhatsApp</a>
           <a class="btn btn-outline btn-lg" href="#preguntas">Ver preguntas</a>
         </div>
+        <p class="open-status reveal" data-open-status hidden></p>
       </div>
       {%- if page.facts.size > 0 %}
       <dl class="facts reveal">
