@@ -3,7 +3,7 @@
 
 seo:
   title: "Dra. Marcela Astudillo G. — Dermatóloga en Machala | DERMASGA"
-  description: "Dermatóloga en Machala, El Oro, especialista formada en La Habana, Cuba. Dermatología clínica, pediátrica y estética. Agenda tu cita por WhatsApp."
+  description: "Dermatóloga en Machala, El Oro, especialista formada en La Habana, Cuba. Dermatología clínica, pediátrica y estética. Agende su cita por WhatsApp."
 
 contact:
   whatsapp: "593999769176"
@@ -37,7 +37,7 @@ contact:
 
 hero:
   eyebrow: "DERMASGA · Dermatóloga en Machala, El Oro"
-  title: "Cuidado experto de tu piel, con atención cercana"
+  title: "Cuidado experto de su piel, con atención cercana"
   lead: "Médica graduada en Cuenca y especialista en Dermatología formada en La Habana, Cuba. Dermatología clínica, pediátrica y estética, con consulta privada en Machala desde 2021."
   photo: "/assets/img/retrato.jpg"
   photo_alt: "Dra. Marcela Astudillo G., dermatóloga, con bata médica"
@@ -119,12 +119,12 @@ conditions:
   - "Piel de bebés y niños"
 
 steps:
-  - title: "Agenda tu cita"
-    text: "Escríbenos por WhatsApp o llama al consultorio y elige el horario que más te convenga."
+  - title: "Agende su cita"
+    text: "Escríbanos por WhatsApp o llame al consultorio y elija el horario que más le convenga."
   - title: "Evaluación completa"
-    text: "Revisamos tu historia y examinamos tu piel para llegar a un diagnóstico claro."
-  - title: "Plan a tu medida"
-    text: "Te explicamos el tratamiento paso a paso y hacemos seguimiento de tu evolución."
+    text: "Revisamos su historia y examinamos su piel para llegar a un diagnóstico claro."
+  - title: "Plan a su medida"
+    text: "Le explicamos el tratamiento paso a paso y hacemos seguimiento de su evolución."
 
 testimonials:
   eyebrow: "Testimonios"
@@ -134,7 +134,7 @@ testimonials:
   reviews_url: "https://maps.app.goo.gl/Jkg63w3RTbcci1VE6"
   items:
     - quote: "Tuve dermatitis seborreica, el cual generaba que mi cabello caiga y no volvía a salir nuevos cabellos, tras un mes y medio de tratamiento recibí el alta médica… Yo salí más que satisfecho."
-      name: "Jean Carlos C."
+      name: "J. C."
       topic: "Cuero cabelludo y caída del cabello"
     - quote: "Desde la primera consulta me transmitió mucha confianza, me escuchó, resolvió todas mis dudas y me dio un diagnóstico claro. Su trato es muy humano y profesional… me ha tratado a mí y a mi hijo."
       name: "Katiusca P."
@@ -151,7 +151,7 @@ testimonials:
 
 faq:
   eyebrow: "Preguntas frecuentes"
-  title: "Resolvemos tus dudas"
+  title: "Resolvemos sus dudas"
   groups:
     - title: "Información general"
       items:
@@ -161,9 +161,9 @@ faq:
 
             - Lunes a viernes: 8:30 a. m. a 6:30 p. m. (horario continuo).
             - Sábados: 8:30 a. m. a 3:30 p. m.
-        - question: "¿Dónde puedo encontrar más información o seguirlos en redes sociales?"
+        - question: "¿Dónde se puede encontrar más información o seguirlos en redes sociales?"
           answer: |-
-            Puedes conocer más sobre nuestros casos y tratamientos en nuestros perfiles de Instagram, Facebook y TikTok, donde nos encuentras como DERMASGA.
+            Puede conocer más sobre nuestros casos y tratamientos en nuestros perfiles de Instagram, Facebook y TikTok, donde nos encuentra como DERMASGA.
         - question: "¿Qué otros tratamientos y procedimientos están disponibles en el consultorio?"
           answer: |-
             En DERMASGA contamos con tecnología y procedimientos médicos avanzados para el cuidado integral de la piel. Nuestro portafolio de servicios incluye:

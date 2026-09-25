@@ -51,7 +51,7 @@ sections:
       El tiempo de evolución depende de la severidad y el tipo de condición de cada paciente. Sin embargo, por lo general, los primeros cambios positivos son visibles a partir del tercer mes de tratamiento continuo.
 testimonials:
   - quote: "Tuve dermatitis seborreica, el cual generaba que mi cabello caiga y no volvía a salir nuevos cabellos, tras un mes y medio de tratamiento recibí el alta médica… Yo salí más que satisfecho."
-    name: "Jean Carlos C."
+    name: "J. C."
   - quote: "Sus consejos y tratamiento me ha ayudado a reparar y mantener mi piel y cabello muy saludables. Sin lugar a duda estoy feliz con los resultados."
-    name: "Sayra M."
+    name: "S. M."
 ---

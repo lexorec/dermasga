@@ -87,7 +87,7 @@ layout: null
         <h1 class="display reveal">{{ page.heading }}</h1>
         <p class="lead reveal">{{ page.lead }}</p>
         <div class="hero-actions reveal">
-          <a class="btn btn-primary btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Agenda por WhatsApp</a>
+          <a class="btn btn-primary btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Agende por WhatsApp</a>
           <a class="btn btn-outline btn-lg" href="#preguntas">Ver preguntas</a>
         </div>
       </div>
@@ -159,7 +159,7 @@ layout: null
 {%- if others.size > 0 %}
 <section class="section section-tight-bottom">
   <div class="container">
-    <p class="eyebrow eyebrow-brand">También te puede interesar</p>
+    <p class="eyebrow eyebrow-brand">También le puede interesar</p>
     <ul class="related">
       {%- for d in others %}
       <li><a href="{{ d.url | relative_url }}">{{ d.title }} <span aria-hidden="true">→</span></a></li>
@@ -173,8 +173,8 @@ layout: null
 <section class="container" aria-label="Agendar">
   <div class="cta reveal">
     <div>
-      <h2 class="h1 cta-title">Agenda tu cita hoy</h2>
-      <p class="cta-text">Atención con cita previa en {{ s.contact.address_line1 }}, Machala. Te respondemos por WhatsApp.</p>
+      <h2 class="h1 cta-title">Agende su cita hoy</h2>
+      <p class="cta-text">Atención con cita previa en {{ s.contact.address_line1 }}, Machala. Le respondemos por WhatsApp.</p>
     </div>
     <a class="btn btn-light btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Escribir al {{ s.contact.whatsapp_display }}</a>
   </div>

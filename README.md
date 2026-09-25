@@ -58,7 +58,7 @@ Luego abrir http://localhost:4000.
 
 Español de Ecuador, de la Costa (Machala): formal pero cercano, sin caer en modismos ni estereotipos.
 
-- Tratar al paciente de **tú**, de forma consistente ("Agenda tu cita", "tu piel"). No mezclar con *usted*.
+- Tratar al paciente de **usted**, de forma consistente ("Agende su cita", "su piel", "Le respondemos"). No mezclar con *tú*.
 - Vocabulario local: **cita** (no "hora"), **celular**, **consultorio**, **agendar**, **brindar**, **carnet**.
   Evitar giros de otros países ("que te acomode", "turno", "móvil", "vale"…).
 - Horas en formato de 12 h: **8:30 a. m.**, **6:30 p. m.** (en los datos del CMS se guardan en 24 h y la
