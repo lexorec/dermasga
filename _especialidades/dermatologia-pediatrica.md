@@ -41,7 +41,7 @@ sections:
       - "Manchas"
   - question: "¿Cuál es la experiencia de la doctora en el ámbito pediátrico?"
     answer: |-
-      Durante tres años, la Dra. Astudillo formó parte del equipo médico del Hospital Pediátrico Borrás Marfán, en La Habana, donde se dedicó exclusivamente al diagnóstico, manejo y tratamiento de enfermedades dermatológicas en pacientes pediátricos.
+      La Dra. Astudillo formó parte del equipo médico del Hospital Pediátrico Borrás Marfán, en La Habana, donde se dedicó exclusivamente al diagnóstico, manejo y tratamiento de enfermedades dermatológicas en pacientes pediátricos.
   - question: "¿Cómo prepararse para la primera consulta de un niño?"
     answer: |-
       Para realizar una evaluación clínica precisa, es fundamental que el paciente acuda con la piel limpia, sin haberse aplicado ninguna crema. Además, los padres deben traer la siguiente información y documentos:
