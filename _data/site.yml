@@ -115,7 +115,7 @@ conditions:
   - "Piel de bebés y niños"
 
 steps:
-  - title: "Agenda tu hora"
+  - title: "Agenda tu cita"
     text: "Escríbenos por WhatsApp o llama al consultorio y elige el horario que mejor te acomode."
   - title: "Evaluación completa"
     text: "Revisamos tu historia y examinamos tu piel para llegar a un diagnóstico claro."
