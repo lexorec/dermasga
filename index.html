@@ -332,7 +332,13 @@ layout: null
   </div>
 </footer>
 
-<a class="wa-float" href="{{ wa }}" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">{% include icon-chat.svg %}</a>
+<a class="wa-float" href="{{ wa }}" target="_blank" rel="noopener" aria-label="Agenda por WhatsApp al {{ s.contact.whatsapp_display }}">
+  <span class="wa-float__badge">{% include icon-whatsapp.svg %}</span>
+  <span class="wa-float__text" aria-hidden="true">
+    <span class="wa-float__title">Agenda por WhatsApp</span>
+    <span class="wa-float__number">{{ s.contact.whatsapp_display }}</span>
+  </span>
+</a>
 
 <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
 <!-- Analytics (Teradive) -->
