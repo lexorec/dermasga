@@ -10,6 +10,8 @@ baseurl: ""
 theme: null
 
 markdown: kramdown
+plugins:
+  - jekyll-sitemap
 exclude:
   - README.md
   - EDITAR.md

@@ -8,42 +8,111 @@ layout: null
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ s.seo.title }}</title>
+<title>{{ s.seo.title | escape }}</title>
 <meta name="description" content="{{ s.seo.description | escape }}">
-<meta name="theme-color" content="#f7f7f7">
+<meta name="author" content="Dra. Marcela Astudillo G.">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="{{ '/' | absolute_url }}">
+<meta name="theme-color" content="#f7f7f7">
+
+<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/img/mark.svg' | relative_url }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicon-32x32.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/img/favicon-16x16.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">
+<link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_EC">
+<meta property="og:site_name" content="Dra. Marcela Astudillo G. — Dermatóloga">
 <meta property="og:title" content="{{ s.seo.title | escape }}">
 <meta property="og:description" content="{{ s.seo.description | escape }}">
-<meta property="og:image" content="{{ s.hero.photo | absolute_url }}">
 <meta property="og:url" content="{{ '/' | absolute_url }}">
-<link rel="icon" type="image/svg+xml" href="{{ '/assets/img/mark.svg' | relative_url }}">
+<meta property="og:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dra. Marcela Astudillo G., dermatóloga en Machala">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ s.seo.title | escape }}">
+<meta name="twitter:description" content="{{ s.seo.description | escape }}">
+<meta name="twitter:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap">
 <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 <script>document.documentElement.classList.replace('no-js','js');</script>
 <script type="application/ld+json">
+{%- assign geo = s.contact.maps_query | split: ',' -%}
 {
   "@context": "https://schema.org",
-  "@type": "Physician",
-  "name": "Dra. Marcela Astudillo G.",
-  "medicalSpecialty": "Dermatology",
-  "description": {{ s.seo.description | jsonify }},
-  "image": {{ s.hero.photo | absolute_url | jsonify }},
-  "url": {{ '/' | absolute_url | jsonify }},
-  "telephone": {{ s.contact.landline | jsonify }},
-  "email": {{ s.contact.email | jsonify }},
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": {{ s.contact.address_line1 | append: ', ' | append: s.contact.address_line2 | jsonify }},
-    "addressLocality": "Machala",
-    "addressRegion": "El Oro",
-    "addressCountry": "EC"
-  }{% assign geo = s.contact.maps_query | split: ',' %}{% if geo.size == 2 %},
-  "geo": { "@type": "GeoCoordinates", "latitude": {{ geo[0] | strip }}, "longitude": {{ geo[1] | strip }} }{% endif %}{% if s.contact.maps_url != blank %},
-  "hasMap": {{ s.contact.maps_url | jsonify }}{% endif %}
+  "@graph": [
+    {
+      "@type": "Physician",
+      "@id": {{ '/#consultorio' | absolute_url | jsonify }},
+      "name": "Dra. Marcela Astudillo G. — Dermatóloga",
+      "description": {{ s.seo.description | jsonify }},
+      "url": {{ '/' | absolute_url | jsonify }},
+      "image": {{ s.hero.photo | absolute_url | jsonify }},
+      "logo": {{ '/assets/img/icon-512.png' | absolute_url | jsonify }},
+      "medicalSpecialty": "Dermatology",
+      "telephone": {{ s.contact.landline | jsonify }},
+      "email": {{ s.contact.email | jsonify }},
+      "isAcceptingNewPatients": true,
+      "availableLanguage": ["es", "en"],
+      "areaServed": { "@type": "AdministrativeArea", "name": "El Oro, Ecuador" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": {{ s.contact.address_line1 | append: ', ' | append: s.contact.address_line2 | jsonify }},
+        "addressLocality": "Machala",
+        "addressRegion": "El Oro",
+        "addressCountry": "EC"
+      },
+      {%- if geo.size == 2 %}
+      "geo": { "@type": "GeoCoordinates", "latitude": {{ geo[0] | strip }}, "longitude": {{ geo[1] | strip }} },
+      {%- endif %}
+      {%- if s.contact.maps_url != blank %}
+      "hasMap": {{ s.contact.maps_url | jsonify }},
+      {%- endif %}
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Citas",
+        "telephone": "+{{ s.contact.whatsapp }}",
+        "url": {{ wa | jsonify }},
+        "availableLanguage": ["es", "en"]
+      },
+      {%- assign same = "" | split: "" -%}
+      {%- if s.contact.instagram != blank %}{% assign same = same | push: s.contact.instagram %}{% endif -%}
+      {%- if s.contact.facebook != blank %}{% assign same = same | push: s.contact.facebook %}{% endif -%}
+      {%- if same.size > 0 %}
+      "sameAs": {{ same | jsonify }},
+      {%- endif %}
+      "employee": { "@id": {{ '/#doctora' | absolute_url | jsonify }} }
+    },
+    {
+      "@type": "Person",
+      "@id": {{ '/#doctora' | absolute_url | jsonify }},
+      "name": "Marcela Astudillo G.",
+      "honorificPrefix": "Dra.",
+      "jobTitle": "Dermatóloga",
+      "image": {{ s.hero.photo | absolute_url | jsonify }},
+      "worksFor": { "@id": {{ '/#consultorio' | absolute_url | jsonify }} },
+      "alumniOf": [
+        { "@type": "CollegeOrUniversity", "name": "Universidad Católica de Cuenca" },
+        { "@type": "CollegeOrUniversity", "name": "Universidad de Ciencias Médicas de La Habana" }
+      ],
+      "knowsLanguage": ["es", "en"],
+      "knowsAbout": {{ s.conditions | jsonify }}
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ '/#website' | absolute_url | jsonify }},
+      "url": {{ '/' | absolute_url | jsonify }},
+      "name": "Dra. Marcela Astudillo G. — Dermatóloga en Machala",
+      "inLanguage": "es",
+      "publisher": { "@id": {{ '/#consultorio' | absolute_url | jsonify }} }
+    }
+  ]
 }
 </script>
 </head>

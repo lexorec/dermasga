@@ -1,0 +1,38 @@
+---
+layout: null
+permalink: /404.html
+sitemap: false
+---
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página no encontrada — Dra. Marcela Astudillo G.</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f7f7f7">
+<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/img/mark.svg' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap">
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+<style>
+  .notfound { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--gutter); }
+  .notfound img { width: min(240px, 60vw); height: auto; margin-bottom: var(--space-6); }
+  .notfound__code { font-size: clamp(56px, 12vw, 96px); font-weight: 700; line-height: 1; color: var(--teal-700); margin: 0; }
+  .notfound h1 { font-size: clamp(24px, 4vw, 32px); margin: var(--space-3) 0 0; }
+  .notfound p.muted { color: var(--ink-muted); margin: var(--space-3) 0 var(--space-5); }
+</style>
+</head>
+<body>
+<main class="notfound">
+  <img src="{{ '/assets/img/logo-horizontal.svg' | relative_url }}" alt="Dra. Marcela Astudillo G. — Dermatóloga" width="203" height="60">
+  <p class="notfound__code">404</p>
+  <h1>Página no encontrada</h1>
+  <p class="muted">La página que buscas no existe o fue movida.</p>
+  <a class="btn btn-primary btn-lg" href="{{ '/' | relative_url }}">Volver al inicio</a>
+</main>
+</body>
+</html>

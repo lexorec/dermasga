@@ -1,0 +1,16 @@
+---
+layout: null
+---
+{
+  "name": "Dra. Marcela Astudillo G. — Dermatóloga",
+  "short_name": "Dra. Astudillo",
+  "lang": "es",
+  "start_url": "{{ '/' | relative_url }}",
+  "display": "browser",
+  "background_color": "#f7f7f7",
+  "theme_color": "#14b5c9",
+  "icons": [
+    { "src": "{{ '/assets/img/icon-192.png' | relative_url }}", "type": "image/png", "sizes": "192x192" },
+    { "src": "{{ '/assets/img/icon-512.png' | relative_url }}", "type": "image/png", "sizes": "512x512" }
+  ]
+}
