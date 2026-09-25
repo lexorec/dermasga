@@ -64,6 +64,9 @@ layout: null
       "address": {
         "@type": "PostalAddress",
         "streetAddress": {{ s.contact.address_line1 | append: ', ' | append: s.contact.address_line2 | jsonify }},
+        {%- if s.contact.postal_code != blank %}
+        "postalCode": {{ s.contact.postal_code | jsonify }},
+        {%- endif %}
         "addressLocality": "Machala",
         "addressRegion": "El Oro",
         "addressCountry": "EC"
@@ -73,6 +76,16 @@ layout: null
       {%- endif %}
       {%- if s.contact.maps_url != blank %}
       "hasMap": {{ s.contact.maps_url | jsonify }},
+      {%- endif %}
+      {%- assign oh = "" | split: "" -%}
+      {%- for h in s.contact.opening_hours -%}
+        {%- if h.days.size > 0 and h.opens.size > 0 -%}
+          {%- capture spec -%}{{ h.days }} {{ h.opens }}-{{ h.closes }}{%- endcapture -%}
+          {%- assign oh = oh | push: spec -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if oh.size > 0 %}
+      "openingHours": {{ oh | jsonify }},
       {%- endif %}
       "contactPoint": {
         "@type": "ContactPoint",
@@ -268,6 +281,40 @@ layout: null
   </div>
 </section>
 
+{%- assign t = s.testimonials -%}
+{%- if t.items.size > 0 %}
+<section class="section section-raised" id="testimonios">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow eyebrow-brand">{{ t.eyebrow }}</p>
+      <h2 class="h1">{{ t.title }}</h2>
+      {%- if t.rating != blank %}
+      <p class="rating">
+        <span class="rating-stars" aria-hidden="true">★★★★★</span>
+        <span><strong>{{ t.rating }}</strong> · {{ t.review_count }} reseñas en Google</span>
+        {%- if t.reviews_url != blank %}
+        <a href="{{ t.reviews_url }}" target="_blank" rel="noopener">Ver todas</a>
+        {%- endif %}
+      </p>
+      {%- endif %}
+    </header>
+    <div class="quote-grid">
+      {%- for q in t.items %}
+      <figure class="quote reveal">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <blockquote><p>{{ q.quote }}</p></blockquote>
+        <figcaption>
+          <span class="quote-name">{{ q.name }}</span>
+          {%- if q.topic != blank %}<span class="quote-topic">{{ q.topic }}</span>{% endif %}
+          <span class="quote-source">Reseña en Google</span>
+        </figcaption>
+      </figure>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
 <section class="container" aria-label="Agendar">
   <div class="cta reveal">
     <div>
@@ -299,7 +346,15 @@ layout: null
       </div>
       <div class="contact-item reveal">
         {% include icon-clock.svg %}
-        <div><p class="contact-label">Horario</p><p class="muted">{{ s.contact.hours }}</p></div>
+        <div><p class="contact-label">Horario</p>
+          {%- if s.contact.opening_hours.size > 0 %}
+          <dl class="hours">
+            {%- for h in s.contact.opening_hours %}
+            <div><dt>{{ h.label }}</dt><dd>{% if h.opens.size > 0 %}{{ h.opens }} – {{ h.closes }}{% else %}Cerrado{% endif %}</dd></div>
+            {%- endfor %}
+          </dl>
+          {%- endif %}
+          <p class="muted">{{ s.contact.hours }}</p></div>
       </div>
     </div>
     <div class="map reveal">

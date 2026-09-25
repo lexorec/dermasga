@@ -24,13 +24,23 @@ content:
         label: Contacto y horario
         type: object
         fields:
-          - { name: hours, label: "Horario de atención", type: text }
+          - { name: hours, label: "Nota sobre el horario (p. ej. con cita previa)", type: text }
+          - name: opening_hours
+            label: Horario por días
+            type: object
+            list: true
+            fields:
+              - { name: label, label: "Días como se muestran (p. ej. Lunes a viernes)", type: string }
+              - { name: days, label: "Días para Google (Mo Tu We Th Fr Sa Su; rango p. ej. Mo-Fr). Vacío = cerrado", type: string }
+              - { name: opens, label: "Abre (HH:MM, 24 h). Vacío = cerrado", type: string }
+              - { name: closes, label: "Cierra (HH:MM, 24 h)", type: string }
           - { name: whatsapp, label: "WhatsApp (formato internacional, sin + ni espacios, p. ej. 593999769176)", type: string }
           - { name: whatsapp_display, label: "WhatsApp como se muestra (p. ej. 099 976 9176)", type: string }
           - { name: whatsapp_message, label: "Mensaje inicial de WhatsApp", type: string }
           - { name: landline, label: "Teléfono fijo (formato internacional, p. ej. +59373642883)", type: string }
           - { name: landline_display, label: "Teléfono fijo como se muestra", type: string }
           - { name: email, label: "Correo", type: string }
+          - { name: postal_code, label: "Código postal", type: string }
           - { name: address_line1, label: "Dirección, línea 1", type: string }
           - { name: address_line2, label: "Dirección, línea 2", type: string }
           - { name: city, label: "Ciudad", type: string }
@@ -107,3 +117,21 @@ content:
         fields:
           - { name: title, label: "Título en Google", type: string }
           - { name: description, label: "Descripción en Google", type: text }
+
+      - name: testimonials
+        label: Testimonios
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto pequeño sobre el título", type: string }
+          - { name: title, label: "Título", type: string }
+          - { name: rating, label: "Calificación en Google (p. ej. 5,0)", type: string }
+          - { name: review_count, label: "Número de reseñas en Google", type: string }
+          - { name: reviews_url, label: "Enlace a las reseñas de Google", type: string }
+          - name: items
+            label: Testimonios
+            type: object
+            list: true
+            fields:
+              - { name: quote, label: "Texto (copiado tal cual de Google; puede recortarse con …)", type: text, required: true }
+              - { name: name, label: "Nombre (nombre e inicial del apellido)", type: string }
+              - { name: topic, label: "Tema (opcional, p. ej. Caída del cabello)", type: string }
