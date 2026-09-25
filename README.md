@@ -54,9 +54,8 @@ bundle exec jekyll serve --baseurl ""
 ## Notes
 
 - **Map**: the embed uses Google Maps' key-less `output=embed` URL built from
-  `contact.maps_query`. Check the pin lands on the right building; if not, refine the query
-  (e.g. add the building name) or replace the iframe `src` in `index.html` with the embed code
-  from Google Maps → Share → Embed a map.
+  `contact.maps_query` (the office's coordinates). The "Cómo llegar" button opens
+  `contact.maps_url`, the office's Google Maps listing.
 - **Hours**: `contact.hours` currently says appointments are by prior booking; replace with real hours when known.
 - **Accessibility**: WCAG AA color pairs from the brand system, skip link, focus rings,
   keyboard-operable menu (Esc closes), and all motion is disabled under `prefers-reduced-motion`.

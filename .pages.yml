@@ -34,7 +34,8 @@ content:
           - { name: address_line1, label: "Dirección, línea 1", type: string }
           - { name: address_line2, label: "Dirección, línea 2", type: string }
           - { name: city, label: "Ciudad", type: string }
-          - { name: maps_query, label: "Búsqueda para el mapa de Google", type: string }
+          - { name: maps_query, label: "Coordenadas o búsqueda para el mapa incrustado", type: string }
+          - { name: maps_url, label: "Enlace de Google Maps (botón Cómo llegar)", type: string }
           - { name: instagram, label: "Enlace de Instagram (opcional)", type: string }
           - { name: facebook, label: "Enlace de Facebook (opcional)", type: string }
 

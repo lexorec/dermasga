@@ -41,7 +41,9 @@ layout: null
     "addressLocality": "Machala",
     "addressRegion": "El Oro",
     "addressCountry": "EC"
-  }
+  }{% assign geo = s.contact.maps_query | split: ',' %}{% if geo.size == 2 %},
+  "geo": { "@type": "GeoCoordinates", "latitude": {{ geo[0] | strip }}, "longitude": {{ geo[1] | strip }} }{% endif %}{% if s.contact.maps_url != blank %},
+  "hasMap": {{ s.contact.maps_url | jsonify }}{% endif %}
 }
 </script>
 </head>
@@ -233,7 +235,7 @@ layout: null
     </div>
     <div class="map reveal">
       <iframe title="Mapa del consultorio en Machala" src="https://maps.google.com/maps?q={{ s.contact.maps_query | uri_escape }}&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <a class="map-link" href="https://www.google.com/maps/search/?api=1&query={{ s.contact.maps_query | uri_escape }}" target="_blank" rel="noopener">{% include icon-pin.svg %}Cómo llegar en Google Maps</a>
+      <a class="map-link" href="{% if s.contact.maps_url != blank %}{{ s.contact.maps_url }}{% else %}https://www.google.com/maps/search/?api=1&query={{ s.contact.maps_query | uri_escape }}{% endif %}" target="_blank" rel="noopener">{% include icon-pin.svg %}Cómo llegar en Google Maps</a>
     </div>
   </div>
 </section>
