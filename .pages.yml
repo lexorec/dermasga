@@ -157,6 +157,71 @@ content:
                   - { name: question, label: "Pregunta", type: string, required: true }
                   - { name: answer, label: "Respuesta (para una lista, empieza cada línea con - )", type: text, required: true }
 
+  - name: ingles
+    label: Página en inglés
+    type: file
+    path: _data/en.yml
+    format: yaml
+    fields:
+      - name: seo
+        label: Google (título y descripción)
+        type: object
+        fields:
+          - { name: title, label: "Título (máx. ~60 caracteres)", type: string }
+          - { name: description, label: "Descripción (máx. ~155 caracteres)", type: text }
+      - { name: whatsapp_message, label: "Mensaje inicial de WhatsApp (en inglés)", type: string }
+      - name: hero
+        label: Portada
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto pequeño sobre el título", type: string }
+          - { name: title, label: "Título principal", type: string }
+          - { name: lead, label: "Introducción", type: text }
+      - name: facts
+        label: Datos destacados
+        type: object
+        list: true
+        fields:
+          - { name: label, label: "Etiqueta", type: string }
+          - { name: value, label: "Valor", type: string }
+      - { name: services_title, label: "Título de servicios", type: string }
+      - name: services
+        label: Servicios
+        type: object
+        list: true
+        fields:
+          - { name: title, label: "Nombre", type: string }
+          - { name: text, label: "Descripción", type: text }
+          - { name: url, label: "Enlace a la página en español (opcional)", type: string }
+      - name: about
+        label: Sobre la doctora
+        type: object
+        fields:
+          - { name: title, label: "Título", type: string }
+          - { name: paragraphs, label: "Párrafos", type: text, list: true }
+      - name: visit
+        label: Ubicación y horario (textos)
+        type: object
+        fields:
+          - { name: title, label: "Título", type: string }
+          - { name: address_note, label: "Referencia de la dirección", type: string }
+          - { name: hours_title, label: "Título del horario", type: string }
+          - { name: days, label: "Días (mismo orden que el horario en español)", type: string, list: true }
+          - { name: closed, label: "Texto para día cerrado", type: string }
+          - { name: hours_note, label: "Nota del horario", type: string }
+          - { name: phones_title, label: "Título de teléfonos", type: string }
+          - { name: mobile_label, label: "Etiqueta del celular", type: string }
+          - { name: landline_label, label: "Etiqueta del teléfono fijo", type: string }
+          - { name: directions, label: "Texto del enlace a Google Maps", type: string }
+      - { name: reviews_line, label: "Texto de reseñas", type: string }
+      - name: cta
+        label: Bloque final
+        type: object
+        fields:
+          - { name: title, label: "Título", type: string }
+          - { name: text, label: "Texto", type: text }
+          - { name: button, label: "Botón", type: string }
+
   - name: especialidades
     label: Páginas de especialidades
     type: collection

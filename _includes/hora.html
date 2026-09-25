@@ -1,6 +1,10 @@
 {%- comment -%} "HH:MM" (24 h) → "8:30 a. m." como se escribe la hora en Ecuador {%- endcomment -%}
 {%- assign hh = include.t | slice: 0, 2 | plus: 0 -%}
 {%- assign mm = include.t | slice: 3, 2 -%}
-{%- if hh >= 12 %}{% assign suf = "p. m." %}{% else %}{% assign suf = "a. m." %}{% endif -%}
+{%- if include.lang == "en" -%}
+  {%- if hh >= 12 %}{% assign suf = "p.m." %}{% else %}{% assign suf = "a.m." %}{% endif -%}
+{%- else -%}
+  {%- if hh >= 12 %}{% assign suf = "p. m." %}{% else %}{% assign suf = "a. m." %}{% endif -%}
+{%- endif -%}
 {%- assign h12 = hh | modulo: 12 -%}{%- if h12 == 0 %}{% assign h12 = 12 %}{% endif -%}
 {{- h12 }}:{{ mm }}&nbsp;{{ suf -}}

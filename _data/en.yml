@@ -1,0 +1,65 @@
+# English page (/en/). Edited from Pages CMS ("Página en inglés") or directly here.
+# Contact details, hours, map and reviews come from site.yml, so they stay in sync.
+
+seo:
+  title: "English-Speaking Dermatologist in Machala, Ecuador | DERMASGA"
+  description: "Dr. Marcela Astudillo G., dermatologist in Machala, Ecuador. Consultations in English and Spanish for adults and children. Book via WhatsApp."
+
+whatsapp_message: "Hello Dr. Astudillo, I would like to book an appointment."
+
+hero:
+  eyebrow: "DERMASGA · Dermatologist in Machala, Ecuador"
+  title: "Dermatology care in English, in Machala"
+  lead: "Dr. Marcela Astudillo G. is a dermatologist trained in Havana, Cuba, with a private practice in Machala since 2021. She sees adults and children, and consultations are available in English and Spanish."
+
+facts:
+  - label: "Languages"
+    value: "English and Spanish"
+  - label: "Patients"
+    value: "Adults, children and adolescents"
+  - label: "Appointments"
+    value: "By appointment, booked via WhatsApp"
+
+services_title: "What we treat"
+services:
+  - title: "Clinical dermatology"
+    text: "Diagnosis and treatment of acne, rosacea, dermatitis, psoriasis and other skin conditions in adults."
+  - title: "Pediatric dermatology"
+    text: "Skin care from birth through adolescence, including atopic dermatitis, molluscum contagiosum, diaper rash, hemangiomas, warts and scabies. Pediatric dermatology residency at Borrás Marfán Pediatric Hospital, Havana."
+    url: "/dermatologia-pediatrica/"
+  - title: "Hair loss"
+    text: "Hair loss in men, women and children, diagnosed with trichoscopy, Wood's lamp examination and the pull test. Personalized treatment that may combine topical and oral medication, hair laser therapy and mesotherapy."
+    url: "/caida-del-cabello/"
+  - title: "Moles and skin cancer"
+    text: "Mole checks and evaluation of suspicious lesions for early detection of skin cancer, with biopsies and safe mole removal."
+  - title: "Procedures"
+    text: "Cryosurgery, biopsies, cauterization, removal of genital warts, and surgery for lipomas, cysts and skin cancer."
+  - title: "Aesthetic dermatology"
+    text: "Botulinum toxin, chemical peels and treatments for dark spots and skin aging."
+  - title: "Skin infections and STIs"
+    text: "Fungal, bacterial and parasitic skin infections, and confidential evaluation of sexually transmitted infections affecting the skin and mucosa."
+
+about:
+  title: "About Dr. Astudillo"
+  paragraphs:
+    - "Medical degree from the Catholic University of Cuenca, Ecuador (2015), with her rotating internship at hospitals in Machala and Pasaje, El Oro."
+    - "Specialist in Dermatology from the University of Medical Sciences of Havana, Cuba (residency 2017–2020 at Manuel Fajardo Hospital, including pediatric dermatology at Borrás Marfán Pediatric Hospital). She completed the specialty with top marks, recognized by the Embassy of Ecuador in Cuba."
+
+visit:
+  title: "Visit us in Machala"
+  address_note: "Between Colón and Tarqui streets, mezzanine, office 3"
+  hours_title: "Opening hours"
+  days: ["Monday to Friday", "Saturday", "Sunday"]
+  closed: "Closed"
+  hours_note: "By appointment only, booked via WhatsApp."
+  phones_title: "Phone"
+  mobile_label: "mobile and WhatsApp"
+  landline_label: "office"
+  directions: "Get directions on Google Maps"
+
+reviews_line: "Google reviews (in Spanish)"
+
+cta:
+  title: "Book your appointment"
+  text: "Send us a WhatsApp message in English or Spanish and we will reply to schedule your visit."
+  button: "Write to us on WhatsApp"

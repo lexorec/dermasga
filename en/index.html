@@ -1,0 +1,171 @@
+---
+layout: null
+permalink: /en/
+---
+{%- assign s = site.data.site -%}
+{%- assign e = site.data.en -%}
+{%- capture wa -%}https://wa.me/{{ s.contact.whatsapp }}?text={{ e.whatsapp_message | uri_escape }}{%- endcapture -%}
+{%- assign page_url = '/en/' | absolute_url -%}
+{%- assign street = s.contact.address_line1 | split: ',' | first -%}
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+{% include head.html lang="en" title=e.seo.title description=e.seo.description url=page_url alternates=true %}
+<script>document.documentElement.classList.replace('no-js','js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": {{ page_url | append: '#page' | jsonify }},
+      "url": {{ page_url | jsonify }},
+      "name": {{ e.seo.title | jsonify }},
+      "description": {{ e.seo.description | jsonify }},
+      "inLanguage": "en",
+      "isPartOf": { "@id": {{ '/#website' | absolute_url | jsonify }} },
+      "about": { "@id": {{ '/#consultorio' | absolute_url | jsonify }} },
+      "mainEntity": { "@id": {{ '/#consultorio' | absolute_url | jsonify }} }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="#inicio" aria-label="DERMASGA — Dr. Marcela Astudillo G., home">
+      <img src="{{ '/assets/img/logo-horizontal.svg' | relative_url }}" alt="Dr. Marcela Astudillo G. — Dermatologist" width="203" height="60">
+    </a>
+    <div class="header-actions">
+      <a class="lang-link" href="{{ '/' | relative_url }}" hreflang="es" lang="es">Español</a>
+      <a class="btn btn-primary" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}<span class="hide-sm">Book an appointment</span><span class="show-sm">Book</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero" id="inicio">
+  <div class="container">
+    <div class="page-hero-grid">
+      <div>
+        <p class="eyebrow eyebrow-brand reveal">{{ e.hero.eyebrow }}</p>
+        <h1 class="display reveal">{{ e.hero.title }}</h1>
+        <p class="lead reveal">{{ e.hero.lead }}</p>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Book via WhatsApp</a>
+          <a class="btn btn-outline btn-lg" href="#visit">Location and hours</a>
+        </div>
+        {%- assign t = s.testimonials %}
+        {%- if t.rating != blank %}
+        <p class="rating reveal">
+          <span class="rating-stars" aria-hidden="true">★★★★★</span>
+          <span><strong>{{ t.rating | replace: ',', '.' }}</strong> · {{ t.review_count }} {{ e.reviews_line }}</span>
+          {%- if t.reviews_url != blank %}<a href="{{ t.reviews_url }}" target="_blank" rel="noopener">See reviews</a>{% endif %}
+        </p>
+        {%- endif %}
+      </div>
+      <div class="en-hero-side reveal">
+        <img class="en-portrait" src="{{ s.hero.photo | relative_url }}" alt="Dr. Marcela Astudillo G., dermatologist, in a white coat" width="1000" height="1000">
+        <dl class="facts">
+          {%- for f in e.facts %}
+          <div class="fact"><dt class="eyebrow">{{ f.label }}</dt><dd>{{ f.value }}</dd></div>
+          {%- endfor %}
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow eyebrow-brand">Services</p>
+      <h2 class="h1">{{ e.services_title }}</h2>
+    </header>
+    <div class="card-grid">
+      {%- for sv in e.services %}
+      <article class="card reveal">
+        <span class="card-rule" aria-hidden="true"></span>
+        <h3 class="h3">{{ sv.title }}</h3>
+        <p class="muted">{{ sv.text }}</p>
+        {%- if sv.url %}
+        <p class="card-more"><a href="{{ sv.url | relative_url }}" hreflang="es">More information (en español) →</a></p>
+        {%- endif %}
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-raised" id="about">
+  <div class="container en-about">
+    <header class="section-head reveal">
+      <p class="eyebrow eyebrow-brand">Training</p>
+      <h2 class="h1">{{ e.about.title }}</h2>
+    </header>
+    <div class="en-about-text reveal">
+      {%- for p in e.about.paragraphs %}
+      <p>{{ p }}</p>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="visit">
+  <div class="container contact-grid">
+    <div class="contact-list">
+      <header class="section-head reveal">
+        <p class="eyebrow eyebrow-brand">Location</p>
+        <h2 class="h1">{{ e.visit.title }}</h2>
+      </header>
+      <div class="contact-item reveal">
+        {% include icon-pin.svg %}
+        <div><p class="contact-label">Address</p><p class="muted">{{ street }}<br>{{ e.visit.address_note }}<br>Machala, El Oro, Ecuador</p></div>
+      </div>
+      <div class="contact-item reveal">
+        {% include icon-phone.svg %}
+        {%- assign wn = s.contact.whatsapp -%}
+        {%- assign ln = s.contact.landline | remove: '+' -%}
+        <div><p class="contact-label">{{ e.visit.phones_title }}</p><p class="muted"><a href="tel:+{{ wn }}">+{{ wn | slice: 0, 3 }} {{ wn | slice: 3, 2 }} {{ wn | slice: 5, 3 }} {{ wn | slice: 8, 4 }}</a> · {{ e.visit.mobile_label }}<br><a href="tel:{{ s.contact.landline }}">+{{ ln | slice: 0, 3 }} {{ ln | slice: 3, 1 }} {{ ln | slice: 4, 3 }} {{ ln | slice: 7, 4 }}</a> · {{ e.visit.landline_label }}</p></div>
+      </div>
+      <div class="contact-item reveal">
+        {% include icon-mail.svg %}
+        <div><p class="contact-label">Email</p><p><a href="mailto:{{ s.contact.email }}">{{ s.contact.email }}</a></p></div>
+      </div>
+      <div class="contact-item reveal">
+        {% include icon-clock.svg %}
+        <div><p class="contact-label">{{ e.visit.hours_title }}</p>
+          <dl class="hours">
+            {%- for h in s.contact.opening_hours %}
+            <div><dt>{{ e.visit.days[forloop.index0] | default: h.label }}</dt><dd>{% if h.opens.size > 0 %}{% include hora.html t=h.opens lang="en" %} – {% include hora.html t=h.closes lang="en" %}{% else %}{{ e.visit.closed }}{% endif %}</dd></div>
+            {%- endfor %}
+          </dl>
+          <p class="muted">{{ e.visit.hours_note }}</p></div>
+      </div>
+    </div>
+    <div class="map reveal">
+      <iframe title="Map of the practice in Machala" src="https://maps.google.com/maps?q={{ s.contact.maps_query | uri_escape }}&z=17&hl=en&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <a class="map-link" href="{% if s.contact.maps_url != blank %}{{ s.contact.maps_url }}{% else %}https://www.google.com/maps/search/?api=1&query={{ s.contact.maps_query | uri_escape }}{% endif %}" target="_blank" rel="noopener">{% include icon-pin.svg %}{{ e.visit.directions }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="container" aria-label="Book">
+  <div class="cta reveal">
+    <div>
+      <h2 class="h1 cta-title">{{ e.cta.title }}</h2>
+      <p class="cta-text">{{ e.cta.text }}</p>
+    </div>
+    <a class="btn btn-light btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}{{ e.cta.button }}</a>
+  </div>
+</section>
+
+</main>
+
+{% include site-footer.html lang="en" %}
+</body>
+</html>

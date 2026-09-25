@@ -21,6 +21,9 @@ favicon.ico, assets/img/favicon-*, icon-*, apple-touch-icon.png, site.webmanifes
 robots.txt               Reglas para buscadores (sitemap.xml lo genera jekyll-sitemap)
 .pages.yml               Formularios de Pages CMS
 EDITAR.md                Guía de edición para la doctora
+en/index.html            Página en inglés (/en/); textos en _data/en.yml. Contacto, horario, mapa y
+                         reseñas se toman de _data/site.yml, así que no hay que duplicarlos.
+_especialidades/         Páginas de especialidades (una por archivo), con plantilla _layouts/especialidad.html
 CNAME                    Dominio propio (dermasga.com)
 ```
 

@@ -1,10 +1,12 @@
+{%- assign wn = s.contact.whatsapp -%}
+{%- capture wa_intl %}+{{ wn | slice: 0, 3 }} {{ wn | slice: 3, 2 }} {{ wn | slice: 5, 3 }} {{ wn | slice: 8, 4 }}{% endcapture -%}
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <img src="{{ '/assets/img/mark.svg' | relative_url }}" alt="Logo de DERMASGA, Dra. Marcela Astudillo G." width="56" height="56">
+      <img src="{{ '/assets/img/mark.svg' | relative_url }}" alt="{% if include.lang == 'en' %}DERMASGA logo, Dr. Marcela Astudillo G.{% else %}Logo de DERMASGA, Dra. Marcela Astudillo G.{% endif %}" width="56" height="56">
       <div>
-        <p class="footer-name">Dra. Marcela Astudillo G.</p>
-        <p class="eyebrow">DERMASGA · Dermatóloga</p>
+        <p class="footer-name">{% if include.lang == 'en' %}Dr.{% else %}Dra.{% endif %} Marcela Astudillo G.</p>
+        <p class="eyebrow">DERMASGA · {% if include.lang == 'en' %}Dermatologist{% else %}Dermatóloga{% endif %}</p>
       </div>
     </div>
     <div class="footer-meta">
@@ -14,16 +16,22 @@
         {% if s.contact.facebook != "" %}<a href="{{ s.contact.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
       </p>
       {%- endif %}
+      {%- if include.lang == 'en' %}
+      <p class="small muted"><a href="{{ '/' | relative_url }}" hreflang="es" lang="es">Versión en español</a></p>
+      <p class="small muted">© {{ site.time | date: "%Y" }} DERMASGA · Dr. Marcela Astudillo G. · Machala, Ecuador<br>The information on this site is for general guidance and does not replace a medical consultation.</p>
+      {%- else %}
+      <p class="small muted"><a href="{{ '/en/' | relative_url }}" hreflang="en" lang="en">English</a></p>
       <p class="small muted">© {{ site.time | date: "%Y" }} DERMASGA · Dra. Marcela Astudillo G. · Machala, Ecuador<br>La información de este sitio es orientativa y no reemplaza una consulta médica.</p>
+      {%- endif %}
     </div>
   </div>
 </footer>
 
-<a class="wa-float" href="{{ wa }}" target="_blank" rel="noopener" aria-label="Agende por WhatsApp al {{ s.contact.whatsapp_display }}">
+<a class="wa-float" href="{{ wa }}" target="_blank" rel="noopener" aria-label="{% if include.lang == 'en' %}Book via WhatsApp at {{ wa_intl }}{% else %}Agende por WhatsApp al {{ s.contact.whatsapp_display }}{% endif %}">
   <span class="wa-float__badge">{% include icon-whatsapp.svg %}</span>
   <span class="wa-float__text" aria-hidden="true">
-    <span class="wa-float__title">Agende por WhatsApp</span>
-    <span class="wa-float__number">{{ s.contact.whatsapp_display }}</span>
+    <span class="wa-float__title">{% if include.lang == 'en' %}Book via WhatsApp{% else %}Agende por WhatsApp{% endif %}</span>
+    <span class="wa-float__number">{% if include.lang == 'en' %}{{ wa_intl }}{% else %}{{ s.contact.whatsapp_display }}{% endif %}</span>
   </span>
 </a>
 

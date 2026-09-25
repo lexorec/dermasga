@@ -6,7 +6,7 @@ layout: null
 <!doctype html>
 <html lang="es" class="no-js">
 <head>
-{% include head.html %}
+{% include head.html alternates=true %}
 <script>document.documentElement.classList.replace('no-js','js');</script>
 <script type="application/ld+json">
 {%- assign geo = s.contact.maps_query | split: ',' -%}
@@ -348,6 +348,10 @@ layout: null
       <div class="contact-item reveal">
         {% include icon-phone.svg %}
         <div><p class="contact-label">Teléfonos</p><p class="muted"><a href="tel:+{{ s.contact.whatsapp }}">{{ s.contact.whatsapp_display }}</a> · celular y WhatsApp<br><a href="tel:{{ s.contact.landline }}">{{ s.contact.landline_display }}</a> · consultorio</p></div>
+      </div>
+      <div class="contact-item reveal">
+        {% include icon-chat.svg %}
+        <div><p class="contact-label">Idiomas</p><p class="muted">Atención en español e inglés · <a href="{{ '/en/' | relative_url }}" hreflang="en" lang="en">English version</a></p></div>
       </div>
       <div class="contact-item reveal">
         {% include icon-mail.svg %}

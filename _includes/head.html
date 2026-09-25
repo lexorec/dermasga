@@ -2,15 +2,21 @@
 {%- assign seo_title = include.title | default: site.data.site.seo.title -%}
 {%- assign seo_description = include.description | default: site.data.site.seo.description -%}
 {%- assign seo_url = include.url | default: '/' | absolute_url -%}
+{%- if include.lang == 'en' %}{% assign lang_tag = 'en' %}{% assign og_locale = 'en_US' %}{% else %}{% assign lang_tag = 'es-EC' %}{% assign og_locale = 'es_EC' %}{% endif -%}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="content-language" content="es-EC">
+<meta http-equiv="content-language" content="{{ lang_tag }}">
 <title>{{ seo_title | escape }}</title>
 <meta name="description" content="{{ seo_description | escape }}">
 <meta name="author" content="Dra. Marcela Astudillo G.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="msvalidate.01" content="8FE758C51C0B0EA44091D87CCD91DA04">
 <link rel="canonical" href="{{ seo_url }}">
+{%- if include.alternates %}
+<link rel="alternate" hreflang="es" href="{{ '/' | absolute_url }}">
+<link rel="alternate" hreflang="en" href="{{ '/en/' | absolute_url }}">
+<link rel="alternate" hreflang="x-default" href="{{ '/' | absolute_url }}">
+{%- endif %}
 <meta name="theme-color" content="#f7f7f7">
 
 <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
@@ -21,7 +27,7 @@
 <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
 
 <meta property="og:type" content="{{ include.og_type | default: 'website' }}">
-<meta property="og:locale" content="es_EC">
+<meta property="og:locale" content="{{ og_locale }}">
 <meta property="og:site_name" content="DERMASGA — Dra. Marcela Astudillo G.">
 <meta property="og:title" content="{{ seo_title | escape }}">
 <meta property="og:description" content="{{ seo_description | escape }}">
