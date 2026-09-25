@@ -6,43 +6,7 @@ layout: null
 <!doctype html>
 <html lang="es" class="no-js">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="content-language" content="es-EC">
-<title>{{ s.seo.title | escape }}</title>
-<meta name="description" content="{{ s.seo.description | escape }}">
-<meta name="author" content="Dra. Marcela Astudillo G.">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="msvalidate.01" content="8FE758C51C0B0EA44091D87CCD91DA04">
-<link rel="canonical" href="{{ '/' | absolute_url }}">
-<meta name="theme-color" content="#f7f7f7">
-
-<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
-<link rel="icon" type="image/svg+xml" href="{{ '/assets/img/mark.svg' | relative_url }}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicon-32x32.png' | relative_url }}">
-<link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/img/favicon-16x16.png' | relative_url }}">
-<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">
-<link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
-
-<meta property="og:type" content="website">
-<meta property="og:locale" content="es_EC">
-<meta property="og:site_name" content="DERMASGA — Dra. Marcela Astudillo G.">
-<meta property="og:title" content="{{ s.seo.title | escape }}">
-<meta property="og:description" content="{{ s.seo.description | escape }}">
-<meta property="og:url" content="{{ '/' | absolute_url }}">
-<meta property="og:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Dra. Marcela Astudillo G., dermatóloga en Machala">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ s.seo.title | escape }}">
-<meta name="twitter:description" content="{{ s.seo.description | escape }}">
-<meta name="twitter:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap">
-<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+{% include head.html %}
 <script>document.documentElement.classList.replace('no-js','js');</script>
 <script type="application/ld+json">
 {%- assign geo = s.contact.maps_query | split: ',' -%}
@@ -153,26 +117,7 @@ layout: null
 <body>
 <a class="skip-link" href="#main">Saltar al contenido</a>
 
-<header class="site-header" id="top">
-  <div class="container header-inner">
-    <a class="brand" href="#inicio" aria-label="DERMASGA — Dra. Marcela Astudillo G., inicio">
-      <img src="{{ '/assets/img/logo-horizontal.svg' | relative_url }}" alt="Dra. Marcela Astudillo G. — Dermatóloga" width="203" height="60">
-    </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
-      <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
-    </button>
-    <nav class="site-nav" id="site-nav" aria-label="Principal">
-      <a class="nav-link" href="#especialidades">Especialidades</a>
-      <a class="nav-link" href="#sobre">Sobre la Dra.</a>
-      <a class="nav-link" href="#afecciones">Afecciones</a>
-      <a class="nav-link" href="#preguntas">Preguntas</a>
-      <a class="nav-link" href="#contacto">Contacto</a>
-      <a class="btn btn-primary" href="{{ wa }}" target="_blank" rel="noopener">
-        {% include icon-chat.svg %}Agenda tu cita
-      </a>
-    </nav>
-  </div>
-</header>
+{% include site-header.html home=true %}
 
 <main id="main">
 
@@ -216,8 +161,11 @@ layout: null
       <article class="card reveal">
         <span class="card-rule" aria-hidden="true"></span>
         <p class="card-num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</p>
-        <h3 class="h3">{{ sp.title }}</h3>
+        <h3 class="h3">{% if sp.url != blank %}<a class="card-link" href="{{ sp.url | relative_url }}">{{ sp.title }}</a>{% else %}{{ sp.title }}{% endif %}</h3>
         <p class="muted">{{ sp.text }}</p>
+        {%- if sp.url != blank %}
+        <p class="card-more" aria-hidden="true">Ver más →</p>
+        {%- endif %}
       </article>
       {%- endfor %}
     </div>
@@ -357,6 +305,17 @@ layout: null
         {%- endfor %}
       </div>
       {%- endfor %}
+      {%- assign esp = site.especialidades | sort: "order" %}
+      {%- if esp.size > 0 %}
+      <div class="faq-more reveal">
+        <p class="eyebrow eyebrow-brand">Más preguntas frecuentes</p>
+        <ul class="related">
+          {%- for d in esp %}
+          <li><a href="{{ d.url | relative_url }}#preguntas">{{ d.title }} <span aria-hidden="true">→</span></a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+      {%- endif %}
     </div>
   </div>
 </section>
@@ -413,44 +372,6 @@ layout: null
 
 </main>
 
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <div class="footer-brand">
-      <img src="{{ '/assets/img/mark.svg' | relative_url }}" alt="Logo de DERMASGA, Dra. Marcela Astudillo G." width="56" height="56">
-      <div>
-        <p class="footer-name">Dra. Marcela Astudillo G.</p>
-        <p class="eyebrow">DERMASGA · Dermatóloga</p>
-      </div>
-    </div>
-    <div class="footer-meta">
-      {%- if s.contact.instagram != "" or s.contact.facebook != "" %}
-      <p class="footer-social">
-        {% if s.contact.instagram != "" %}<a href="{{ s.contact.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
-        {% if s.contact.facebook != "" %}<a href="{{ s.contact.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
-      </p>
-      {%- endif %}
-      <p class="small muted">© {{ site.time | date: "%Y" }} DERMASGA · Dra. Marcela Astudillo G. · Machala, Ecuador<br>La información de este sitio es orientativa y no reemplaza una consulta médica.</p>
-    </div>
-  </div>
-</footer>
-
-<a class="wa-float" href="{{ wa }}" target="_blank" rel="noopener" aria-label="Agenda por WhatsApp al {{ s.contact.whatsapp_display }}">
-  <span class="wa-float__badge">{% include icon-whatsapp.svg %}</span>
-  <span class="wa-float__text" aria-hidden="true">
-    <span class="wa-float__title">Agenda por WhatsApp</span>
-    <span class="wa-float__number">{{ s.contact.whatsapp_display }}</span>
-  </span>
-</a>
-
-<script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
-<!-- Analytics (Teradive) -->
-<script>
-(function() {
-  var d=document,s=d.createElement('script');
-  s.src='https://teradive.com/t/7e9e30798272/tracker.js';
-  s.async=true;
-  d.head.appendChild(s);
-})();
-</script>
+{% include site-footer.html %}
 </body>
 </html>

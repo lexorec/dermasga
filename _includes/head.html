@@ -1,0 +1,41 @@
+{%- comment -%} Shared <head> tags. Pass title/description/url to override the homepage values. {%- endcomment -%}
+{%- assign seo_title = include.title | default: site.data.site.seo.title -%}
+{%- assign seo_description = include.description | default: site.data.site.seo.description -%}
+{%- assign seo_url = include.url | default: '/' | absolute_url -%}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="content-language" content="es-EC">
+<title>{{ seo_title | escape }}</title>
+<meta name="description" content="{{ seo_description | escape }}">
+<meta name="author" content="Dra. Marcela Astudillo G.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="msvalidate.01" content="8FE758C51C0B0EA44091D87CCD91DA04">
+<link rel="canonical" href="{{ seo_url }}">
+<meta name="theme-color" content="#f7f7f7">
+
+<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/img/mark.svg' | relative_url }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicon-32x32.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/img/favicon-16x16.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">
+<link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+
+<meta property="og:type" content="{{ include.og_type | default: 'website' }}">
+<meta property="og:locale" content="es_EC">
+<meta property="og:site_name" content="DERMASGA — Dra. Marcela Astudillo G.">
+<meta property="og:title" content="{{ seo_title | escape }}">
+<meta property="og:description" content="{{ seo_description | escape }}">
+<meta property="og:url" content="{{ seo_url }}">
+<meta property="og:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dra. Marcela Astudillo G., dermatóloga en Machala">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo_title | escape }}">
+<meta name="twitter:description" content="{{ seo_description | escape }}">
+<meta name="twitter:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap">
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">

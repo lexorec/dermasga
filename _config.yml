@@ -12,6 +12,15 @@ theme: null
 markdown: kramdown
 plugins:
   - jekyll-sitemap
+
+# Páginas de especialidades: un archivo por página en _especialidades/
+collections:
+  especialidades:
+    output: true
+    permalink: /:name/
+defaults:
+  - scope: { type: especialidades }
+    values: { layout: especialidad }
 exclude:
   - README.md
   - EDITAR.md

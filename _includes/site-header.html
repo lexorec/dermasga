@@ -1,0 +1,21 @@
+{%- if include.home %}{% assign nav_base = "" %}{% else %}{% capture nav_base %}{{ '/' | relative_url }}{% endcapture %}{% endif -%}
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="{% if include.home %}#inicio{% else %}{{ '/' | relative_url }}{% endif %}" aria-label="DERMASGA — Dra. Marcela Astudillo G., inicio">
+      <img src="{{ '/assets/img/logo-horizontal.svg' | relative_url }}" alt="Dra. Marcela Astudillo G. — Dermatóloga" width="203" height="60">
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+      <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Principal">
+      <a class="nav-link" href="{{ nav_base }}#especialidades">Especialidades</a>
+      <a class="nav-link" href="{{ nav_base }}#sobre">Sobre la Dra.</a>
+      <a class="nav-link" href="{{ nav_base }}#afecciones">Afecciones</a>
+      <a class="nav-link" href="{{ nav_base }}#preguntas">Preguntas</a>
+      <a class="nav-link" href="{{ nav_base }}#contacto">Contacto</a>
+      <a class="btn btn-primary" href="{{ wa }}" target="_blank" rel="noopener">
+        {% include icon-chat.svg %}Agenda tu cita
+      </a>
+    </nav>
+  </div>
+</header>

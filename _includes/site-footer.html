@@ -1,0 +1,39 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="{{ '/assets/img/mark.svg' | relative_url }}" alt="Logo de DERMASGA, Dra. Marcela Astudillo G." width="56" height="56">
+      <div>
+        <p class="footer-name">Dra. Marcela Astudillo G.</p>
+        <p class="eyebrow">DERMASGA · Dermatóloga</p>
+      </div>
+    </div>
+    <div class="footer-meta">
+      {%- if s.contact.instagram != "" or s.contact.facebook != "" %}
+      <p class="footer-social">
+        {% if s.contact.instagram != "" %}<a href="{{ s.contact.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+        {% if s.contact.facebook != "" %}<a href="{{ s.contact.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+      </p>
+      {%- endif %}
+      <p class="small muted">© {{ site.time | date: "%Y" }} DERMASGA · Dra. Marcela Astudillo G. · Machala, Ecuador<br>La información de este sitio es orientativa y no reemplaza una consulta médica.</p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="{{ wa }}" target="_blank" rel="noopener" aria-label="Agenda por WhatsApp al {{ s.contact.whatsapp_display }}">
+  <span class="wa-float__badge">{% include icon-whatsapp.svg %}</span>
+  <span class="wa-float__text" aria-hidden="true">
+    <span class="wa-float__title">Agenda por WhatsApp</span>
+    <span class="wa-float__number">{{ s.contact.whatsapp_display }}</span>
+  </span>
+</a>
+
+<script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+<!-- Analytics (Teradive) -->
+<script>
+(function() {
+  var d=document,s=d.createElement('script');
+  s.src='https://teradive.com/t/7e9e30798272/tracker.js';
+  s.async=true;
+  d.head.appendChild(s);
+})();
+</script>

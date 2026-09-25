@@ -69,6 +69,7 @@ content:
         fields:
           - { name: title, label: "Nombre", type: string, required: true }
           - { name: text, label: "Descripción", type: text }
+          - { name: url, label: "Enlace a su página (opcional, p. ej. /caida-del-cabello/)", type: string }
 
       - name: about
         label: Sobre la Dra.
@@ -155,3 +156,46 @@ content:
                 fields:
                   - { name: question, label: "Pregunta", type: string, required: true }
                   - { name: answer, label: "Respuesta (para una lista, empieza cada línea con - )", type: text, required: true }
+
+  - name: especialidades
+    label: Páginas de especialidades
+    type: collection
+    path: _especialidades
+    format: yaml-frontmatter
+    filename: "{fields.title}.md"
+    view:
+      fields: [ title ]
+      primary: title
+      sort: [ order ]
+    fields:
+      - { name: title, label: "Nombre corto (menús y migas de pan)", type: string, required: true }
+      - { name: heading, label: "Título principal de la página", type: string, required: true }
+      - { name: seo_title, label: "Título en Google (máx. ~60 caracteres)", type: string }
+      - { name: description, label: "Descripción en Google (máx. ~155 caracteres)", type: text }
+      - { name: order, label: "Orden", type: number }
+      - { name: eyebrow, label: "Texto pequeño sobre el título", type: string }
+      - { name: lead, label: "Introducción", type: text }
+      - name: facts
+        label: Datos destacados (recuadro lateral)
+        type: object
+        list: true
+        fields:
+          - { name: label, label: "Etiqueta", type: string }
+          - { name: value, label: "Valor", type: string }
+      - name: sections
+        label: Preguntas y respuestas
+        type: object
+        list:
+          collapsible:
+            summary: "{question}"
+        fields:
+          - { name: question, label: "Pregunta", type: string, required: true }
+          - { name: answer, label: "Respuesta (para una lista, empieza cada línea con - )", type: text, required: true }
+          - { name: items, label: "Etiquetas (opcional: afecciones que se muestran como chips)", type: string, list: true }
+      - name: testimonials
+        label: Testimonios
+        type: object
+        list: true
+        fields:
+          - { name: quote, label: "Texto (copiado tal cual de Google)", type: text }
+          - { name: name, label: "Nombre e inicial del apellido", type: string }

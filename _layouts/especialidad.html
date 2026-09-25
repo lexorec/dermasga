@@ -1,0 +1,187 @@
+---
+layout: null
+---
+{%- assign s = site.data.site -%}
+{%- capture wa -%}https://wa.me/{{ s.contact.whatsapp }}?text={{ s.contact.whatsapp_message | uri_escape }}{%- endcapture -%}
+{%- assign page_url = page.url | absolute_url -%}
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+{% include head.html title=page.seo_title description=page.description url=page_url %}
+<script>document.documentElement.classList.replace('no-js','js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      "@id": {{ page_url | append: '#pagina' | jsonify }},
+      "url": {{ page_url | jsonify }},
+      "name": {{ page.seo_title | jsonify }},
+      "headline": {{ page.heading | jsonify }},
+      "description": {{ page.description | jsonify }},
+      "inLanguage": "es",
+      "isPartOf": { "@id": {{ '/#website' | absolute_url | jsonify }} },
+      "specialty": "https://schema.org/Dermatology",
+      "audience": "https://schema.org/Patient",
+      "author": { "@id": {{ '/#doctora' | absolute_url | jsonify }} },
+      "reviewedBy": { "@id": {{ '/#doctora' | absolute_url | jsonify }} },
+      "provider": { "@id": {{ '/#consultorio' | absolute_url | jsonify }} },
+      {%- assign conditions = "" | split: "" -%}
+      {%- for sec in page.sections -%}{%- for it in sec.items -%}{%- assign conditions = conditions | push: it -%}{%- endfor -%}{%- endfor -%}
+      {%- if conditions.size > 0 %}
+      "about": [
+        {%- for c in conditions %}
+        { "@type": "MedicalCondition", "name": {{ c | jsonify }} }{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
+      ],
+      {%- endif %}
+      "breadcrumb": { "@id": {{ page_url | append: '#migas' | jsonify }} }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": {{ page_url | append: '#migas' | jsonify }},
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": {{ '/' | absolute_url | jsonify }} },
+        { "@type": "ListItem", "position": 2, "name": {{ page.title | jsonify }}, "item": {{ page_url | jsonify }} }
+      ]
+    }
+    {%- if page.sections.size > 0 %},
+    {
+      "@type": "FAQPage",
+      "@id": {{ page_url | append: '#preguntas' | jsonify }},
+      "inLanguage": "es",
+      "mainEntity": [
+        {%- for sec in page.sections %}
+        {%- capture full_answer -%}{{ sec.answer | markdownify }}{%- if sec.items.size > 0 -%}<ul>{%- for it in sec.items -%}<li>{{ it }}</li>{%- endfor -%}</ul>{%- endif -%}{%- endcapture %}
+        {
+          "@type": "Question",
+          "name": {{ sec.question | jsonify }},
+          "acceptedAnswer": { "@type": "Answer", "text": {{ full_answer | strip_newlines | strip | jsonify }} }
+        }{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
+      ]
+    }
+    {%- endif %}
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+{% include site-header.html %}
+
+<main id="main">
+
+<section class="page-hero" id="inicio">
+  <div class="container">
+    <nav class="breadcrumbs reveal" aria-label="Ruta de navegación">
+      <a href="{{ '/' | relative_url }}">Inicio</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">{{ page.title }}</span>
+    </nav>
+    <div class="page-hero-grid">
+      <div>
+        <p class="eyebrow eyebrow-brand reveal">{{ page.eyebrow }}</p>
+        <h1 class="display reveal">{{ page.heading }}</h1>
+        <p class="lead reveal">{{ page.lead }}</p>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Agenda por WhatsApp</a>
+          <a class="btn btn-outline btn-lg" href="#preguntas">Ver preguntas</a>
+        </div>
+      </div>
+      {%- if page.facts.size > 0 %}
+      <dl class="facts reveal">
+        {%- for f in page.facts %}
+        <div class="fact"><dt class="eyebrow">{{ f.label }}</dt><dd>{{ f.value }}</dd></div>
+        {%- endfor %}
+      </dl>
+      {%- endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="preguntas">
+  <div class="container qa-list">
+    {%- for sec in page.sections %}
+    <article class="qa reveal">
+      <h2 class="h2 qa-question">{{ sec.question }}</h2>
+      <div class="qa-answer">
+        {{ sec.answer | markdownify }}
+        {%- if sec.items.size > 0 %}
+        <ul class="chips">
+          {%- for it in sec.items %}
+          <li>{{ it }}</li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+      </div>
+    </article>
+    {%- endfor %}
+  </div>
+</section>
+
+{%- if page.testimonials.size > 0 %}
+<section class="section section-raised" id="testimonios">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow eyebrow-brand">Testimonios</p>
+      <h2 class="h1">Lo que dicen nuestros pacientes</h2>
+      {%- assign t = s.testimonials %}
+      {%- if t.rating != blank %}
+      <p class="rating">
+        <span class="rating-stars" aria-hidden="true">★★★★★</span>
+        <span><strong>{{ t.rating }}</strong> · {{ t.review_count }} reseñas en Google</span>
+        {%- if t.reviews_url != blank %}
+        <a href="{{ t.reviews_url }}" target="_blank" rel="noopener">Ver todas</a>
+        {%- endif %}
+      </p>
+      {%- endif %}
+    </header>
+    <div class="quote-grid">
+      {%- for q in page.testimonials %}
+      <figure class="quote reveal">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <blockquote><p>{{ q.quote }}</p></blockquote>
+        <figcaption>
+          <span class="quote-name">{{ q.name }}</span>
+          <span class="quote-source">Reseña en Google</span>
+        </figcaption>
+      </figure>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{%- assign others = site.especialidades | where_exp: "d", "d.url != page.url" | sort: "order" %}
+{%- if others.size > 0 %}
+<section class="section section-tight-bottom">
+  <div class="container">
+    <p class="eyebrow eyebrow-brand">También te puede interesar</p>
+    <ul class="related">
+      {%- for d in others %}
+      <li><a href="{{ d.url | relative_url }}">{{ d.title }} <span aria-hidden="true">→</span></a></li>
+      {%- endfor %}
+      <li><a href="{{ '/#especialidades' | relative_url }}">Todas las especialidades <span aria-hidden="true">→</span></a></li>
+    </ul>
+  </div>
+</section>
+{%- endif %}
+
+<section class="container" aria-label="Agendar">
+  <div class="cta reveal">
+    <div>
+      <h2 class="h1 cta-title">Agenda tu cita hoy</h2>
+      <p class="cta-text">Atención con cita previa en {{ s.contact.address_line1 }}, Machala. Te respondemos por WhatsApp.</p>
+    </div>
+    <a class="btn btn-light btn-lg" href="{{ wa }}" target="_blank" rel="noopener">{% include icon-chat.svg %}Escribir al {{ s.contact.whatsapp_display }}</a>
+  </div>
+</section>
+
+</main>
+
+{% include site-footer.html %}
+</body>
+</html>
