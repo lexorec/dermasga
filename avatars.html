@@ -1,0 +1,48 @@
+---
+layout: null
+permalink: /avatars.html
+sitemap: false
+---
+{%- assign v = site.time | date: '%s' -%}
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Avatares DERMASGA · editores de poses</title>
+<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap">
+<link rel="stylesheet" href="{{ '/assets/css/avatar-editor.css' | relative_url }}?v={{ v }}">
+</head>
+<body>
+<header>
+  <h1>Avatares DERMASGA</h1>
+  <p>Editores de poses (uso interno). Elija un personaje para posarlo y guardar la imagen.</p>
+</header>
+<div class="cards">
+  <a class="card" href="{{ '/avatar-doctor.html' | relative_url }}">
+    <canvas data-avatar="doctor" aria-hidden="true"></canvas>
+    <h2>Dra. Marcela</h2>
+    <p>Bata blanca, estetoscopio y cabello castaño oscuro. Accesorios: lámpara y mascarilla.</p>
+    <span class="open">Abrir editor →</span>
+  </a>
+  <a class="card" href="{{ '/avatar-child.html' | relative_url }}">
+    <canvas data-avatar="child" aria-hidden="true"></canvas>
+    <h2>Niña</h2>
+    <p>La paciente de los videos de dermatología pediátrica: coletas, vestido turquesa y manchitas opcionales.</p>
+    <span class="open">Abrir editor →</span>
+  </a>
+</div>
+<script src="{{ '/assets/js/avatar-editor.js' | relative_url }}?v={{ v }}"></script>
+<script src="{{ '/assets/js/avatars/doctor.js' | relative_url }}?v={{ v }}"></script>
+<script src="{{ '/assets/js/avatars/child.js' | relative_url }}?v={{ v }}"></script>
+<script>
+  for (const c of document.querySelectorAll('canvas[data-avatar]')) {
+    AvatarEditor.preview(c, window.AVATARS[c.dataset.avatar], { width: 360, pose: { armR: { a1: 142, a2: 26 } } });
+  }
+</script>
+</body>
+</html>

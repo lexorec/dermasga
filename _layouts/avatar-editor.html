@@ -1,0 +1,89 @@
+---
+layout: null
+---
+{%- assign v = site.time | date: '%s' -%}
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{{ page.title }} · editor de poses</title>
+<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap">
+<link rel="stylesheet" href="{{ '/assets/css/avatar-editor.css' | relative_url }}?v={{ v }}">
+</head>
+<body>
+<header>
+  <p class="crumbs"><a href="{{ '/avatars.html' | relative_url }}">← Todos los avatares</a></p>
+  <h1>{{ page.title }}</h1>
+  <p>Editor de poses (uso interno). Arrastre las manos, los pies o la cabeza, o use los controles.</p>
+</header>
+<main>
+  <div class="stage">
+    <canvas id="stage" width="800" height="1000" aria-label="{{ page.title }}: avatar para posar"></canvas>
+    <p class="hint">Puntos de control: manos, pies, cabeza (inclinar) y centro del cuerpo (inclinar el cuerpo). No aparecen en la imagen descargada.</p>
+  </div>
+
+  <div class="panel">
+    <fieldset>
+      <legend>Poses rápidas</legend>
+      <div class="presets" id="presets"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Brazos</legend>
+      <div class="grid2" id="arms"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Piernas</legend>
+      <div class="grid2" id="legs"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Cuerpo y cara</legend>
+      <div class="grid2" id="body"></div>
+      <div class="checks" id="checks" style="margin-top:12px"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Imagen</legend>
+      <div class="row">
+        <label>Fondo
+          <select id="bg">
+            <option value="transparent">Transparente</option>
+            <option value="white">Blanco</option>
+            <option value="surface">Gris claro</option>
+            <option value="scene" selected>Escena DERMASGA</option>
+          </select>
+        </label>
+        <label>Tamaño
+          <select id="size">
+            <option value="1">800 × 1000</option>
+            <option value="2" selected>1600 × 2000</option>
+            <option value="3">2400 × 3000</option>
+          </select>
+        </label>
+      </div>
+      <div class="checks" style="margin-top:12px">
+        <label><input type="checkbox" id="mirror"> Reflejar horizontalmente</label>
+        <label><input type="checkbox" id="trim"> Recortar al personaje</label>
+        <label><input type="checkbox" id="handles" checked> Mostrar puntos de control</label>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <button class="primary" id="download" type="button">Descargar PNG</button>
+        <button id="reset" type="button">Restablecer</button>
+      </div>
+      <p class="save-hint" id="saveHint" hidden>Se abrirá el menú de compartir: elija <strong>«Guardar imagen»</strong> para guardarla en Fotos.</p>
+    </fieldset>
+  </div>
+</main>
+
+<script src="{{ '/assets/js/avatar-editor.js' | relative_url }}?v={{ v }}"></script>
+<script src="{{ '/assets/js/avatars/' | append: page.avatar | append: '.js' | relative_url }}?v={{ v }}"></script>
+<script>AvatarEditor.mount(window.AVATARS[{{ page.avatar | jsonify }}]);</script>
+</body>
+</html>
