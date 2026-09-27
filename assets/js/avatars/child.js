@@ -65,15 +65,14 @@
       H.ellipse(ctx, 0, -54.2, 2.5, 2.4, C.skin);                           // neck (shows when the head tilts)
 
       const armStyle = { w: 5.4, color: C.skin, hand: 3.2, handColor: C.skin, cap: { to: 0.32, w: 8.1, color: C.teal500, edge: C.teeEdge } };
-      const drawArm = (ga, spots) => {
-        H.arm(ctx, ga, armStyle);
-        if (!spots) return;
+      const spotsOn = ga => {                                                 // on the skin, so the sleeve covers any that reach it
         for (const [t, off] of [[0.5, 0.9], [0.62, -1.0], [0.74, 0.7], [0.86, -0.6]]) {
           const p = H.point(ga, t), q = H.point(ga, t + 0.01);
           const ang = Math.atan2(q.y - p.y, q.x - p.x);
           H.ellipse(ctx, p.x - Math.sin(ang) * off, p.y + Math.cos(ang) * off, 0.95, 0.95, C.spot);
         }
       };
+      const drawArm = (ga, spots) => H.arm(ctx, ga, spots ? Object.assign({ skin: spotsOn }, armStyle) : armStyle);
       const raised = ga => ga.W.y < ga.S.y - 4;
       if (!raised(g.armL)) drawArm(g.armL, pose.spots);
       if (!raised(g.armR)) drawArm(g.armR, false);                         // drawn last so it can scratch the other arm

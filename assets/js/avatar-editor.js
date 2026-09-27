@@ -47,13 +47,15 @@
       ctx.beginPath();
       for (let i = 0; i <= n; i++) { const p = H.point(g, t0 + (t1 - t0) * i / n); i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); }
     },
-    /* Smooth arm through the elbow. o: { w, color, edge?, cuff?, cap?: { to, w, color, edge? }, hand, handColor }
+    /* Smooth arm through the elbow. o: { w, color, edge?, skin?(g), cuff?, cap?: { to, w, color, edge? }, hand, handColor }
+       skin(g) draws marks on the bare arm (e.g. spots) before the cuff and sleeve, so the clothes always cover them.
        Returns the direction angle at the hand (radians), for props held in the hand. */
     arm(ctx, g, o) {
       const curve = () => { ctx.beginPath(); ctx.moveTo(g.S.x, g.S.y); ctx.quadraticCurveTo(g.Q.x, g.Q.y, g.W.x, g.W.y); };
       ctx.lineCap = 'round'; ctx.lineJoin = 'round';
       if (o.edge) { curve(); ctx.strokeStyle = o.edge; ctx.lineWidth = o.w * 1.12; ctx.stroke(); }
       curve(); ctx.strokeStyle = o.color; ctx.lineWidth = o.w; ctx.stroke();
+      if (o.skin) o.skin(g);
       if (o.cuff) { H.polyline(ctx, g, 0.84, 1); ctx.strokeStyle = o.cuff; ctx.lineWidth = o.w; ctx.stroke(); }
       if (o.cap) {
         if (o.cap.edge) { H.polyline(ctx, g, 0, o.cap.to); ctx.strokeStyle = o.cap.edge; ctx.lineWidth = o.cap.w + 0.7; ctx.stroke(); }

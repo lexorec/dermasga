@@ -1,5 +1,7 @@
-/* DERMASGA animations built from the avatar characters (needs avatar-editor.js + avatars/doctor.js + avatars/child.js).
-   Usage: <canvas data-animation="hero-pediatria"></canvas>  then  AvatarAnimations.play(canvas, 'hero-pediatria').
+/* DERMASGA animations built from the avatar characters (needs avatar-editor.js + avatars/doctor.js, avatars/child.js, avatars/boy.js).
+   Usage: <canvas data-animation="hero-pediatria"></canvas>  then  AvatarAnimations.playAll().
+   Several ids separated by spaces: one of them is picked at random on each page load (and plays on its own):
+   <canvas data-animation="hero-pediatria hero-pediatria-nino"></canvas>
    Loops while visible, pauses off-screen or in a background tab, and shows a still frame with prefers-reduced-motion. */
 (function () {
   'use strict';
@@ -38,15 +40,15 @@
   }
 
   // ---------------- animations ----------------
-  const ANIMS = {
-    'hero-pediatria': {
-      title: 'Hero · Dermatología pediátrica',
-      description: 'La niña saluda, la Dra. Marcela revisa su brazo con la lámpara, chocan los cinco y la niña salta de alegría. Bucle de 10 s.',
+  // Pediatric hero scene with the girl ('child') or the boy ('boy') as the patient: both use the same child rig
+  function pediatricScene(kidKey, title, description) {
+    return {
+      title, description,
       duration: 10,
       size: [1000, 1000],
       still: 1.0,
       draw(c2d, base, t) {
-        const DOC = AV.doctor, KID = AV.child;
+        const DOC = AV.doctor, KID = AV[kidKey];
         const dPlace = { x: 350, y: 900, U: 7.4 }, kPlace = { x: 680, y: 900, U: 7.4 * 0.745 };
 
         // background: soft disc, a few drifting shapes, floor band
@@ -58,11 +60,11 @@
         E.H.ellipse(c2d, 880 + drift(3, 8), 330 + drift(4, 8), 11, 11, TEAL700);
         E.H.ellipse(c2d, 820 + drift(5, 6), 170 + drift(6, 8), 22, 22, '#d6d6d6');
         for (let gx = 0; gx < 4; gx++) for (let gy = 0; gy < 3; gy++) E.H.ellipse(c2d, 105 + gx * 16, 540 + gy * 16 + drift(7, 5), 3.4, 3.4, TEAL200);
-        c2d.save(); c2d.translate(900 + drift(8, 6), 560 + drift(9, 6)); c2d.rotate(0.5 + t * 0.2);
+        c2d.save(); c2d.translate(900 + drift(8, 6), 560 + drift(9, 6)); c2d.rotate(0.5 + t * Math.PI / 10);   // half a turn per loop: seamless
         c2d.beginPath(); c2d.roundRect(-26, -7, 52, 14, 7); c2d.fillStyle = TEAL200; c2d.fill(); c2d.restore();
         E.H.ellipse(c2d, 500, 905, 440, 24, '#e5eef0');
 
-        // ---- girl ----
+        // ---- child ----
         let kid = E.withDefaults(KID, { spots: true, mouth: true, blink: blinkAt(t, 2.7, 1.9) });
         const kidIdle = kid;
         const wave = Object.assign({}, kidIdle, { armR: { a1: 142, a2: 26 }, tilt: -4 });
@@ -152,7 +154,7 @@
           }
           c2d.restore();
         }
-        for (let i = 0; i < 3; i++) {                          // hearts rising from the girl
+        for (let i = 0; i < 3; i++) {                          // hearts rising from the child
           const k = seg(t, 6.8 + i * 0.35, 8.6 + i * 0.35);
           if (k <= 0 || k >= 1) continue;
           c2d.save(); c2d.globalAlpha = Math.sin(k * Math.PI);
@@ -160,13 +162,22 @@
           c2d.restore();
         }
       }
-    }
+    };
+  }
+
+  const ANIMS = {
+    'hero-pediatria': pediatricScene('child', 'Hero · Dermatología pediátrica',
+      'La niña saluda, la Dra. Marcela revisa su brazo con la lámpara, chocan los cinco y la niña salta de alegría. Bucle de 10 s.'),
+    'hero-pediatria-nino': pediatricScene('boy', 'Hero · Dermatología pediátrica (niño)',
+      'El niño saluda, la Dra. Marcela revisa su brazo con la lámpara, chocan los cinco y el niño salta de alegría. Bucle de 10 s.')
   };
 
   // ---------------- player ----------------
-  function play(canvas, id) {
-    const A = ANIMS[id];
-    if (!A) return null;
+  // ids: one animation, or several separated by spaces: one of them is picked at random on each page load
+  function play(canvas, ids) {
+    const list = String(ids).split(/[\s,]+/).map(id => ANIMS[id]).filter(Boolean);
+    if (!list.length) return null;
+    const A = list[Math.floor(Math.random() * list.length)];
     const ctx = canvas.getContext('2d');
     const [AW, AH] = A.size;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -187,7 +198,7 @@
     const kick = () => { if (!reduce && !raf && visible && !document.hidden) raf = requestAnimationFrame(frame); };
     if (reduce) { drawAt(A.still); window.addEventListener('resize', () => drawAt(A.still)); return { stop() {} }; }
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(entries => { visible = entries[0].isIntersecting; kick(); }, { threshold: 0.05 }).observe(canvas);
+      new IntersectionObserver(entries => { visible = entries[entries.length - 1].isIntersecting; kick(); }, { threshold: 0.05 }).observe(canvas);
     }
     document.addEventListener('visibilitychange', kick);
     kick();

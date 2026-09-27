@@ -71,13 +71,16 @@ ad_videos:
         <p class="badge">Publicada en Dermatología pediátrica</p>
         <h3>Hero · Dermatología pediátrica</h3>
         <p>La niña saluda, la Dra. Marcela revisa su brazo con la lámpara, chocan los cinco y la niña salta de alegría.
-          Bucle de 10 s, formato cuadrado. En el recuadro principal de <a href="{{ '/dermatologia-pediatrica/' | relative_url }}">Dermatología pediátrica</a>.</p>
+          Bucle de 10 s, formato cuadrado. En el recuadro principal de <a href="{{ '/dermatologia-pediatrica/' | relative_url }}">Dermatología pediátrica</a>
+          aparece esta o la del niño, al azar en cada visita.</p>
         <details>
           <summary>Cómo insertarla</summary>
-          <pre><code>&lt;canvas data-animation="hero-pediatria"&gt;&lt;/canvas&gt;
+          <pre><code>&lt;!-- una sola, o varias separadas por espacios: se elige una al azar en cada visita --&gt;
+&lt;canvas data-animation="hero-pediatria hero-pediatria-nino"&gt;&lt;/canvas&gt;
 &lt;script src="/assets/js/avatar-editor.js"&gt;&lt;/script&gt;
 &lt;script src="/assets/js/avatars/doctor.js"&gt;&lt;/script&gt;
 &lt;script src="/assets/js/avatars/child.js"&gt;&lt;/script&gt;
+&lt;script src="/assets/js/avatars/boy.js"&gt;&lt;/script&gt;
 &lt;script src="/assets/js/avatar-animations.js"&gt;&lt;/script&gt;
 &lt;script&gt;AvatarAnimations.playAll();&lt;/script&gt;</code></pre>
         </details>
@@ -102,8 +105,17 @@ ad_videos:
         </div>
       </div>
     </article>
+    <article class="anim-card">
+      <canvas data-animation="hero-pediatria-nino" aria-label="Animación: el niño saluda, la Dra. Marcela revisa su brazo, chocan los cinco y el niño salta de alegría"></canvas>
+      <div class="anim-body">
+        <p class="badge">Publicada en Dermatología pediátrica</p>
+        <h3>Hero · Dermatología pediátrica (niño)</h3>
+        <p>La misma escena con el niño: saluda, la Dra. Marcela revisa su brazo con la lámpara, chocan los cinco y salta de alegría.
+          En el recuadro principal de <a href="{{ '/dermatologia-pediatrica/' | relative_url }}">Dermatología pediátrica</a> aparece esta o la de la niña, al azar en cada visita.</p>
+      </div>
+    </article>
     <div class="anim-placeholder">
-      <p><strong>Próximamente</strong><br>Más animaciones con la Dra. Marcela y la niña.</p>
+      <p><strong>Próximamente</strong><br>Más animaciones con la Dra. Marcela, la niña y el niño.</p>
     </div>
   </div>
 </section>
