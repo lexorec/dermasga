@@ -36,10 +36,41 @@ sitemap: false
     <span class="open">Abrir editor →</span>
   </a>
 </div>
+
+<section class="anims" aria-labelledby="anims-title">
+  <h2 id="anims-title">Animaciones</h2>
+  <p class="lead-muted">Animaciones hechas con los personajes. Se dibujan en vivo (nítidas en cualquier tamaño y muy livianas),
+    se pausan fuera de pantalla y muestran una imagen fija si el visitante desactivó las animaciones.</p>
+  <div class="anim-grid">
+    <article class="anim-card">
+      <canvas data-animation="hero-pediatria" aria-label="Animación: la niña saluda, la Dra. Marcela revisa su brazo, chocan los cinco y la niña salta de alegría"></canvas>
+      <div class="anim-body">
+        <p class="badge">Borrador · aún no publicada en la web</p>
+        <h3>Hero · Dermatología pediátrica</h3>
+        <p>La niña saluda, la Dra. Marcela revisa su brazo con la lámpara, chocan los cinco y la niña salta de alegría.
+          Bucle de 10 s, formato cuadrado. Pensada para el recuadro principal de <a href="{{ '/dermatologia-pediatrica/' | relative_url }}">Dermatología pediátrica</a>.</p>
+        <details>
+          <summary>Cómo insertarla</summary>
+          <pre><code>&lt;canvas data-animation="hero-pediatria"&gt;&lt;/canvas&gt;
+&lt;script src="/assets/js/avatar-editor.js"&gt;&lt;/script&gt;
+&lt;script src="/assets/js/avatars/doctor.js"&gt;&lt;/script&gt;
+&lt;script src="/assets/js/avatars/child.js"&gt;&lt;/script&gt;
+&lt;script src="/assets/js/avatar-animations.js"&gt;&lt;/script&gt;
+&lt;script&gt;AvatarAnimations.playAll();&lt;/script&gt;</code></pre>
+        </details>
+      </div>
+    </article>
+    <div class="anim-placeholder">
+      <p><strong>Próximamente</strong><br>Más animaciones con la Dra. Marcela y la niña.</p>
+    </div>
+  </div>
+</section>
 <script src="{{ '/assets/js/avatar-editor.js' | relative_url }}?v={{ v }}"></script>
 <script src="{{ '/assets/js/avatars/doctor.js' | relative_url }}?v={{ v }}"></script>
 <script src="{{ '/assets/js/avatars/child.js' | relative_url }}?v={{ v }}"></script>
+<script src="{{ '/assets/js/avatar-animations.js' | relative_url }}?v={{ v }}"></script>
 <script>
+  AvatarAnimations.playAll();
   for (const c of document.querySelectorAll('canvas[data-avatar]')) {
     AvatarEditor.preview(c, window.AVATARS[c.dataset.avatar], { width: 360, pose: { armR: { a1: 142, a2: 26 } } });
   }

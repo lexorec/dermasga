@@ -71,3 +71,22 @@ button.primary:hover { background: var(--teal-800); }
 .card h2 { margin: 0; font-size: 20px; color: var(--ink); }
 .card p { margin: 0; color: var(--muted); font-size: 15px; }
 .card .open { font-weight: 700; color: var(--teal-700); }
+
+/* animations list on the avatars index */
+.anims { max-width: 900px; margin: 0 auto; padding: 8px 24px 64px; }
+.anims h2 { margin: 0 0 4px; font-size: 22px; }
+.lead-muted { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
+.anim-grid { display: grid; gap: 20px; }
+.anim-card { display: grid; gap: 16px; padding: 16px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; }
+@media (min-width: 720px) { .anim-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; } }
+.anim-card canvas { width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 8px; border: 0; background: #f7f7f7; cursor: default; }
+.anim-body { display: grid; gap: 8px; font-size: 15px; }
+.anim-body h3 { margin: 0; font-size: 19px; }
+.anim-body p { margin: 0; color: var(--muted); }
+.anim-body a { color: var(--teal-700); }
+.badge { justify-self: start; padding: 3px 10px; border-radius: 999px; background: var(--teal-50); color: var(--teal-800) !important; font-size: 13px; font-weight: 700; }
+details summary { cursor: pointer; font-weight: 700; color: var(--teal-800); }
+pre { margin: 8px 0 0; padding: 12px; background: #f3f6f7; border: 1px solid var(--border); border-radius: 6px; overflow-x: auto; font-size: 12.5px; line-height: 1.5; }
+.anim-placeholder { display: grid; place-items: center; min-height: 120px; padding: 20px; text-align: center; color: var(--muted);
+  border: 2px dashed var(--border); border-radius: 10px; }
+.anim-placeholder p { margin: 0; }

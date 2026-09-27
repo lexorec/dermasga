@@ -137,17 +137,40 @@
     ['body', 'Altura del salto', 'lift', 0, 30, '']
   ];
 
+  /* Draw one character standing at logical point (place.x, place.y) with scale place.U (px per character unit).
+     Returns its limb geometry and transforms (logical space), so scenes can find hands, arms, etc. */
+  function drawCharacter(c2d, base, cfg, pose, place) {
+    const U = place.U;
+    const floor = new DOMMatrix().translate(place.x, place.y).scale(U);
+    const root = new DOMMatrix().translate(place.x, place.y - pose.lift * U).scale(U);
+    const hp = cfg.hipPivot, nk = cfg.neck;
+    const body = root.translate(hp.x, hp.y).rotate(pose.lean).translate(-hp.x, -hp.y);
+    const head = body.translate(nk.x, nk.y).rotate(pose.tilt).translate(0, -cfg.headAbove);   // origin at the head center
+    const use = M => c2d.setTransform(base.multiply(M));
+    const g = {
+      armL: limbGeom(cfg.shoulders.L, pose.armL, cfg.arm.L1, cfg.arm.L2),
+      armR: limbGeom(cfg.shoulders.R, pose.armR, cfg.arm.L1, cfg.arm.L2),
+      legL: limbGeom(cfg.hips.L, pose.legL, cfg.leg.L1, cfg.leg.L2),
+      legR: limbGeom(cfg.hips.R, pose.legR, cfg.leg.L1, cfg.leg.L2)
+    };
+    cfg.draw({ ctx: c2d, pose, use, S: { root, body, head }, g, H });
+    return { g, M: { floor, root, body, head } };
+  }
+  function drawShadow(c2d, base, cfg, pose, place) {
+    const k = clamp(1 - pose.lift / 45, 0.45, 1);
+    c2d.setTransform(base.multiply(new DOMMatrix().translate(place.x, place.y).scale(place.U)));
+    H.ellipse(c2d, 0, -0.5, cfg.shadowRx * k, 2.6 * k, '#dbe9ec');
+  }
+
   function makeRenderer(cfg) {
     const U = cfg.U;
     return function render(c2d, scale, opts, pose) {
       let base = new DOMMatrix([scale, 0, 0, scale, 0, 0]);
       if (opts.mirror) base = base.translate(LW, 0).scale(-1, 1);
-      const floorM = new DOMMatrix().translate(OX, OY).scale(U);
       const root = new DOMMatrix().translate(OX, OY - pose.lift * U).scale(U);
       const hp = cfg.hipPivot, nk = cfg.neck;
       const body = root.translate(hp.x, hp.y).rotate(pose.lean).translate(-hp.x, -hp.y);
       const head = body.translate(nk.x, nk.y).rotate(pose.tilt).translate(0, -cfg.headAbove);   // origin at the head center
-      const use = M => c2d.setTransform(base.multiply(M));
 
       c2d.setTransform(1, 0, 0, 1, 0, 0);
       c2d.clearRect(0, 0, c2d.canvas.width, c2d.canvas.height);
@@ -160,18 +183,9 @@
         H.ellipse(c2d, LW / 2, 560, 380, 380, '#e8fafd');
         H.ellipse(c2d, LW / 2, OY + 6, 340, 22, '#e5eef0');
       }
-      if (opts.bg === 'scene' || opts.shadow) {
-        const k = clamp(1 - pose.lift / 45, 0.45, 1);
-        use(floorM); H.ellipse(c2d, 0, -0.5, cfg.shadowRx * k, 2.6 * k, '#dbe9ec');
-      }
-
-      const g = {
-        armL: limbGeom(cfg.shoulders.L, pose.armL, cfg.arm.L1, cfg.arm.L2),
-        armR: limbGeom(cfg.shoulders.R, pose.armR, cfg.arm.L1, cfg.arm.L2),
-        legL: limbGeom(cfg.hips.L, pose.legL, cfg.leg.L1, cfg.leg.L2),
-        legR: limbGeom(cfg.hips.R, pose.legR, cfg.leg.L1, cfg.leg.L2)
-      };
-      cfg.draw({ ctx: c2d, pose, use, S: { root, body, head }, g, H });
+      const place = { x: OX, y: OY, U };
+      if (opts.bg === 'scene' || opts.shadow) drawShadow(c2d, base, cfg, pose, place);
+      const { g } = drawCharacter(c2d, base, cfg, pose, place);
 
       const toLogical = (M, p) => { const q = M.transformPoint(new DOMPoint(p.x, p.y)); return { x: q.x, y: q.y }; };
       const handles = [
@@ -359,5 +373,5 @@
     draw();
   }
 
-  window.AvatarEditor = { mount, preview, H, ik, limbGeom };
+  window.AvatarEditor = { mount, preview, drawCharacter, drawShadow, withDefaults, H, ik, limbGeom };
 })();
