@@ -25,7 +25,7 @@
     U: 8.4, shadowRx: 14,
     arm: ARM, leg: { L1: 7.8, L2: 7.4 },
     shoulders: SH,
-    hips: { L: { x: -4.0, y: -19.0 }, R: { x: 4.0, y: -19.0 } },
+    hips: { L: { x: -4.8, y: -19.0 }, R: { x: 4.8, y: -19.0 } },
     hipPivot: { x: 0, y: -19 }, neck: { x: 0, y: -53 }, headAbove: 17, headHandle: 26, leanHandle: { x: 0, y: -34 },
     defaults: {
       armL: { a1: -22, a2: 18 }, armR: { a1: 22, a2: -18 }, legL: { a1: -2, a2: 0 }, legR: { a1: 2, a2: 0 },
@@ -63,26 +63,30 @@
         H.ellipse(ctx, side * 1.0, 3.2, 4.9, 0.95, C.sole);
         ctx.restore();
       }
-      // shorts: one outline rebuilt every frame, so it never splits: the waistband turns with the torso (tucked under
-      // the tee) and each leg opening sits across its thigh, however the body leans or the legs move
+      // shorts: overlapping pieces of one colour, so no pose can open a gap: the seat, whose waistband turns with the
+      // torso (tucked under the tee), and a sleeve per leg, round at the hip joint and cut straight across the thigh
       const toRoot = S.root.inverse().multiply(S.body);
       const fromBody = (x, y) => { const q = toRoot.transformPoint(new DOMPoint(x, y)); return { x: q.x, y: q.y }; };
-      const opening = (lg, side) => {                                        // side: -1 left leg, 1 right leg
-        const dx = lg.E.x - lg.S.x, dy = lg.E.y - lg.S.y, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
-        const cx = lg.S.x + dx * 0.55, cy = lg.S.y + dy * 0.55, nx = -uy * side, ny = ux * side;   // n points to the inner side
-        return { ux, uy, out: { x: cx - nx * 4.4, y: cy - ny * 4.4 }, inn: { x: cx + nx * 3.3, y: cy + ny * 3.3 } };
-      };
-      const L = opening(g.legL, -1), R = opening(g.legR, 1);
       const wl = fromBody(-11.4, -27.2), wr = fromBody(11.4, -27.2), hl = fromBody(-11.9, -23.4), hr = fromBody(11.9, -23.4);
+      ctx.fillStyle = C.shorts;
       ctx.beginPath();
       ctx.moveTo(wl.x, wl.y); ctx.lineTo(wr.x, wr.y);
-      ctx.bezierCurveTo(hr.x, hr.y, R.out.x - R.ux * 3, R.out.y - R.uy * 3, R.out.x, R.out.y);
-      ctx.lineTo(R.inn.x, R.inn.y);
-      ctx.quadraticCurveTo(R.inn.x - R.ux * 1.6, R.inn.y - R.uy * 1.6, 0, -17.2);      // small notch between the legs
-      ctx.quadraticCurveTo(L.inn.x - L.ux * 1.6, L.inn.y - L.uy * 1.6, L.inn.x, L.inn.y);
-      ctx.lineTo(L.out.x, L.out.y);
-      ctx.bezierCurveTo(L.out.x - L.ux * 3, L.out.y - L.uy * 3, hl.x, hl.y, wl.x, wl.y);
-      ctx.closePath(); ctx.fillStyle = C.shorts; ctx.fill();
+      ctx.bezierCurveTo(hr.x, hr.y, 10.9, -20.6, 9.5, -18.6);
+      ctx.quadraticCurveTo(4.8, -16.6, 0, -17.2);                            // top of the small notch between the legs
+      ctx.quadraticCurveTo(-4.8, -16.6, -9.5, -18.6);
+      ctx.bezierCurveTo(-10.9, -20.6, hl.x, hl.y, wl.x, wl.y);
+      ctx.closePath(); ctx.fill();
+      for (const [lg, side] of [[g.legL, -1], [g.legR, 1]]) {
+        const dx = lg.E.x - lg.S.x, dy = lg.E.y - lg.S.y, len = Math.hypot(dx, dy);
+        const ox = dy / len * side, oy = -dx / len * side;                  // unit normal toward the outer side of the leg
+        const r = 3.85, cx = lg.S.x + ox * 0.55, cy = lg.S.y + oy * 0.55;   // 4.4 outward, 3.3 inward of the thigh line
+        const hx = cx + dx * 0.55, hy = cy + dy * 0.55;                      // hem at 55 % of the thigh
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(cx + ox * r, cy + oy * r); ctx.lineTo(hx + ox * r, hy + oy * r);
+        ctx.lineTo(hx - ox * r, hy - oy * r); ctx.lineTo(cx - ox * r, cy - oy * r);
+        ctx.closePath(); ctx.fill();
+      }
 
       use(S.body);
       H.fill(ctx, TEE, C.tee);
