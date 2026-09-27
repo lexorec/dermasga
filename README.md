@@ -86,7 +86,7 @@ Español de Ecuador, de la Costa (Machala): formal pero cercano, sin caer en mod
   menú operable con teclado (Esc lo cierra) y sin animaciones con `prefers-reduced-motion`.
 - **Analítica**: Teradive (script al final de `index.html`).
 - **Editores de avatares (uso interno, no enlazados, `noindex`, fuera del sitemap)**: `/avatars.html` lista
-  `/avatar-doctor.html` (Dra. Marcela), `/avatar-child.html` (niña), `/avatar-boy.html` (niño) y `/avatar-teen-vitiligo.html` (adolescente con vitiligo). Motor compartido en
+  `/avatar-doctor.html` (Dra. Marcela), `/avatar-child.html` (niña), `/avatar-boy.html` (niño), `/avatar-teen-vitiligo.html` (adolescente con vitiligo) y `/avatar-man-balding.html` (joven con caída del cabello). Motor compartido en
   `assets/js/avatar-editor.js`; cada personaje (articulaciones, poses rápidas y dibujo) en `assets/js/avatars/`.
   `/avatar.html` redirige al editor de la doctora.
 - **Anuncios en video (uso interno)**: se hacen con las animaciones de los avatares y se publican en `/avatars.html`

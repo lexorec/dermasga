@@ -1,4 +1,4 @@
-/* DERMASGA avatar pose editor: shared engine for the unlisted avatar pages (avatar-doctor.html, avatar-child.html, avatar-boy.html, avatar-teen-vitiligo.html).
+/* DERMASGA avatar pose editor: shared engine for the unlisted avatar pages (avatar-doctor.html, avatar-child.html, avatar-boy.html, avatar-teen-vitiligo.html, avatar-man-balding.html).
    A character page calls AvatarEditor.mount({...}) with its rig (joints, limb lengths), defaults, quick poses
    and a draw() function; this file handles the canvas, dragging with IK, controls and image export. */
 (function () {
