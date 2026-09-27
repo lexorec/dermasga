@@ -52,6 +52,12 @@ ad_videos:
     <p>La paciente de los videos de dermatología pediátrica: coletas, vestido turquesa y manchitas opcionales.</p>
     <span class="open">Abrir editor →</span>
   </a>
+  <a class="card" href="{{ '/avatar-boy.html' | relative_url }}">
+    <canvas data-avatar="boy" aria-hidden="true"></canvas>
+    <h2>Niño</h2>
+    <p>Cabello corto con remolino, camiseta a rayas y pantalón corto. Manchitas y mascarilla opcionales.</p>
+    <span class="open">Abrir editor →</span>
+  </a>
 </div>
 
 <section class="anims" aria-labelledby="anims-title">
@@ -104,6 +110,7 @@ ad_videos:
 <script src="{{ '/assets/js/avatar-editor.js' | relative_url }}?v={{ v }}"></script>
 <script src="{{ '/assets/js/avatars/doctor.js' | relative_url }}?v={{ v }}"></script>
 <script src="{{ '/assets/js/avatars/child.js' | relative_url }}?v={{ v }}"></script>
+<script src="{{ '/assets/js/avatars/boy.js' | relative_url }}?v={{ v }}"></script>
 <script src="{{ '/assets/js/avatar-animations.js' | relative_url }}?v={{ v }}"></script>
 <script>
   AvatarAnimations.playAll();
