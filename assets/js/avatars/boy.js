@@ -14,9 +14,6 @@
   const TEE = [['M', -4.6, -52.8], ['C', -8.6, -53.0, -11.2, -51.2, -11.8, -47.2], ['C', -12.4, -41.0, -12.8, -33.0, -12.8, -27.8],
     ['C', -12.8, -25.8, -11.8, -24.8, -10.2, -24.8], ['L', 10.2, -24.8], ['C', 11.8, -24.8, 12.8, -25.8, 12.8, -27.8],
     ['C', 12.8, -33.0, 12.4, -41.0, 11.8, -47.2], ['C', 11.2, -51.2, 8.6, -53.0, 4.6, -52.8], ['Z']];
-  const SEAT = [['M', -11.6, -28.6], ['L', 11.6, -28.6], ['C', 11.9, -25.2, 10.6, -21.2, 8.6, -18.4],
-    ['C', 6.0, -17.4, 2.6, -17.6, 0, -18.8], ['C', -2.6, -17.6, -6.0, -17.4, -8.6, -18.4],
-    ['C', -10.6, -21.2, -11.9, -25.2, -11.6, -28.6], ['Z']];
 
   const ARM = { L1: 11.0, L2: 10.6 };
   const SH = { L: { x: -10.6, y: -47.6 }, R: { x: 10.6, y: -47.6 } };
@@ -66,12 +63,26 @@
         H.ellipse(ctx, side * 1.0, 3.2, 4.9, 0.95, C.sole);
         ctx.restore();
       }
-      for (const lg of [g.legL, g.legR]) {                                // shorts legs follow the thighs
-        ctx.beginPath(); ctx.moveTo(lg.S.x, lg.S.y);
-        ctx.lineTo(lg.S.x + (lg.E.x - lg.S.x) * 0.52, lg.S.y + (lg.E.y - lg.S.y) * 0.52);
-        ctx.lineCap = 'butt'; ctx.strokeStyle = C.shorts; ctx.lineWidth = 8.6; ctx.stroke();
-      }
-      H.fill(ctx, SEAT, C.shorts);
+      // shorts: one outline rebuilt every frame, so it never splits: the waistband turns with the torso (tucked under
+      // the tee) and each leg opening sits across its thigh, however the body leans or the legs move
+      const toRoot = S.root.inverse().multiply(S.body);
+      const fromBody = (x, y) => { const q = toRoot.transformPoint(new DOMPoint(x, y)); return { x: q.x, y: q.y }; };
+      const opening = (lg, side) => {                                        // side: -1 left leg, 1 right leg
+        const dx = lg.E.x - lg.S.x, dy = lg.E.y - lg.S.y, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+        const cx = lg.S.x + dx * 0.55, cy = lg.S.y + dy * 0.55, nx = -uy * side, ny = ux * side;   // n points to the inner side
+        return { ux, uy, out: { x: cx - nx * 4.4, y: cy - ny * 4.4 }, inn: { x: cx + nx * 3.3, y: cy + ny * 3.3 } };
+      };
+      const L = opening(g.legL, -1), R = opening(g.legR, 1);
+      const wl = fromBody(-11.4, -27.2), wr = fromBody(11.4, -27.2), hl = fromBody(-11.9, -23.4), hr = fromBody(11.9, -23.4);
+      ctx.beginPath();
+      ctx.moveTo(wl.x, wl.y); ctx.lineTo(wr.x, wr.y);
+      ctx.bezierCurveTo(hr.x, hr.y, R.out.x - R.ux * 3, R.out.y - R.uy * 3, R.out.x, R.out.y);
+      ctx.lineTo(R.inn.x, R.inn.y);
+      ctx.quadraticCurveTo(R.inn.x - R.ux * 1.6, R.inn.y - R.uy * 1.6, 0, -17.2);      // small notch between the legs
+      ctx.quadraticCurveTo(L.inn.x - L.ux * 1.6, L.inn.y - L.uy * 1.6, L.inn.x, L.inn.y);
+      ctx.lineTo(L.out.x, L.out.y);
+      ctx.bezierCurveTo(L.out.x - L.ux * 3, L.out.y - L.uy * 3, hl.x, hl.y, wl.x, wl.y);
+      ctx.closePath(); ctx.fillStyle = C.shorts; ctx.fill();
 
       use(S.body);
       H.fill(ctx, TEE, C.tee);
