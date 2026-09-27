@@ -10,10 +10,11 @@
       </div>
     </div>
     <div class="footer-meta">
-      {%- if s.contact.instagram != "" or s.contact.facebook != "" %}
+      {%- if s.contact.instagram != "" or s.contact.facebook != "" or s.contact.tiktok %}
       <p class="footer-social">
         {% if s.contact.instagram != "" %}<a href="{{ s.contact.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
         {% if s.contact.facebook != "" %}<a href="{{ s.contact.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+        {% if s.contact.tiktok and s.contact.tiktok != "" %}<a href="{{ s.contact.tiktok }}" target="_blank" rel="noopener">TikTok</a>{% endif %}
       </p>
       {%- endif %}
       {%- if include.lang == 'en' %}

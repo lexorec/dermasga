@@ -48,6 +48,7 @@ content:
           - { name: maps_url, label: "Enlace de Google Maps (botón Cómo llegar)", type: string }
           - { name: instagram, label: "Enlace de Instagram (opcional)", type: string }
           - { name: facebook, label: "Enlace de Facebook (opcional)", type: string }
+          - { name: tiktok, label: "Enlace de TikTok (opcional)", type: string }
 
       - name: credentials
         label: Formación destacada (franja bajo la portada)

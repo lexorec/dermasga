@@ -64,6 +64,7 @@ layout: null
       {%- assign same = "" | split: "" -%}
       {%- if s.contact.instagram != blank %}{% assign same = same | push: s.contact.instagram %}{% endif -%}
       {%- if s.contact.facebook != blank %}{% assign same = same | push: s.contact.facebook %}{% endif -%}
+      {%- if s.contact.tiktok and s.contact.tiktok != "" %}{% assign same = same | push: s.contact.tiktok %}{% endif -%}
       {%- if same.size > 0 %}
       "sameAs": {{ same | jsonify }},
       {%- endif %}
