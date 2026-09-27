@@ -85,3 +85,7 @@ Español de Ecuador, de la Costa (Machala): formal pero cercano, sin caer en mod
 - **Accesibilidad**: pares de color con contraste WCAG AA, enlace "Saltar al contenido", foco visible,
   menú operable con teclado (Esc lo cierra) y sin animaciones con `prefers-reduced-motion`.
 - **Analítica**: Teradive (script al final de `index.html`).
+- **Editores de avatares (uso interno, no enlazados, `noindex`, fuera del sitemap)**: `/avatars.html` lista
+  `/avatar-doctor.html` (Dra. Marcela) y `/avatar-child.html` (niña). Motor compartido en
+  `assets/js/avatar-editor.js`; cada personaje (articulaciones, poses rápidas y dibujo) en `assets/js/avatars/`.
+  `/avatar.html` redirige al editor de la doctora.
