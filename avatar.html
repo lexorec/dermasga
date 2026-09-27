@@ -160,7 +160,7 @@ sitemap: false
   // ---------- palette (same as the DERMASGA videos) ----------
   const C = {
     surface: '#f7f7f7', ink: '#333333', teal50: '#e8fafd', teal200: '#a0e1ea', teal500: '#14b5c9', teal700: '#0d7582',
-    teal800: '#09545d', white: '#ffffff', coatEdge: '#d4dfe2', coatFold: '#ecf1f2', sleeveBack: '#ecf2f3',
+    teal800: '#09545d', white: '#ffffff', coatEdge: '#d4dfe2', coatFold: '#ecf1f2',
     skin: '#e5b896', hair: '#523426', eye: '#30201c', mouth: '#843a38', mouthIn: '#96343a', tongue: '#e87878',
     blush: '#eaa28c', floor: '#e5eef0', shadow: '#dbe9ec'
   };
@@ -333,7 +333,7 @@ sitemap: false
 
     const armL = armGeom(SHOULDER.L, pose.armL), armR = armGeom(SHOULDER.R, pose.armR);
     const raisedL = armL.W.y < SHOULDER.L.y - 4, raisedR = armR.W.y < SHOULDER.R.y - 4;
-    if (!raisedL) drawArm(ctx, armL, C.sleeveBack, false);
+    if (!raisedL) drawArm(ctx, armL, C.white, false);
     if (!raisedR) drawArm(ctx, armR, C.white, pose.lamp);
 
     use(head);
@@ -342,7 +342,7 @@ sitemap: false
     fillPath(ctx, BANGS, C.hair);
 
     use(body);                                                                // raised arms go in front of the hair
-    if (raisedL) drawArm(ctx, armL, C.sleeveBack, false);
+    if (raisedL) drawArm(ctx, armL, C.white, false);
     if (raisedR) drawArm(ctx, armR, C.white, pose.lamp);
 
     const toLogical = (M, p) => { const q = M.transformPoint(new DOMPoint(p.x, p.y)); return { x: q.x, y: q.y }; };
