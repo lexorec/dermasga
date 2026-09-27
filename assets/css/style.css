@@ -34,6 +34,7 @@
 @media (min-width: 1200px) { :root { --gutter: 64px; --section: 104px; --header-h: 96px; } }
 
 /* Base */
+[hidden] { display: none !important; }  /* never let a component's display rule revive a hidden element */
 *, *::before, *::after { box-sizing: border-box; }
 html {
   scroll-behavior: smooth;
@@ -282,11 +283,11 @@ a:hover { color: var(--teal-800); }
 .footer-brand img { width: 56px; height: 56px; }
 .footer-name { font-weight: 700; }
 .footer-social { display: flex; gap: 20px; margin-bottom: 8px; }
+.contact-social { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0; }
 @media (min-width: 768px) {
-  .site-footer { padding-block: 48px; }
-  .footer-inner { flex-direction: row; justify-content: space-between; align-items: flex-start; }
-  .footer-meta { text-align: right; max-width: 520px; }
-  .footer-social { justify-content: flex-end; }
+  /* left-aligned so nothing sits under the floating WhatsApp button (bottom right) */
+  .footer-inner { flex-direction: row; justify-content: flex-start; align-items: flex-start; gap: 64px; }
+  .footer-meta { max-width: 520px; }
 }
 
 /* Floating WhatsApp button (appears after the hero) */
@@ -468,6 +469,7 @@ a:hover { color: var(--teal-800); }
   box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.35);
   opacity: 0; transform: translateY(8px); transition: opacity 300ms ease, transform 300ms var(--ease-out);
 }
+.wa-nudge:not(.is-visible) { pointer-events: none; }
 .wa-nudge.is-visible { opacity: 1; transform: none; }
 .wa-nudge__text { color: var(--ink); font-weight: 700; font-size: 15px; line-height: 1.35; text-decoration: none; }
 .wa-nudge__text:hover { color: var(--teal-800); }

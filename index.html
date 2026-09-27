@@ -367,6 +367,16 @@ layout: null
         {% include icon-mail.svg %}
         <div><p class="contact-label">Correo</p><p><a href="mailto:{{ s.contact.email }}">{{ s.contact.email }}</a></p></div>
       </div>
+      {%- if s.contact.instagram != "" or s.contact.facebook != "" or s.contact.tiktok %}
+      <div class="contact-item reveal">
+        {% include icon-chat.svg %}
+        <div><p class="contact-label">Síganos</p><p class="contact-social">
+          {%- if s.contact.instagram != "" %}<a href="{{ s.contact.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+          {%- if s.contact.facebook != "" %}<a href="{{ s.contact.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+          {%- if s.contact.tiktok and s.contact.tiktok != "" %}<a href="{{ s.contact.tiktok }}" target="_blank" rel="noopener">TikTok</a>{% endif %}
+        </p></div>
+      </div>
+      {%- endif %}
       <div class="contact-item reveal">
         {% include icon-clock.svg %}
         <div><p class="contact-label">Horario</p>
