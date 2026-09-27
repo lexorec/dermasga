@@ -2,6 +2,23 @@
 layout: null
 permalink: /avatars.html
 sitemap: false
+# video ads rendered from the hero-pediatria animation (_tools/anuncios/), files in assets/video/
+ad_videos:
+  - network: "Instagram"
+    detail: "Reels · 9:16 · 1080 × 1920"
+    file: "anuncio-pediatria-instagram"
+    width: 1080
+    height: 1920
+  - network: "TikTok"
+    detail: "Para ti · 9:16 · 1080 × 1920"
+    file: "anuncio-pediatria-tiktok"
+    width: 1080
+    height: 1920
+  - network: "Facebook"
+    detail: "Noticias · 4:5 · 1080 × 1350"
+    file: "anuncio-pediatria-facebook"
+    width: 1080
+    height: 1350
 ---
 {%- assign v = site.time | date: '%s' -%}
 <!doctype html>
@@ -59,6 +76,25 @@ sitemap: false
 &lt;script&gt;AvatarAnimations.playAll();&lt;/script&gt;</code></pre>
         </details>
       </div>
+      <div class="ad-videos">
+        <h4>Anuncio en video · 17 s</h4>
+        <p>Hecho con esta misma animación, con los textos del anuncio y la tarjeta final con WhatsApp. Una versión por red, con la
+          medida y los márgenes que cada app deja libres. Va sin música: se le puede agregar desde la app al publicarlo.</p>
+        <div class="ad-grid">
+          {%- for ad in page.ad_videos %}
+          {%- assign src = '/assets/video/' | append: ad.file | relative_url %}
+          <figure class="ad-item">
+            <video src="{{ src }}.mp4?v={{ v }}" poster="{{ src }}-portada.jpg?v={{ v }}" width="{{ ad.width }}" height="{{ ad.height }}"
+              controls muted loop playsinline preload="none" aria-label="Anuncio de Dermatología pediátrica para {{ ad.network }}"></video>
+            <figcaption><strong>{{ ad.network }}</strong> · {{ ad.detail }}</figcaption>
+            <p class="ad-actions">
+              <a href="{{ src }}.mp4" download data-save="video">Descargar video</a>
+              <a href="{{ src }}-portada.jpg" download data-save="portada">Descargar portada</a>
+            </p>
+          </figure>
+          {%- endfor %}
+        </div>
+      </div>
     </article>
     <div class="anim-placeholder">
       <p><strong>Próximamente</strong><br>Más animaciones con la Dra. Marcela y la niña.</p>
@@ -74,6 +110,36 @@ sitemap: false
   for (const c of document.querySelectorAll('canvas[data-avatar]')) {
     AvatarEditor.preview(c, window.AVATARS[c.dataset.avatar], { width: 360, pose: { armR: { a1: 142, a2: 26 } } });
   }
+
+  /* On phones, «Guardar» opens the share sheet («Guardar video» / «Guardar imagen» -> Fotos) instead of saving to Archivos.
+     The file is downloaded first; if that outlasts the tap, one more tap opens the sheet. */
+  (function () {
+    if (!window.matchMedia('(pointer: coarse)').matches || !navigator.canShare) return;
+    const ready = new Map();
+    for (const a of document.querySelectorAll('a[data-save]')) {
+      const label = a.dataset.save === 'video' ? 'Guardar video' : 'Guardar portada';
+      a.textContent = label;
+      a.addEventListener('click', async e => {
+        e.preventDefault();
+        const url = a.href;
+        if (ready.has(url)) {
+          a.textContent = label;
+          navigator.share({ files: [ready.get(url)] }).catch(() => {});
+          return;
+        }
+        a.textContent = 'Preparando…';
+        let file;
+        try {
+          const blob = await (await fetch(url)).blob();
+          file = new File([blob], url.split('/').pop(), { type: blob.type });
+        } catch (err) { a.textContent = label; window.location.href = url; return; }
+        if (!navigator.canShare({ files: [file] })) { a.textContent = label; window.location.href = url; return; }
+        ready.set(url, file);
+        try { await navigator.share({ files: [file] }); a.textContent = label; }
+        catch (err) { a.textContent = err && err.name === 'NotAllowedError' ? 'Toque otra vez para guardar' : label; }
+      });
+    }
+  })();
 </script>
 </body>
 </html>

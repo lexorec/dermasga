@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Render de anuncios</title>
+<style>body { margin: 0; background: #ddd; } canvas { display: block; max-width: 100%; height: auto; }</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<!-- the same character engine and animations the site uses -->
+<script src="/assets/js/avatar-editor.js"></script>
+<script src="/assets/js/avatars/doctor.js"></script>
+<script src="/assets/js/avatars/child.js"></script>
+<script src="/assets/js/avatar-animations.js"></script>
+<script>
+/* Driven by render.py: asks it for the plan, draws every frame or still, and posts each one back as an image. */
+(async function () {
+  'use strict';
+  const post = (url, body) => fetch(url, { method: 'POST', body });
+  const toBlob = (canvas, type, q) => new Promise((resolve, reject) =>
+    canvas.toBlob(b => (b ? resolve(b) : reject(new Error('toBlob falló'))), type, q));
+  window.addEventListener('error', e => { post('/error', String(e.message)); });
+  try {
+    const plan = await (await fetch('/plan')).json();
+    await new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = plan.ad + '.js'; s.onload = resolve; s.onerror = () => reject(new Error('No se encontró ' + plan.ad + '.js'));
+      document.head.appendChild(s);
+    });
+    const AD = window.ADS[plan.ad];
+    if (AD.ready) await AD.ready();
+    const canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+    for (const [i, task] of plan.tasks.entries()) {
+      const F = AD.formats[task.format];
+      if (!F) throw new Error('Formato desconocido: ' + task.format);
+      canvas.width = F.w; canvas.height = F.h;
+      if (task.kind === 'video') {
+        const n = Math.round(AD.duration * plan.fps);
+        for (let k = 0; k < n; k++) {
+          AD.frame(ctx, task.format, k / plan.fps);
+          await post(`/frame?task=${i}&n=${k}&of=${n}`, await toBlob(canvas, 'image/png'));
+        }
+        await post(`/end?task=${i}`);
+      } else {
+        if (task.kind === 'cover') AD.cover(ctx, task.format); else AD.frame(ctx, task.format, task.t);
+        await post(`/image?task=${i}`, await toBlob(canvas, task.kind === 'cover' ? 'image/jpeg' : 'image/png', 0.92));
+      }
+    }
+    await post('/finished');
+  } catch (err) {
+    await post('/error', String((err && err.stack) || err));
+  }
+})();
+</script>
+</body>
+</html>

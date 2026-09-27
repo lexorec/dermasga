@@ -89,3 +89,6 @@ Español de Ecuador, de la Costa (Machala): formal pero cercano, sin caer en mod
   `/avatar-doctor.html` (Dra. Marcela) y `/avatar-child.html` (niña). Motor compartido en
   `assets/js/avatar-editor.js`; cada personaje (articulaciones, poses rápidas y dibujo) en `assets/js/avatars/`.
   `/avatar.html` redirige al editor de la doctora.
+- **Anuncios en video (uso interno)**: se hacen con las animaciones de los avatares y se publican en `/avatars.html`
+  (archivos en `assets/video/`: un MP4 y una portada por red). Para volver a generarlos (Chrome y ffmpeg instalados):
+  `python3 _tools/anuncios/render.py pediatria`. Textos, tiempos y medidas de cada red en `_tools/anuncios/pediatria.js`.

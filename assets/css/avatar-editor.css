@@ -90,3 +90,16 @@ pre { margin: 8px 0 0; padding: 12px; background: #f3f6f7; border: 1px solid var
 .anim-placeholder { display: grid; place-items: center; min-height: 120px; padding: 20px; text-align: center; color: var(--muted);
   border: 2px dashed var(--border); border-radius: 10px; }
 .anim-placeholder p { margin: 0; }
+
+/* ad videos made from an animation, one per social network */
+.ad-videos { grid-column: 1 / -1; display: grid; gap: 8px; padding-top: 16px; border-top: 1px solid var(--border); }
+.ad-videos h4 { margin: 0; font-size: 17px; }
+.ad-videos > p { margin: 0; color: var(--muted); font-size: 15px; }
+.ad-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 8px; align-items: start; }
+@media (min-width: 720px) { .ad-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ad-item { display: grid; gap: 6px; margin: 0; }
+.ad-item video { display: block; width: 100%; height: auto; border-radius: 8px; background: var(--surface); }
+.ad-item figcaption { color: var(--muted); font-size: 14px; line-height: 1.4; }
+.ad-item figcaption strong { color: var(--ink); }
+.ad-actions { display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 0; font-size: 14px; }
+.ad-actions a { font-weight: 700; color: var(--teal-700); }
