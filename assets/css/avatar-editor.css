@@ -1,4 +1,4 @@
-/* DERMASGA avatar editors (unlisted pages: avatars.html, avatar-doctor.html, avatar-child.html, avatar-boy.html, avatar-teen-vitiligo.html, avatar-man-balding.html) */
+/* DERMASGA avatar editors (unlisted pages: avatars.html, avatar-doctor.html, avatar-child.html, avatar-boy.html, avatar-teen-vitiligo.html, avatar-man-balding.html, avatar-woman.html) */
 :root {
   --teal-50: #e8fafd; --teal-500: #14b5c9; --teal-700: #0d7582; --teal-800: #09545d;
   --ink: #333333; --muted: #5c5c5c; --border: #d6d6d6; --surface: #f7f7f7; --white: #ffffff;
@@ -65,7 +65,7 @@ button.primary:hover { background: var(--teal-800); }
 .cards { display: grid; gap: 20px; padding: 16px 24px 48px; max-width: 900px; margin: 0 auto; }
 @media (min-width: 640px) { .cards { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 900px) { .cards { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1100px) { .cards { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); max-width: 1180px; } }
+@media (min-width: 1100px) { .cards { grid-template-columns: repeat(3, 1fr); max-width: 1180px; } }
 .card { display: grid; gap: 10px; padding: 16px; background: var(--white); border: 1px solid var(--border); border-radius: 10px;
   color: inherit; text-decoration: none; transition: border-color .2s ease, box-shadow .2s ease; }
 .card:hover { border-color: var(--teal-500); box-shadow: 0 10px 24px -16px rgba(9, 84, 93, .35); }
