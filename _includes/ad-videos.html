@@ -1,0 +1,24 @@
+{%- comment -%}
+  Video ads of the pediatric scene for one child, one per network (avatars.html, unlisted).
+  include.kid: nina | nino · include.who: "la niña" | "el niño" · include.v: cache version. Files: _tools/anuncios/render.py
+{%- endcomment -%}
+<div class="ad-videos">
+  <h4>Anuncio en video con {{ include.who }} · 22 s</h4>
+  <p>Hecho con esta misma animación, con los textos del anuncio y la tarjeta final con WhatsApp. Una versión por red, con la
+    medida y los márgenes que cada app deja libres. Va sin música: se le puede agregar desde la app al publicarlo.</p>
+  <div class="ad-grid">
+    {%- for ad in page.ad_formats %}
+    {%- capture file %}/assets/video/anuncio-pediatria-{{ include.kid }}-{{ ad.format }}{% endcapture %}
+    {%- assign src = file | relative_url %}
+    <figure class="ad-item">
+      <video src="{{ src }}.mp4?v={{ include.v }}" poster="{{ src }}-portada.jpg?v={{ include.v }}" width="{{ ad.width }}" height="{{ ad.height }}"
+        controls muted loop playsinline preload="none" aria-label="Anuncio de Dermatología pediátrica con {{ include.who }} para {{ ad.network }}"></video>
+      <figcaption><strong>{{ ad.network }}</strong> · {{ ad.detail }}</figcaption>
+      <p class="ad-actions">
+        <a href="{{ src }}.mp4" download data-save="video">Descargar video</a>
+        <a href="{{ src }}-portada.jpg" download data-save="portada">Descargar portada</a>
+      </p>
+    </figure>
+    {%- endfor %}
+  </div>
+</div>

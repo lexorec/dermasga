@@ -1,9 +1,10 @@
-/* Anuncio en video «Dermatología pediátrica» para Instagram, TikTok y Facebook.
-   Base: la animación «hero-pediatria» de assets/js/avatar-animations.js, cuadro por cuadro, con los textos del anuncio
-   y la tarjeta final. Lo dibuja render.html y render.py lo convierte en MP4 (ver README.md de esta carpeta). */
+/* Anuncio en video «Dermatología pediátrica» para Instagram, TikTok y Facebook, en dos versiones: con la niña y con el niño.
+   Base: las animaciones «hero-pediatria» y «hero-pediatria-nino» de assets/js/avatar-animations.js, cuadro por cuadro,
+   con los textos del anuncio y la tarjeta final. Lo dibuja render.html y render.py lo convierte en MP4 (ver README.md). */
 (function () {
   'use strict';
-  const SCENE = window.AvatarAnimations.list['hero-pediatria'];
+  const SCENES = { nina: 'hero-pediatria', nino: 'hero-pediatria-nino' };
+  const sceneOf = variant => window.AvatarAnimations.list[SCENES[variant] || SCENES.nina];
 
   const C = {
     surface: '#f7f7f7', ink: '#333333', white: '#ffffff', mist: '#d0ecf0',
@@ -37,23 +38,26 @@
   }
 
   // ---------------- timeline (seconds of the ad) ----------------
-  // ad time -> animation time: wave (0–1.8), arm shown (–3.5), lamp exam (–5.55), high five + jump (–8.1), goodbye wave (–10)
-  const animTime = monotone([[0, 0], [2.2, 1.8], [4.9, 3.5], [7.6, 5.55], [10.4, 8.1], [13.6, 10.7]]);
-  const END = 13.4;                 // end card opens here
-  const DURATION = 17.2;
-  const FOCUS = { x: 560, y: 620 }; // scene point the camera leans in on during the exam (the girl's forearm)
-  const zoomAt = T => 1 + 0.1 * (ease(seg(T, 4.8, 6.0)) - ease(seg(T, 7.3, 8.3)));
+  // ad time -> animation time: wave (0–1.8), arm shown and lamp on the arm and cheek (–5.8), cream and the calendar with the
+  // spots fading (–10.85), high five + jump (–13), goodbye wave (–15.5)
+  const animTime = monotone([[0, 0], [2.0, 1.6], [4.7, 3.3], [7.5, 5.8], [12.5, 10.85], [14.9, 13.0], [18.2, 15.6]]);
+  const END = 18.0;                 // end card opens here
+  const DURATION = 21.8;
+  const FOCUS = { x: 560, y: 620 }; // scene point the camera leans in on during the exam and the cream (the child's forearm)
+  const zoomAt = T => 1 + 0.1 * (ease(seg(T, 4.9, 6.0)) - ease(seg(T, 9.2, 10.2)));
 
-  const CAPTIONS = [
-    { t0: 0, t1: 2.3, eyebrow: 'DERMASGA · MACHALA', text: 'Dermatología\npediátrica', title: true },
-    { t0: 2.3, t1: 4.95, eyebrow: '¿LE SUENA FAMILIAR?', text: '¿Manchas, granitos o\npicazón en la piel\nde su hijo?' },
-    { t0: 4.95, t1: 7.65, eyebrow: 'CON CALMA Y SIN DOLOR', text: 'Revisamos su piel con\nluces especiales, sin\ninyecciones ni dolor' },
-    { t0: 7.65, t1: 10.45, eyebrow: 'ATENCIÓN CERCANA', text: 'Para toda\nla familia' },
-    { t0: 10.45, t1: 13.45, eyebrow: 'DESDE EL NACIMIENTO', text: 'Hasta la\nadolescencia' }
+  const HOOK = { nina: '¿Manchas, granitos o\npicazón en la piel\nde su hija?', nino: '¿Manchas, granitos o\npicazón en la piel\nde su hijo?' };
+  const captionsFor = variant => [
+    { t0: 0, t1: 2.1, eyebrow: 'DERMASGA · MACHALA', text: 'Dermatología\npediátrica', title: true },
+    { t0: 2.1, t1: 4.75, eyebrow: '¿LE SUENA FAMILIAR?', text: HOOK[variant] || HOOK.nina },
+    { t0: 4.75, t1: 7.55, eyebrow: 'CON CALMA Y SIN DOLOR', text: 'Revisamos su piel con\nluces especiales, sin\ninyecciones ni dolor' },
+    { t0: 7.55, t1: 12.55, eyebrow: 'UN PLAN A SU MEDIDA', text: 'Tratamiento paso\na paso y seguimiento\nde su evolución' },
+    { t0: 12.55, t1: 14.95, eyebrow: 'ATENCIÓN CERCANA', text: 'Para toda\nla familia' },
+    { t0: 14.95, t1: 18.05, eyebrow: 'DESDE EL NACIMIENTO', text: 'Hasta la\nadolescencia' }
   ];
   // shown in this order, two per row, each row centred (long names paired with short ones)
   const CHIPS = ['Dermatitis atópica', 'Tiñas', 'Verrugas', 'Prúrigo por insectos', 'Dermatitis del pañal', 'Hemangiomas'];
-  const CHIPS_IN = 10.75, CHIPS_OUT = 13.0;
+  const CHIPS_IN = 15.1, CHIPS_OUT = 17.6;
 
   // ---------------- formats ----------------
   // scene: where the 1000×1000 animation goes (scale s, horizontal centre cx, feet line feetY).
@@ -66,7 +70,7 @@
       type: { eyebrow: 32, text: 64, title: 96, eyebrowY: 292, textY: 342 },
       chips: { size: 36, rows: [575, 670, 765], shift: [0, -18, 14] },
       end: { scale: 1, top: 318, cx: 540 },
-      cover: { tau: 7.35, scene: { s: 1.08, cx: 540, feetY: 1480 }, eyebrow: 34, eyebrowY: 330, title: 100, titleY: 384, url: 52, urlY: 1540 }
+      cover: { tau: 12.45, scene: { s: 1.08, cx: 540, feetY: 1480 }, eyebrow: 34, eyebrowY: 330, title: 100, titleY: 384, url: 52, urlY: 1540 }
     },
     tiktok: {
       label: 'TikTok', w: 1080, h: 1920, cx: 520,
@@ -74,7 +78,7 @@
       type: { eyebrow: 32, text: 64, title: 96, eyebrowY: 250, textY: 300 },
       chips: { size: 34, rows: [522, 606, 690], shift: [0, -18, 14] },
       end: { scale: 1, top: 290, cx: 520 },
-      cover: { tau: 7.35, scene: { s: 1.08, cx: 540, feetY: 1480 }, eyebrow: 34, eyebrowY: 330, title: 100, titleY: 384, url: 52, urlY: 1540 }
+      cover: { tau: 12.45, scene: { s: 1.08, cx: 540, feetY: 1480 }, eyebrow: 34, eyebrowY: 330, title: 100, titleY: 384, url: 52, urlY: 1540 }
     },
     facebook: {
       label: 'Facebook', w: 1080, h: 1350, cx: 540,
@@ -82,7 +86,7 @@
       type: { eyebrow: 28, text: 56, title: 84, eyebrowY: 64, textY: 108 },
       chips: { size: 32, rows: [360, 448, 536], shift: [0, -18, 14] },
       end: { scale: 0.9, top: 287, cx: 540 },
-      cover: { tau: 7.35, scene: { s: 0.9, cx: 540, feetY: 1215 }, eyebrow: 30, eyebrowY: 78, title: 88, titleY: 122, url: 46, urlY: 1262 }
+      cover: { tau: 12.45, scene: { s: 0.9, cx: 540, feetY: 1215 }, eyebrow: 30, eyebrowY: 78, title: 88, titleY: 122, url: 46, urlY: 1262 }
     }
   };
 
@@ -97,7 +101,7 @@
     ctx.restore();
   }
 
-  function drawScene(ctx, F, S, tau, zoom) {
+  function drawScene(ctx, F, S, tau, zoom, SCENE) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.fillStyle = C.surface; ctx.fillRect(0, 0, F.w, F.h);
     const x0 = S.cx - 500 * S.s, y0 = S.feetY - 900 * S.s;
@@ -195,18 +199,18 @@
   }
 
   // ---------------- public ----------------
-  function frame(ctx, fmt, T) {
+  function frame(ctx, fmt, T, variant) {
     const F = FORMATS[fmt], S = F.scene;
     const reveal = ease(seg(T, END, END + 0.6));
     if (reveal < 1) {
-      drawScene(ctx, F, S, animTime(T), zoomAt(T));
+      drawScene(ctx, F, S, animTime(T), zoomAt(T), sceneOf(variant));
       const spots = chipSpots(ctx, F);
       CHIPS.forEach((label, i) => {
         const k = seg(T, CHIPS_IN + i * 0.26, CHIPS_IN + 0.45 + i * 0.26) * (1 - ease(seg(T, CHIPS_OUT, CHIPS_OUT + 0.4)));
         const [x, y] = spots[i];
         chip(ctx, label, x, y + Math.sin(T * 2 + i) * 5, k, F.chips.size);
       });
-      CAPTIONS.forEach((cap, i) => caption(ctx, F, cap, T, i === 0));
+      captionsFor(variant).forEach((cap, i) => caption(ctx, F, cap, T, i === 0));
     }
     if (reveal > 0) {                // the teal card opens as a circle from between the two characters
       const ox = S.cx - 500 * S.s + 515 * S.s, oy = S.feetY - 250 * S.s;
@@ -217,9 +221,9 @@
     }
   }
 
-  function cover(ctx, fmt) {
+  function cover(ctx, fmt, variant) {
     const F = FORMATS[fmt], K = F.cover, cx = K.scene.cx;
-    drawScene(ctx, F, K.scene, K.tau, 1);
+    drawScene(ctx, F, K.scene, K.tau, 1, sceneOf(variant));
     text(ctx, 'DERMASGA · MACHALA', cx, K.eyebrowY, { size: K.eyebrow, weight: 600, color: C.teal700, spacing: 0.28 });
     text(ctx, 'Dermatología\npediátrica', cx, K.titleY, { size: K.title, weight: 700, color: C.ink });
     text(ctx, 'dermasga.com', cx, K.urlY, { size: K.url, weight: 700, color: C.teal700 });
@@ -235,5 +239,5 @@
   }
 
   window.ADS = window.ADS || {};
-  window.ADS.pediatria = { formats: FORMATS, duration: DURATION, frame, cover, ready };
+  window.ADS.pediatria = { variants: Object.keys(SCENES), formats: FORMATS, duration: DURATION, frame, cover, ready };
 })();

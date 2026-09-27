@@ -12,6 +12,7 @@
 <script src="/assets/js/avatar-editor.js"></script>
 <script src="/assets/js/avatars/doctor.js"></script>
 <script src="/assets/js/avatars/child.js"></script>
+<script src="/assets/js/avatars/boy.js"></script>
 <script src="/assets/js/avatar-animations.js"></script>
 <script>
 /* Driven by render.py: asks it for the plan, draws every frame or still, and posts each one back as an image. */
@@ -31,20 +32,24 @@
     const AD = window.ADS[plan.ad];
     if (AD.ready) await AD.ready();
     const canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+    const variants = plan.variants || AD.variants || [''];                   // e.g. the girl and the boy versions
     for (const [i, task] of plan.tasks.entries()) {
       const F = AD.formats[task.format];
       if (!F) throw new Error('Formato desconocido: ' + task.format);
       canvas.width = F.w; canvas.height = F.h;
-      if (task.kind === 'video') {
-        const n = Math.round(AD.duration * plan.fps);
-        for (let k = 0; k < n; k++) {
-          AD.frame(ctx, task.format, k / plan.fps);
-          await post(`/frame?task=${i}&n=${k}&of=${n}`, await toBlob(canvas, 'image/png'));
+      for (const variant of variants) {
+        const q = `task=${i}&variant=${encodeURIComponent(variant)}`;
+        if (task.kind === 'video') {
+          const n = Math.round(AD.duration * plan.fps);
+          for (let k = 0; k < n; k++) {
+            AD.frame(ctx, task.format, k / plan.fps, variant);
+            await post(`/frame?${q}&n=${k}&of=${n}`, await toBlob(canvas, 'image/png'));
+          }
+          await post(`/end?${q}`);
+        } else {
+          if (task.kind === 'cover') AD.cover(ctx, task.format, variant); else AD.frame(ctx, task.format, task.t, variant);
+          await post(`/image?${q}`, await toBlob(canvas, task.kind === 'cover' ? 'image/jpeg' : 'image/png', 0.92));
         }
-        await post(`/end?task=${i}`);
-      } else {
-        if (task.kind === 'cover') AD.cover(ctx, task.format); else AD.frame(ctx, task.format, task.t);
-        await post(`/image?task=${i}`, await toBlob(canvas, task.kind === 'cover' ? 'image/jpeg' : 'image/png', 0.92));
       }
     }
     await post('/finished');

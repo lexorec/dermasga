@@ -97,12 +97,15 @@
       H.ellipse(ctx, 0, -54.2, 2.5, 2.4, C.skin);                           // neck (shows when the head tilts)
 
       const armStyle = { w: 5.4, color: C.skin, hand: 3.2, handColor: C.skin, cap: { to: 0.34, w: 7.3, color: C.tee, edge: C.teeEdge } };
+      const spotAlpha = pose.spots === true ? 1 : Math.max(0, Math.min(1, +pose.spots || 0));   // on/off, or 0–1 while fading
       const spotsOn = ga => {                                                 // on the skin, so the sleeve covers any that reach it
+        ctx.save(); ctx.globalAlpha *= spotAlpha;
         for (const [t, off] of [[0.5, 0.9], [0.62, -1.0], [0.74, 0.7], [0.86, -0.6]]) {
           const p = H.point(ga, t), q = H.point(ga, t + 0.01);
           const ang = Math.atan2(q.y - p.y, q.x - p.x);
           H.ellipse(ctx, p.x - Math.sin(ang) * off, p.y + Math.cos(ang) * off, 0.95, 0.95, C.spot);
         }
+        ctx.restore();
       };
       const drawArm = (ga, spots) => H.arm(ctx, ga, spots ? Object.assign({ skin: spotsOn }, armStyle) : armStyle);
       const raised = ga => ga.W.y < ga.S.y - 4;
@@ -116,7 +119,11 @@
       }
       H.ellipse(ctx, 0, 0, 18.2, 17.2, C.skin);
       H.face(ctx, { eyeY: 2.6, eyeDX: 6.6, rx: 2.25, ry: 2.95, mouthY: 8.4, mouthW: 3.0, blush: C.blush, blink: pose.blink, open: pose.mouth });
-      if (pose.spots) for (const [cx, cy] of [[-11.8, 0.6], [-10.2, 2.4], [-12.4, 3.4]]) H.ellipse(ctx, cx, cy, 0.95, 0.95, C.spot);
+      if (pose.spots) {
+        ctx.save(); ctx.globalAlpha *= spotAlpha;
+        for (const [cx, cy] of [[-11.8, 0.6], [-10.2, 2.4], [-12.4, 3.4]]) H.ellipse(ctx, cx, cy, 0.95, 0.95, C.spot);
+        ctx.restore();
+      }
       if (pose.mask) { ctx.save(); ctx.translate(0, 0.9); ctx.scale(1.07, 1.075); H.mask(ctx); ctx.restore(); }
       H.fill(ctx, COWLICK, C.hair);
       H.fill(ctx, HAIR, C.hair);

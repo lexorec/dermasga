@@ -4,7 +4,7 @@ seo_title: "Dermatología pediátrica en Machala — Dra. Marcela Astudillo G."
 description: "Atención dermatológica para bebés, niños y adolescentes en Machala. Dra. Marcela Astudillo G., formada en el Hospital Pediátrico Borrás Marfán de La Habana."
 order: 1
 hero_animation: "hero-pediatria hero-pediatria-nino"
-hero_animation_alt: "Animación: una niña o un niño saluda, la Dra. Marcela revisa la piel de su brazo con una luz especial, chocan los cinco y salta de alegría."
+hero_animation_alt: "Animación: una niña o un niño saluda; la Dra. Marcela revisa la piel de su brazo y de su mejilla con una luz especial y le pone crema; pasan los días, las manchitas se aclaran, chocan los cinco y salta de alegría."
 whatsapp_message: "Hola Dra. Astudillo, quisiera agendar una cita para mi hijo/a."
 eyebrow: "Especialidad · DERMASGA"
 heading: "Dermatología pediátrica en Machala"

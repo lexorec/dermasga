@@ -4,6 +4,7 @@
 Uso, desde la carpeta del repositorio:
   python3 _tools/anuncios/render.py pediatria                        # videos y portadas -> assets/video/
   python3 _tools/anuncios/render.py pediatria --formatos tiktok      # solo una red
+  python3 _tools/anuncios/render.py pediatria --variantes nino       # solo una versión (el anuncio define cuáles hay)
   python3 _tools/anuncios/render.py pediatria --portadas             # solo las portadas
   python3 _tools/anuncios/render.py pediatria --cuadros 1,6.5,15 --salida /tmp/prueba   # imágenes sueltas para revisar
 """
@@ -25,36 +26,43 @@ FPS = 30
 
 
 class Job:
-    """What to render, plus the ffmpeg encoders fed by the page."""
+    """What to render, plus the ffmpeg encoders fed by the page (one per task and version)."""
 
-    def __init__(self, ad, tasks):
-        self.ad, self.tasks = ad, tasks
+    def __init__(self, ad, tasks, out_dir, variants):
+        self.ad, self.tasks, self.out_dir, self.variants = ad, tasks, out_dir, variants
         self.encoders = {}
         self.done = threading.Event()
         self.error = None
 
-    def frame(self, i, n, total, data):
+    def out(self, i, variant):
         task = self.tasks[i]
-        if i not in self.encoders:
-            self.encoders[i] = subprocess.Popen(
-                ["ffmpeg", "-y", "-loglevel", "error", "-f", "image2pipe", "-c:v", "png", "-framerate", str(FPS), "-i", "-",
-                 "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-movflags", "+faststart", task["out"]],
-                stdin=subprocess.PIPE)
-        self.encoders[i].stdin.write(data)
-        if n % FPS == 0 or n == total - 1:
-            print(f"\r  {task['format']}: cuadro {n + 1} de {total}", end="", flush=True)
+        name = f"anuncio-{self.ad}{'-' + variant if variant else ''}-{task['format']}"
+        suffix = {"video": ".mp4", "cover": "-portada.jpg"}.get(task["kind"]) or f"-{task['t']:05.2f}s.png"
+        return os.path.join(self.out_dir, name + suffix)
 
-    def end(self, i):
-        enc = self.encoders.pop(i)
+    def frame(self, i, variant, n, total, data):
+        key = (i, variant)
+        if key not in self.encoders:
+            self.encoders[key] = subprocess.Popen(
+                ["ffmpeg", "-y", "-loglevel", "error", "-f", "image2pipe", "-c:v", "png", "-framerate", str(FPS), "-i", "-",
+                 "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+                 self.out(i, variant)],
+                stdin=subprocess.PIPE)
+        self.encoders[key].stdin.write(data)
+        if n % FPS == 0 or n == total - 1:
+            print(f"\r  {variant or self.ad} · {self.tasks[i]['format']}: cuadro {n + 1} de {total}", end="", flush=True)
+
+    def end(self, i, variant):
+        enc = self.encoders.pop((i, variant))
         enc.stdin.close()
         if enc.wait() != 0:
-            raise RuntimeError("ffmpeg falló con " + self.tasks[i]["out"])
-        print("\n  listo: " + os.path.relpath(self.tasks[i]["out"], ROOT))
+            raise RuntimeError("ffmpeg falló con " + self.out(i, variant))
+        print("\n  listo: " + os.path.relpath(self.out(i, variant), ROOT))
 
-    def image(self, i, data):
-        with open(self.tasks[i]["out"], "wb") as f:
+    def image(self, i, variant, data):
+        with open(self.out(i, variant), "wb") as f:
             f.write(data)
-        print("  listo: " + os.path.relpath(self.tasks[i]["out"], ROOT))
+        print("  listo: " + os.path.relpath(self.out(i, variant), ROOT))
 
 
 def handler_for(job):
@@ -72,7 +80,7 @@ def handler_for(job):
         def do_GET(self):
             if self.path != "/plan":
                 return super().do_GET()
-            plan = {"ad": job.ad, "fps": FPS, "tasks": [{k: v for k, v in t.items() if k != "out"} for t in job.tasks]}
+            plan = {"ad": job.ad, "fps": FPS, "tasks": job.tasks, "variants": job.variants}
             body = json.dumps(plan).encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
@@ -86,11 +94,11 @@ def handler_for(job):
             data = self.rfile.read(int(self.headers.get("Content-Length") or 0))
             try:
                 if url.path == "/frame":
-                    job.frame(int(q["task"]), int(q["n"]), int(q["of"]), data)
+                    job.frame(int(q["task"]), q.get("variant", ""), int(q["n"]), int(q["of"]), data)
                 elif url.path == "/end":
-                    job.end(int(q["task"]))
+                    job.end(int(q["task"]), q.get("variant", ""))
                 elif url.path == "/image":
-                    job.image(int(q["task"]), data)
+                    job.image(int(q["task"]), q.get("variant", ""), data)
                 elif url.path == "/finished":
                     job.done.set()
                 elif url.path == "/error":
@@ -109,6 +117,7 @@ def main():
     ap = argparse.ArgumentParser(description="Renderiza un anuncio de _tools/anuncios/ en MP4 y portadas.")
     ap.add_argument("anuncio", help="nombre del archivo del anuncio en esta carpeta, sin .js (p. ej. pediatria)")
     ap.add_argument("--formatos", default="instagram,tiktok,facebook", help="redes separadas por comas")
+    ap.add_argument("--variantes", help="versiones separadas por comas (por defecto todas las del anuncio)")
     ap.add_argument("--portadas", action="store_true", help="solo las portadas")
     ap.add_argument("--cuadros", help="solo imágenes PNG en estos segundos, separados por comas")
     ap.add_argument("--salida", default=os.path.join(ROOT, "assets", "video"), help="carpeta de salida")
@@ -119,16 +128,14 @@ def main():
 
     tasks = []
     for fmt in args.formatos.split(","):
-        base = os.path.join(args.salida, f"anuncio-{args.anuncio}-{fmt}")
         if args.cuadros:
-            for t in args.cuadros.split(","):
-                tasks.append({"kind": "still", "format": fmt, "t": float(t), "out": f"{base}-{float(t):05.2f}s.png"})
+            tasks += [{"kind": "still", "format": fmt, "t": float(t)} for t in args.cuadros.split(",")]
             continue
         if not args.portadas:
-            tasks.append({"kind": "video", "format": fmt, "out": base + ".mp4"})
-        tasks.append({"kind": "cover", "format": fmt, "out": base + "-portada.jpg"})
+            tasks.append({"kind": "video", "format": fmt})
+        tasks.append({"kind": "cover", "format": fmt})
 
-    job = Job(args.anuncio, tasks)
+    job = Job(args.anuncio, tasks, args.salida, args.variantes.split(",") if args.variantes else None)
     server = ThreadingHTTPServer(("127.0.0.1", 0), handler_for(job))
     threading.Thread(target=server.serve_forever, daemon=True).start()
     page = f"http://127.0.0.1:{server.server_port}/{os.path.relpath(HERE, ROOT)}/render.html"
