@@ -104,26 +104,29 @@
     window.setInterval(render, 60000);
   })();
 
-  /* Gentle WhatsApp nudge: once per visit, after 40 s or most of the page read, never over the hero */
+  /* Gentle WhatsApp nudge: once per page load, after 40 s or most of the page read, never over the hero */
   (function () {
     var nudge = document.querySelector('[data-wa-nudge]');
     if (!nudge || !waFloat) return;
-    var KEY = 'waNudgeShown';
-    try { if (window.sessionStorage.getItem(KEY)) return; } catch (e) { /* storage blocked: still show once */ }
     var shown = false;
     function show() {
       if (shown || !waFloat.classList.contains('is-visible')) return;
       shown = true;
-      try { window.sessionStorage.setItem(KEY, '1'); } catch (e) { /* ignore */ }
       nudge.hidden = false;
       window.requestAnimationFrame(function () { nudge.classList.add('is-visible'); });
     }
     function hide() { nudge.classList.remove('is-visible'); window.setTimeout(function () { nudge.hidden = true; }, 300); }
     var timer = window.setTimeout(function tick() { if (!shown) { show(); if (!shown) timer = window.setTimeout(tick, 5000); } }, 40000);
-    window.addEventListener('scroll', function () {
+    function checkScroll() {
       var doc = document.documentElement;
       if ((window.scrollY + window.innerHeight) / doc.scrollHeight > 0.6) show();
-    }, { passive: true });
+    }
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    /* the floating button can switch on just after the last scroll event: check again when it does */
+    if ('MutationObserver' in window) {
+      new MutationObserver(function () { if (waFloat.classList.contains('is-visible')) checkScroll(); })
+        .observe(waFloat, { attributes: true, attributeFilter: ['class'] });
+    }
     nudge.querySelector('.wa-nudge__close').addEventListener('click', hide);
     nudge.querySelector('.wa-nudge__text').addEventListener('click', hide);
     waFloat.addEventListener('click', hide);
@@ -179,8 +182,9 @@
 
   /* Floating WhatsApp button once the hero is out of view */
   if (waFloat && hero) {
+    /* several changes can arrive in one batch: the last one is the current state */
     new IntersectionObserver(function (entries) {
-      waFloat.classList.toggle('is-visible', !entries[0].isIntersecting);
+      waFloat.classList.toggle('is-visible', !entries[entries.length - 1].isIntersecting);
     }, { threshold: 0.1 }).observe(hero);
   }
 })();
