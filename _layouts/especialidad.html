@@ -93,12 +93,21 @@ layout: null
         </div>
         <p class="open-status reveal" data-open-status hidden></p>
       </div>
-      {%- if page.facts.size > 0 %}
-      <dl class="facts reveal">
-        {%- for f in page.facts %}
-        <div class="fact"><dt class="eyebrow">{{ f.label }}</dt><dd>{{ f.value }}</dd></div>
-        {%- endfor %}
-      </dl>
+      {%- if page.hero_animation or page.facts.size > 0 %}
+      <div class="page-hero-side">
+        {%- if page.hero_animation %}
+        <div class="hero-anim reveal">
+          <canvas data-animation="{{ page.hero_animation }}" role="img" aria-label="{{ page.hero_animation_alt | escape }}"></canvas>
+        </div>
+        {%- endif %}
+        {%- if page.facts.size > 0 %}
+        <dl class="facts reveal">
+          {%- for f in page.facts %}
+          <div class="fact"><dt class="eyebrow">{{ f.label }}</dt><dd>{{ f.value }}</dd></div>
+          {%- endfor %}
+        </dl>
+        {%- endif %}
+      </div>
       {%- endif %}
     </div>
   </div>
@@ -185,5 +194,13 @@ layout: null
 </main>
 
 {% include site-footer.html %}
+{%- if page.hero_animation %}
+{%- assign v = site.time | date: '%s' %}
+<script src="{{ '/assets/js/avatar-editor.js' | relative_url }}?v={{ v }}" defer></script>
+<script src="{{ '/assets/js/avatars/doctor.js' | relative_url }}?v={{ v }}" defer></script>
+<script src="{{ '/assets/js/avatars/child.js' | relative_url }}?v={{ v }}" defer></script>
+<script src="{{ '/assets/js/avatar-animations.js' | relative_url }}?v={{ v }}" defer></script>
+<script>document.addEventListener('DOMContentLoaded', function () { if (window.AvatarAnimations) AvatarAnimations.playAll(); });</script>
+{%- endif %}
 </body>
 </html>

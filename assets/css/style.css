@@ -395,6 +395,8 @@ a:hover { color: var(--teal-800); }
 .page-hero-grid { display: grid; gap: 40px; align-items: start; }
 .page-hero-grid > div { display: flex; flex-direction: column; gap: var(--space-4); }
 @media (min-width: 1024px) { .page-hero-grid { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 64px; } }
+.page-hero-side { display: grid; gap: 20px; }
+.hero-anim canvas { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: var(--radius-md); }
 .facts { margin: 0; display: grid; gap: 0; background: var(--surface-raised); border: 1px solid var(--border); border-top: 4px solid var(--teal-500); border-radius: var(--radius-md); }
 .fact { padding: 20px 24px; border-bottom: 1px solid var(--border); }
 .fact:last-child { border-bottom: 0; }

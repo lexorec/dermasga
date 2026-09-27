@@ -240,6 +240,8 @@ content:
       - { name: description, label: "Descripción en Google (máx. ~155 caracteres)", type: text }
       - { name: order, label: "Orden", type: number }
       - { name: whatsapp_message, label: "Mensaje de WhatsApp para esta página (opcional)", type: string }
+      - { name: hero_animation, label: "Animación del recuadro principal (opcional, p. ej. hero-pediatria)", type: string }
+      - { name: hero_animation_alt, label: "Descripción de la animación (accesibilidad)", type: text }
       - { name: eyebrow, label: "Texto pequeño sobre el título", type: string }
       - { name: lead, label: "Introducción", type: text }
       - name: facts
