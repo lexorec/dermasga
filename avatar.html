@@ -108,6 +108,7 @@ sitemap: false
         <label><input type="checkbox" id="blink"> Ojos cerrados</label>
         <label><input type="checkbox" id="mouth"> Boca abierta</label>
         <label><input type="checkbox" id="lamp"> Lámpara</label>
+        <label><input type="checkbox" id="mask"> Mascarilla</label>
       </div>
     </fieldset>
 
@@ -162,7 +163,7 @@ sitemap: false
     surface: '#f7f7f7', ink: '#333333', teal50: '#e8fafd', teal200: '#a0e1ea', teal500: '#14b5c9', teal700: '#0d7582',
     teal800: '#09545d', white: '#ffffff', coatEdge: '#d4dfe2', coatFold: '#ecf1f2',
     skin: '#e5b896', hair: '#523426', eye: '#30201c', mouth: '#843a38', mouthIn: '#96343a', tongue: '#e87878',
-    blush: '#eaa28c', floor: '#e5eef0', shadow: '#dbe9ec'
+    blush: '#eaa28c', floor: '#e5eef0', shadow: '#dbe9ec', mask: '#c9ecf2', maskLine: '#a3dbe4', loop: '#e3f4f7'
   };
 
   // ---------- rig (character units: ~100 tall, y up is negative, origin between the feet) ----------
@@ -177,7 +178,7 @@ sitemap: false
   const DEFAULT = {
     armL: { a1: -16, a2: 8 }, armR: { a1: 16, a2: -8 },
     legL: { a1: -1, a2: 0 }, legR: { a1: 1, a2: 0 },
-    lean: 0, tilt: 0, blink: false, mouth: false, lamp: false
+    lean: 0, tilt: 0, blink: false, mouth: false, lamp: false, mask: false
   };
   const PRESETS = [
     ['De pie', {}],
@@ -212,6 +213,13 @@ sitemap: false
     [['M', -4.6, -56.2], ['C', -2.4, -58.6, 2.4, -58.6, 4.6, -56.2]],
     [['M', -4.6, -56.2], ['C', -5.6, -52, -6, -48.2, -5.6, -44.4]],
     [['M', 4.6, -56.2], ['C', 5.2, -53.6, 5.4, -51.6, 5, -50]]
+  ];
+
+  const MASK = [['M', -13.4, 6.0], ['C', -7.2, 4.4, 7.2, 4.4, 13.4, 6.0], ['C', 13.2, 8.8, 11.6, 11.8, 8.6, 13.4],
+    ['C', 4.6, 15.6, -4.6, 15.6, -8.6, 13.4], ['C', -11.6, 11.8, -13.2, 8.8, -13.4, 6.0], ['Z']];
+  const MASK_PLEATS = [
+    [['M', -12.4, 8.6], ['C', -6, 7.8, 6, 7.8, 12.4, 8.6]],
+    [['M', -10.9, 11.2], ['C', -5.4, 10.6, 5.4, 10.6, 10.9, 11.2]]
   ];
 
   function path(ctx, cmds) {
@@ -295,6 +303,16 @@ sitemap: false
     }
   }
 
+  function drawMask(ctx) {
+    for (const sx of [-1, 1]) {                 // ear loops (tucked under the hair)
+      strokePath(ctx, [['M', sx * 13.2, 6.4], ['C', sx * 14.2, 6.0, sx * 15.0, 5.8, sx * 15.8, 5.7]], C.loop, 0.55);
+      strokePath(ctx, [['M', sx * 11.4, 11.6], ['C', sx * 13.0, 10.9, sx * 14.4, 9.9, sx * 15.6, 8.8]], C.loop, 0.55);
+    }
+    path(ctx, MASK); ctx.fillStyle = C.mask; ctx.fill();
+    ctx.lineWidth = 0.4; ctx.strokeStyle = C.maskLine; ctx.stroke();
+    for (const pl of MASK_PLEATS) strokePath(ctx, pl, C.maskLine, 0.45);
+  }
+
   // ---------- render ----------
   function render(ctx, scale, opts) {
     let base = new DOMMatrix([scale, 0, 0, scale, 0, 0]);
@@ -339,6 +357,7 @@ sitemap: false
     use(head);
     ellipse(ctx, 0, 0, 17, 16, C.skin);
     drawFace(ctx);
+    if (pose.mask) drawMask(ctx);
     fillPath(ctx, BANGS, C.hair);
 
     use(body);                                                                // raised arms go in front of the hair
@@ -408,14 +427,14 @@ sitemap: false
   }
   function syncControls() {
     for (const key in inputs) { const v = Math.round(getv(key)); inputs[key].inp.value = v; inputs[key].out.textContent = v + '°'; }
-    $('blink').checked = pose.blink; $('mouth').checked = pose.mouth; $('lamp').checked = pose.lamp;
+    $('blink').checked = pose.blink; $('mouth').checked = pose.mouth; $('lamp').checked = pose.lamp; $('mask').checked = pose.mask;
   }
-  for (const k of ['blink', 'mouth', 'lamp']) $(k).addEventListener('change', e => { pose[k] = e.target.checked; draw(); });
+  for (const k of ['blink', 'mouth', 'lamp', 'mask']) $(k).addEventListener('change', e => { pose[k] = e.target.checked; draw(); });
   for (const el of [bgSel, mirrorChk, handlesChk]) el.addEventListener('change', draw);
 
   for (const [name, p] of PRESETS) {
     const b = document.createElement('button'); b.type = 'button'; b.textContent = name;
-    b.addEventListener('click', () => { pose = Object.assign(clone(DEFAULT), clone(p)); syncControls(); draw(); });
+    b.addEventListener('click', () => { const mask = pose.mask; pose = Object.assign(clone(DEFAULT), clone(p), { mask }); syncControls(); draw(); });
     $('presets').appendChild(b);
   }
   $('reset').addEventListener('click', () => { pose = clone(DEFAULT); syncControls(); draw(); });
