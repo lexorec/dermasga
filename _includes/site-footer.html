@@ -29,8 +29,12 @@
 </footer>
 
 <div class="wa-nudge" data-wa-nudge hidden>
-  <a class="wa-nudge__text" href="{{ wa }}" target="_blank" rel="noopener">{% if include.lang == 'en' %}Any questions? Message us on WhatsApp.{% else %}¿Tiene alguna duda? Escríbanos por WhatsApp.{% endif %}</a>
-  <button class="wa-nudge__close" type="button" aria-label="{% if include.lang == 'en' %}Close{% else %}Cerrar{% endif %}">×</button>
+  <span class="wa-nudge__avatar">{% include dra-avatar.svg %}</span>
+  <div class="wa-nudge__bubble">
+    <p class="wa-nudge__name">{% if include.lang == 'en' %}Dr. Marcela{% else %}Dra. Marcela{% endif %}</p>
+    <a class="wa-nudge__text" href="{{ wa }}" target="_blank" rel="noopener">{% if include.lang == 'en' %}Any questions? Message us on WhatsApp.{% else %}¿Tiene alguna duda? Escríbanos por WhatsApp.{% endif %}</a>
+    <button class="wa-nudge__close" type="button" aria-label="{% if include.lang == 'en' %}Close{% else %}Cerrar{% endif %}">×</button>
+  </div>
 </div>
 
 <script type="application/json" id="opening-hours">{{ s.contact.opening_hours | jsonify }}</script>
