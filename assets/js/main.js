@@ -177,10 +177,25 @@
   }, { rootMargin: '-45% 0px -50% 0px' });
   sections.forEach(function (s) { navObserver.observe(s); });
 
-  /* Floating WhatsApp button once the hero is out of view */
+  /* Floating WhatsApp button once the hero is out of view, and out of the way of the footer links */
+  var footer = document.querySelector('.site-footer');
   if (waFloat && hero) {
+    var heroInView = true, footerInView = false;
+    var updateFloat = function () {
+      var show = !heroInView && !footerInView;
+      waFloat.classList.toggle('is-visible', show);
+      if (!show) {
+        var nudgeEl = document.querySelector('[data-wa-nudge]');
+        if (nudgeEl && nudgeEl.classList.contains('is-visible')) { nudgeEl.classList.remove('is-visible'); nudgeEl.hidden = true; }
+      }
+    };
     new IntersectionObserver(function (entries) {
-      waFloat.classList.toggle('is-visible', !entries[0].isIntersecting);
+      heroInView = entries[0].isIntersecting; updateFloat();
     }, { threshold: 0.1 }).observe(hero);
+    if (footer) {
+      new IntersectionObserver(function (entries) {
+        footerInView = entries[0].isIntersecting; updateFloat();
+      }, { threshold: 0 }).observe(footer);
+    }
   }
 })();
