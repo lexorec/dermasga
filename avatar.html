@@ -178,7 +178,7 @@ sitemap: false
   const DEFAULT = {
     armL: { a1: -16, a2: 8 }, armR: { a1: 16, a2: -8 },
     legL: { a1: -1, a2: 0 }, legR: { a1: 1, a2: 0 },
-    lean: 0, tilt: 0, blink: false, mouth: false, lamp: false, mask: false
+    lean: 0, tilt: 0, lift: 0, blink: false, mouth: false, lamp: false, mask: false
   };
   const PRESETS = [
     ['De pie', {}],
@@ -187,7 +187,9 @@ sitemap: false
     ['Señalar', { armR: { a1: 104, a2: -8 }, tilt: -4 }],
     ['Lámpara', { armR: { a1: 64, a2: 40 }, lamp: true, lean: 6, tilt: 6 }],
     ['Manos en la cintura', { armL: { a1: -58, a2: 96 }, armR: { a1: 58, a2: -96 } }],
-    ['Caminar', { legL: { a1: -16, a2: 10 }, legR: { a1: 12, a2: -4 }, armL: { a1: -24, a2: 6 }, armR: { a1: 12, a2: -6 } }]
+    ['Caminar', { legL: { a1: -16, a2: 10 }, legR: { a1: 12, a2: -4 }, armL: { a1: -24, a2: 6 }, armR: { a1: 12, a2: -6 } }],
+    ['Saltando de emoción', { armL: { a1: -122, a2: -16 }, armR: { a1: 122, a2: 16 }, legL: { a1: -30, a2: 52 }, legR: { a1: 30, a2: -52 },
+      lift: 14, tilt: -5, mouth: true }]
   ];
 
   const clone = o => JSON.parse(JSON.stringify(o));
@@ -317,7 +319,8 @@ sitemap: false
   function render(ctx, scale, opts) {
     let base = new DOMMatrix([scale, 0, 0, scale, 0, 0]);
     if (opts.mirror) base = base.translate(LW, 0).scale(-1, 1);
-    const root = new DOMMatrix().translate(OX, OY).scale(U);
+    const floorM = new DOMMatrix().translate(OX, OY).scale(U);
+    const root = new DOMMatrix().translate(OX, OY - pose.lift * U).scale(U);
     const body = root.translate(HIP_PIVOT.x, HIP_PIVOT.y).rotate(pose.lean).translate(-HIP_PIVOT.x, -HIP_PIVOT.y);
     const head = body.translate(NECK.x, NECK.y).rotate(pose.tilt).translate(0, -16);   // head space: origin at the head center
     const use = M => ctx.setTransform(base.multiply(M));
@@ -333,7 +336,10 @@ sitemap: false
       ellipse(ctx, LW / 2, 560, 380, 380, C.teal50);
       ellipse(ctx, LW / 2, OY + 6, 340, 22, C.floor);
     }
-    if (opts.bg === 'scene' || opts.shadow) { use(root); ellipse(ctx, 0, -0.5, 17, 2.6, C.shadow); }
+    if (opts.bg === 'scene' || opts.shadow) {
+      const k = clamp(1 - pose.lift / 45, 0.45, 1);
+      use(floorM); ellipse(ctx, 0, -0.5, 17 * k, 2.6 * k, C.shadow);
+    }
 
     const legL = legGeom(HIP.L, pose.legL), legR = legGeom(HIP.R, pose.legR);
     use(root); drawLeg(ctx, legL, -1); drawLeg(ctx, legR, 1);
@@ -411,22 +417,23 @@ sitemap: false
     ['legs', 'Pierna derecha · cadera', 'legR.a1', -70, 70],
     ['legs', 'Pierna derecha · rodilla', 'legR.a2', -100, 100],
     ['body', 'Inclinación del cuerpo', 'lean', -25, 25],
-    ['body', 'Inclinación de la cabeza', 'tilt', -35, 35]
+    ['body', 'Inclinación de la cabeza', 'tilt', -35, 35],
+    ['body', 'Altura del salto', 'lift', 0, 30, '']
   ];
   const getv = key => key.split('.').reduce((o, k) => o[k], pose);
   const setv = (key, v) => { const ks = key.split('.'); const last_ = ks.pop(); ks.reduce((o, k) => o[k], pose)[last_] = v; };
   const inputs = {};
-  for (const [group, label, key, min, max] of SLIDERS) {
+  for (const [group, label, key, min, max, unit = '°'] of SLIDERS) {
     const wrap = document.createElement('label'); wrap.className = 'ctl';
     const id = 'r-' + key.replace('.', '-');
     wrap.innerHTML = `<span>${label}</span><output for="${id}"></output><input id="${id}" type="range" min="${min}" max="${max}" step="1">`;
     const inp = wrap.querySelector('input'), out = wrap.querySelector('output');
-    inp.addEventListener('input', () => { setv(key, +inp.value); out.textContent = inp.value + '°'; draw(); });
-    inputs[key] = { inp, out };
+    inp.addEventListener('input', () => { setv(key, +inp.value); out.textContent = inp.value + unit; draw(); });
+    inputs[key] = { inp, out, unit };
     $(group).appendChild(wrap);
   }
   function syncControls() {
-    for (const key in inputs) { const v = Math.round(getv(key)); inputs[key].inp.value = v; inputs[key].out.textContent = v + '°'; }
+    for (const key in inputs) { const v = Math.round(getv(key)); inputs[key].inp.value = v; inputs[key].out.textContent = v + inputs[key].unit; }
     $('blink').checked = pose.blink; $('mouth').checked = pose.mouth; $('lamp').checked = pose.lamp; $('mask').checked = pose.mask;
   }
   for (const k of ['blink', 'mouth', 'lamp', 'mask']) $(k).addEventListener('change', e => { pose[k] = e.target.checked; draw(); });
