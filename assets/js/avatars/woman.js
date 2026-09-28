@@ -8,7 +8,7 @@
   const C = {
     skin: '#e1b18d', hair: '#1e1411', highlight: '#3b2a23', clip: '#14b5c9', clipEdge: '#0f97a8',
     dress: '#0d7582', dressEdge: '#0a6570', chain: '#c9a54a', pendant: '#a0e1ea', shoe: '#14b5c9', shoeEdge: '#0f97a8',
-    lash: '#30201c', lip: '#d4777a', blush: '#eaa28c', line: '#c4946f', spot: '#a8714f', frame: '#0d7582', glass: '#e8fafd'
+    lash: '#30201c', lip: '#d4777a', blush: '#eaa28c', line: '#b3805c', spot: '#a8714f', frame: '#0d7582', glass: '#e8fafd'
   };
   // head space: origin at the head centre, eyes at y 2.6; a round face
   const HEAD_RX = 17.2, HEAD_RY = 16.6;
@@ -125,7 +125,7 @@
         for (const [x, y, rx, ry, rot] of SPOTS) H.ellipse(ctx, x, y, rx, ry, C.spot, rot);
         ctx.restore();
       }
-      if (lines > 0) { ctx.save(); ctx.globalAlpha *= 0.4 * lines; for (const l of LINES) H.stroke(ctx, l, C.line, 0.35); ctx.restore(); }
+      if (lines > 0) { ctx.save(); ctx.globalAlpha *= 0.5 * lines; for (const l of LINES) H.stroke(ctx, l, C.line, 0.38); ctx.restore(); }
       H.face(ctx, { eyeY: 2.6, eyeDX: 6.4, rx: 2.35, ry: 3.0, mouthY: 9.2, mouthW: 3.0, blush: C.blush, blink: pose.blink, open: pose.mouth });
       if (!pose.mouth) H.ellipse(ctx, 0, 10.2, 2.0, 0.6, C.lip);            // soft lip colour under the smile line
       if (!pose.blink) {                                                      // curled lashes at the outer corners
