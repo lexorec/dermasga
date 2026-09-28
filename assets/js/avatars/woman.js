@@ -1,14 +1,14 @@
 /* Woman (aesthetic dermatology): rig, poses and drawing for the avatar editor (units: ~100 tall, origin between the feet,
    y up is negative). Cute style like Dra. Marcela: round face, big eyes. Hair built like the doctor's (a back layer plus
-   one front piece): a chestnut lob with caramel highlights, side-swept bangs and a clip. Wrap dress with cap sleeves and
+   one front piece): a near-black lob with a soft sheen, side-swept bangs and a clip. Wrap dress with cap sleeves and
    teal flats. Skin options for before/after scenes, each on/off or 0–1: expression lines, melasma spots and luminous skin.
    Prop: a hand mirror in the right hand. */
 (function () {
   'use strict';
   const C = {
-    skin: '#ddab86', hair: '#5a3526', highlight: '#8d5b3d', clip: '#14b5c9', clipEdge: '#0f97a8',
+    skin: '#e1b18d', hair: '#1e1411', highlight: '#3b2a23', clip: '#14b5c9', clipEdge: '#0f97a8',
     dress: '#0d7582', dressEdge: '#0a6570', chain: '#c9a54a', pendant: '#a0e1ea', shoe: '#14b5c9', shoeEdge: '#0f97a8',
-    lash: '#30201c', lip: '#d4777a', blush: '#eaa28c', line: '#c08e6b', spot: '#a8714f', frame: '#0d7582', glass: '#e8fafd'
+    lash: '#30201c', lip: '#d4777a', blush: '#eaa28c', line: '#c4946f', spot: '#a8714f', frame: '#0d7582', glass: '#e8fafd'
   };
   // head space: origin at the head centre, eyes at y 2.6; a round face
   const HEAD_RX = 17.2, HEAD_RY = 16.6;
