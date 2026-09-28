@@ -13,11 +13,10 @@
   // head space: origin at the head centre, eyes at y 2.6; a round face
   const HEAD_RX = 17.2, HEAD_RY = 16.6;
   const faceClip = ctx => { ctx.beginPath(); ctx.ellipse(0, 0, HEAD_RX, HEAD_RY, 0, 0, Math.PI * 2); ctx.clip(); };
-  // hair pulled back: a smooth cap with a rounded hairline, a bun on top and two soft wisps at the temples
-  const CAP = [['M', -17.4, -2.0], ['C', -18.6, -11.4, -10.8, -18.4, 0, -18.4], ['C', 10.8, -18.4, 18.6, -11.4, 17.4, -2.0],
-    ['C', 16.2, -1.4, 15.4, -3.2, 14.8, -5.0], ['C', 12.6, -9.6, 7.0, -11.6, 0, -11.6], ['C', -7.0, -11.6, -12.6, -9.6, -14.8, -5.0],
-    ['C', -15.4, -3.2, -16.2, -1.4, -17.4, -2.0], ['Z']];
-  const WISPS = [[['M', -13.8, -6.6], ['C', -15.6, -2.0, -15.2, 3.0, -13.4, 6.6]], [['M', 13.8, -6.6], ['C', 15.6, -2.0, 15.2, 3.0, 13.4, 6.6]]];
+  // hair pulled back: a smooth cap with a rounded hairline that ends cleanly at the temples, and a bun on top
+  const CAP = [['M', -17.2, -5.4], ['C', -18.4, -12.2, -10.8, -18.4, 0, -18.4], ['C', 10.8, -18.4, 18.4, -12.2, 17.2, -5.4],
+    ['C', 16.2, -6.4, 15.0, -7.8, 13.6, -8.6], ['C', 10.4, -10.6, 5.8, -11.6, 0, -11.6], ['C', -5.8, -11.6, -10.4, -10.6, -13.6, -8.6],
+    ['C', -15.0, -7.8, -16.2, -6.4, -17.2, -5.4], ['Z']];
   const BROWS = [[['M', -9.2, -2.2], ['C', -7.8, -3.4, -5.6, -3.6, -4.0, -2.8]], [['M', 9.2, -2.2], ['C', 7.8, -3.4, 5.6, -3.6, 4.0, -2.8]]];
   // expression lines, kept subtle: a faint forehead line, crow's feet, a soft line under the eyes, short folds by the mouth
   const LINES = [
@@ -151,7 +150,6 @@
       H.ellipse(ctx, 0, -18.4, 5.8, 2.0, C.scrunchieEdge);                    // scrunchie
       H.ellipse(ctx, 0, -18.6, 5.4, 1.7, C.scrunchie);
       for (const x of [-3.0, 0, 3.0]) H.stroke(ctx, [['M', x - 0.5, -19.6], ['L', x + 0.5, -17.6]], C.scrunchieEdge, 0.4);
-      for (const w of WISPS) H.stroke(ctx, w, C.hair, 0.9);
       H.stroke(ctx, [['M', -10.4, -12.2], ['C', -8.4, -14.2, -5.6, -15.4, -2.6, -15.8]], C.shine, 0.9);   // shine on the crown
 
       use(S.body);                                                            // raised arms go in front of the hair
