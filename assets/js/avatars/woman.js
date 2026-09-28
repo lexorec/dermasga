@@ -6,9 +6,9 @@
 (function () {
   'use strict';
   const C = {
-    skin: '#d6a079', hair: '#5a3526', highlight: '#8d5b3d', clip: '#14b5c9', clipEdge: '#0f97a8',
+    skin: '#ddab86', hair: '#5a3526', highlight: '#8d5b3d', clip: '#14b5c9', clipEdge: '#0f97a8',
     dress: '#0d7582', dressEdge: '#0a6570', chain: '#c9a54a', pendant: '#a0e1ea', shoe: '#14b5c9', shoeEdge: '#0f97a8',
-    lash: '#30201c', lip: '#d4777a', blush: '#eaa28c', line: '#b8835f', spot: '#a8714f', frame: '#0d7582', glass: '#e8fafd'
+    lash: '#30201c', lip: '#d4777a', blush: '#eaa28c', line: '#c08e6b', spot: '#a8714f', frame: '#0d7582', glass: '#e8fafd'
   };
   // head space: origin at the head centre, eyes at y 2.6; a round face
   const HEAD_RX = 17.2, HEAD_RY = 16.6;
